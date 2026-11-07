@@ -14,7 +14,7 @@ function Header({dark=false}) {
   const [open,setOpen] = useState(false);
   return <>
     <header className={`header ${dark?'header-dark':''}`}>
-      <Link href="/" className="brand quantum-brand" aria-label="QuantumX home">Quantum<span>X</span><small>®</small></Link>
+      <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src="/assets/quantum-logo.svg" alt="QuantumX"/></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/projects">Projects</Link><Link href="/industries">Industries</Link><Link href="/services">Services</Link></nav>
       <button className={`hamburger ${open?'active':''}`} aria-label={open?'Close menu':'Open menu'} aria-expanded={open} onClick={()=>setOpen(!open)}><i/><i/><i/></button>
     </header>
@@ -29,7 +29,7 @@ function Loader() {
 function Footer() {
   return <>
     <section className="cta"><p>Ready when you are</p><h2>Let’s build<br/><em>what’s next.</em></h2><Button light/></section>
-    <footer><div className="footer-top"><div><p className="eyebrow">QUANTUMX</p><h3>Growth, managed as<br/>one connected system.</h3><p>Strategy · Creative · Performance · Technology · Data · AI</p></div><div><p className="eyebrow">Write to us</p><a href={`mailto:${email}`}>{email} ↗</a><p>+91 9789960251</p></div><div><p className="eyebrow">Where we work</p><p>Chennai HQ<br/>Across India<br/>North America<br/>Europe<br/>Middle East<br/>Asia-Pacific</p></div></div><div className="footer-bottom"><Link href="/" className="footer-logo">Quantum<span>X</span></Link><div><span>CHENNAI, INDIA</span><span>© 2026 QUANTUMX</span></div></div></footer>
+    <footer><div className="footer-top"><div><p className="eyebrow">QUANTUMX</p><h3>Growth, managed as<br/>one connected system.</h3><p>Strategy · Creative · Performance · Technology · Data · AI</p></div><div><p className="eyebrow">Write to us</p><a href={`mailto:${email}`}>{email} ↗</a><p>+91 9789960251</p></div><div><p className="eyebrow">Where we work</p><p>Chennai HQ<br/>Across India<br/>North America<br/>Europe<br/>Middle East<br/>Asia-Pacific</p></div></div><div className="footer-bottom"><Link href="/" className="footer-logo" aria-label="QuantumX home"><img src="/assets/quantum-logo.svg" alt="QuantumX"/></Link><div><span>CHENNAI, INDIA</span><span>© 2026 QUANTUMX</span></div></div></footer>
   </>;
 }
 function ProjectVisual({project}) {
