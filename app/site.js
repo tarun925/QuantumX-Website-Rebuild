@@ -21,11 +21,6 @@ function Header({dark=false}) {
     {open&&<div className="menu"><div className="menu-links">{['About','Projects','Services','Industries','Contact'].map(item=><Link key={item} href={`/${slugify(item)}`} onClick={()=>setOpen(false)}>{item}<span>↗</span></Link>)}</div><div className="menu-side"><p>Have a project in mind?</p><a href={`mailto:${email}`}>{email} ↗</a><small>CHENNAI · INDIA · NORTH AMERICA · EUROPE · MIDDLE EAST · ASIA-PACIFIC</small></div></div>}
   </>;
 }
-function Loader() {
-  const [show,setShow]=useState(false);
-  useEffect(()=>{if(!sessionStorage.getItem('quantumx-loaded')){setShow(true);sessionStorage.setItem('quantumx-loaded','1');const timer=setTimeout(()=>setShow(false),1700);return()=>clearTimeout(timer)}},[]);
-  return show?<div className="loader"><div className="loader-mark">✳</div><div className="loader-word">Quantum<span>X</span></div></div>:null;
-}
 function Footer() {
   return <>
     <section className="cta"><p>Ready when you are</p><h2>Let’s build<br/><em>what’s next.</em></h2><Button light/></section>
@@ -85,5 +80,5 @@ function Generic({path}) {
 export default function Site({path}) {
   useEffect(()=>{window.scrollTo(0,0)},[path.join('/')]);
   const project=path[0]==='projects'&&path[1]?projects.find(item=>item.slug===path[1]):null;
-  return <><Loader/>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:path[0]==='contact'?<Contact/>:<Generic path={path}/>}</>;
+  return <>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:path[0]==='contact'?<Contact/>:<Generic path={path}/>}</>;
 }
