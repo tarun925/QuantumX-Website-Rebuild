@@ -70,5 +70,5 @@ export default function TransitionLoader() {
     return () => { document.removeEventListener('click', onClick, true); window.removeEventListener('popstate', onPopState); clearTimers(); };
   }, [start, clearTimers]);
 
-  return overlay ? <div key={overlay.id} className={`loader ${overlay.leaving ? 'loader-leaving' : ''}`} aria-hidden="true"><div className="loader-mark">✳</div><div className="loader-word">Quantum<span>X</span></div></div> : null;
+  return overlay ? <div key={overlay.id} className={`loader ${overlay.leaving ? 'loader-leaving' : ''}`} aria-hidden="true"><div className="loader-mark"><svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true"><g stroke="currentColor" strokeWidth="4" strokeLinecap="round"><path d="M24 4v40M4 24h40M10 10l28 28M38 10L10 38"/></g></svg></div><div className="loader-word"><img src="/assets/quantum-logo.svg" alt=""/></div></div> : null;
 }
