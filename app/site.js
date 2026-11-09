@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useState} from 'react';
 import Link from 'next/link';
 import {projects,projectCategories,services,industries,markets} from './portfolio';
 
@@ -45,23 +45,8 @@ const clientLogos = [
   {name:'Chettinad Cement', src:'/assets/client-logos/chettinad.png'},
 ];
 function ClientLogos() {
-  const strip = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const element = strip.current;
-    if (!element || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let timer;
-    const observer = new IntersectionObserver(entries => {
-      if (!entries.some(entry => entry.isIntersecting)) return;
-      observer.disconnect();
-      // Let the initial page loader finish before the logo sequence starts.
-      timer = setTimeout(() => setVisible(true), document.querySelector('.loader') ? 1750 : 0);
-    }, {threshold:0.15});
-    observer.observe(element);
-    return () => { observer.disconnect(); clearTimeout(timer); };
-  }, []);
-  return <div ref={strip} className={`logo-strip quantum-logo-strip ${visible ? 'logos-revealed' : ''}`} aria-label="Selected brands">
-    {clientLogos.map((logo, index) => <span key={logo.name} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
+  return <div className="logo-strip quantum-logo-strip" aria-label="Selected brands">
+    {clientLogos.map(logo => <span key={logo.name} className={`client-logo ${logo.className || ''}`}>
       <img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}
     </span>)}
   </div>;

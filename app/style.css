@@ -61,3 +61,25 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
   .logos-revealed .client-logo{animation:client-logo-rise .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--logo-index) * 2s)}
   @keyframes client-logo-rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 }
+
+/* A slow three-turn orbit and a synchronized, repeating logo reveal. */
+.hero .donut{width:min(49.4vw,676px);right:max(0px,calc(var(--page-gutter) - 110px));animation:hero-orbit 36s ease-in-out infinite}
+@keyframes hero-orbit{
+  0%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(12px,-12px) rotate(270deg)}
+  50%{transform:translate(0,-24px) rotate(540deg)}
+  75%{transform:translate(-12px,-12px) rotate(810deg)}
+  100%{transform:translate(0,0) rotate(1080deg)}
+}
+.quantum-logo-strip{max-width:1200px;column-gap:clamp(24px,4vw,56px);row-gap:24px}
+@media(prefers-reduced-motion:no-preference){
+  .quantum-logo-strip .client-logo{animation:client-logo-together 2.5s ease-in-out infinite}
+  @keyframes client-logo-together{
+    0%,5%{opacity:0;transform:translateY(16px)}
+    25%,78%{opacity:1;transform:translateY(0)}
+    95%,100%{opacity:0;transform:translateY(0)}
+  }
+}
+@media(max-width:767px){.hero .donut{width:min(100%,390px);right:auto}.quantum-logo-strip{column-gap:24px}}
+@media(prefers-reduced-motion:reduce){.hero .donut,.quantum-logo-strip .client-logo{animation:none;transform:none;opacity:1}}
+@media(min-width:768px){.hero-copy{width:52%}}
