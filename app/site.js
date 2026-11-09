@@ -148,7 +148,7 @@ const clientLogos = [
 ];
 function ClientLogos() {
   return <div className="logo-strip quantum-logo-strip" aria-label="Selected brands">
-    {clientLogos.map(logo => <span key={logo.name} className={`client-logo ${logo.className || ''}`}>
+    {clientLogos.map((logo,index) => <span key={logo.name} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
       <img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}
     </span>)}
   </div>;
