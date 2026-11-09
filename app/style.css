@@ -99,3 +99,17 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
 @media(max-width:767px){.featured-projects .project-card{top:20px;margin-bottom:32px}.featured-projects .project-image{max-height:none}}
 @media(prefers-reduced-motion:reduce){.hero .donut{animation:none;transform:none}.featured-projects .project-card{position:relative;top:auto;box-shadow:none}}
 .featured-projects .compact-caption{display:none}
+
+/* Keep navigation visible and match its colors to the section underneath. */
+.header{position:fixed;background:rgba(255,255,255,.96);transition:background-color .45s ease,color .45s ease;backdrop-filter:blur(12px)}
+.header.header-dark,.header:has(.active){color:#fff;background:rgba(23,23,23,.96)}
+header.header .quantum-brand img,header.header:has(.active) .quantum-brand img{filter:none}
+
+/* The project introduction is light; the cards bring in the dark theme on scroll. */
+.work-section{background:#fff;color:#121212;transition:background-color .6s ease,color .6s ease}
+.work-section.work-dark{background:#171717;color:#fff}
+/* Leave room for the fixed navigation above the stacked cards. */
+.featured-projects .project-card{top:clamp(90px,10vh,110px)}
+.featured-projects .project-image{max-height:calc(100vh - 220px)}
+@media(max-width:767px){.featured-projects .project-card{top:82px}.featured-projects .project-image{max-height:none}}
+@media(prefers-reduced-motion:reduce){.featured-projects .project-card{top:auto}}

@@ -10,11 +10,34 @@ const email = 'info@quantumx.one';
 function Button({href='/contact',children='Get in Touch',light=false}) {
   return <Link className={`pill ${light?'light':''}`} href={href}>{children}<span>↗</span></Link>;
 }
-function Header({dark=false}) {
+function Header({dark=false,workDark=false}) {
   const [open,setOpen] = useState(false);
+  const [navDark,setNavDark] = useState(dark);
+  useEffect(() => {
+    let frame;
+    const update = () => {
+      const line = 41;
+      const crossesLine = element => {
+        if (!element) return false;
+        const rect = element.getBoundingClientRect();
+        return rect.top <= line && rect.bottom > line;
+      };
+      const work = document.querySelector('.work-section');
+      const isDark = crossesLine(document.querySelector('main.dark-page')) ||
+        crossesLine(document.querySelector('.cta')) || crossesLine(document.querySelector('footer')) ||
+        (workDark && crossesLine(work));
+      setNavDark(Boolean(isDark));
+      frame = null;
+    };
+    const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('resize',schedule);
+    return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
+  }, [dark,workDark]);
   return <>
-    <header className={`header ${dark?'header-dark':''}`}>
-      <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src="/assets/quantum-logo.svg" alt="QuantumX"/></Link>
+    <header className={`header ${navDark?'header-dark':''}`}>
+      <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/projects">Projects</Link><Link href="/industries">Industries</Link><Link href="/services">Services</Link></nav>
       <button className={`hamburger ${open?'active':''}`} aria-label={open?'Close menu':'Open menu'} aria-expanded={open} onClick={()=>setOpen(!open)}><i/><i/><i/></button>
     </header>
@@ -53,11 +76,26 @@ function ClientLogos() {
 }
 function Home() {
   const [faq,setFaq]=useState(-1);
+  const [workDark,setWorkDark]=useState(false);
+  useEffect(() => {
+    let frame;
+    const update = () => {
+      const firstProject = document.querySelector('.featured-projects .project-card');
+      const section = document.querySelector('.work-section');
+      if (firstProject && section) setWorkDark(firstProject.getBoundingClientRect().top <= (window.innerWidth <= 767 ? 130 : 160) && section.getBoundingClientRect().bottom > 0);
+      frame = null;
+    };
+    const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('resize',schedule);
+    return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
+  }, []);
   const questions=[['What does QuantumX do?','We connect strategy, creative, performance marketing, digital experience, CRM, data and AI into one growth system.'],['Which industries do you work with?','Our portfolio spans consumer brands, technology, education, hospitality, B2B, industrial businesses and real estate.'],['Where does QuantumX work?','We are based in Chennai and serve clients across India, North America, Europe, the Middle East and Asia-Pacific.']];
-  return <><Header/><main>
+  return <><Header workDark={workDark}/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><img className="donut" src="/assets/donut.avif" alt=""/></section>
     <ClientLogos/>
-    <section className="work-section"><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
+    <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
     <section className="testimonial quantum-results"><p className="eyebrow">OUR RESULTS</p><blockquote>One team. Connected capabilities. <em>Measurable growth.</em></blockquote><div className="result-grid"><div><strong>70+</strong><span>Brands served</span></div><div><strong>118+</strong><span>Projects delivered</span></div><div><strong>7+</strong><span>Markets reached</span></div></div></section>
     <section className="services-home"><div className="section-intro"><h2>From first idea<br/><em>to measurable impact.</em></h2><p>Seven capabilities working together across the full growth journey.</p></div><div className="service-list">{services.map((service,index)=><Link key={service} href={`/services/${slugify(service)}`}><span>0{index+1}</span><h3>{service}</h3><span>↗</span></Link>)}</div></section>
     <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><ProjectVisual project={project}/><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
