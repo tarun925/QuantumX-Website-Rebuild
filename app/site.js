@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import {projects,projectCategories,services,industries,markets} from './portfolio';
 
@@ -12,6 +12,55 @@ function Button({href='/contact',children='Get in Touch',light=false}) {
 }
 function ProjectCTA() {
   return <div className="project-cta-wrap"><div className="project-cta"><span>Let’s build something</span><Link href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div></div>;
+}
+function FloatingProjectCTA() {
+  const [visible,setVisible] = useState(false);
+  useEffect(() => {
+    let frame;
+    const update = () => {
+      const firstProject = document.querySelector('.featured-projects .project-card');
+      setVisible(Boolean(firstProject && firstProject.getBoundingClientRect().top <= window.innerHeight * .8));
+      frame = null;
+    };
+    const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('resize',schedule);
+    return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
+  }, []);
+  return visible ? <div className="floating-project-cta"><div className="project-cta"><span>Let’s build something</span><Link href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div></div> : null;
+}
+const testimonialBrands = ['ASET College','Snitch','GoFloaters','Milky Mist'];
+function Testimonials() {
+  const track = useRef(null);
+  const [edges,setEdges] = useState({previous:false,next:false});
+  const updateEdges = () => {
+    const element = track.current;
+    if (element) setEdges({previous:element.scrollLeft > 2,next:element.scrollLeft + element.clientWidth < element.scrollWidth - 2});
+  };
+  useEffect(() => {
+    const frame = requestAnimationFrame(updateEdges);
+    window.addEventListener('resize',updateEdges);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('resize',updateEdges); };
+  }, []);
+  const move = direction => {
+    const element = track.current;
+    const card = element?.querySelector('.leader-card');
+    if (!element || !card) return;
+    const gap = parseFloat(getComputedStyle(element).columnGap) || 0;
+    element.scrollBy({left:direction * (card.getBoundingClientRect().width + gap),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  };
+  return <section className="leaders-section" aria-labelledby="leaders-heading">
+    <h2 id="leaders-heading">Hear from Industry Leaders</h2>
+    <div className="leaders-track" ref={track} onScroll={updateEdges} tabIndex={0} role="region" aria-label="Client testimonial placeholders">
+      {testimonialBrands.map(brand => <article className="leader-card" key={brand}>
+        <div><div className="leader-avatar" role="img" aria-label="Photo to be added"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="23" r="10"/><path d="M13 55c1-12 8-19 19-19s18 7 19 19"/></svg></div>
+          <h3>Name to be added</h3><p className="leader-role">Role to be added</p><p className="leader-quote">Testimonial to be added.</p></div>
+        <p className="leader-brand">{brand}</p>
+      </article>)}
+    </div>
+    <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
+  </section>;
 }
 function Header({dark=false,workDark=false}) {
   const [open,setOpen] = useState(false);
@@ -28,6 +77,7 @@ function Header({dark=false,workDark=false}) {
       const work = document.querySelector('.work-section');
       const isDark = crossesLine(document.querySelector('main.dark-page')) ||
         crossesLine(document.querySelector('.cta')) || crossesLine(document.querySelector('footer')) ||
+        crossesLine(document.querySelector('.leaders-section')) ||
         (workDark && crossesLine(work));
       setNavDark(Boolean(isDark));
       frame = null;
@@ -98,12 +148,13 @@ function Home() {
   return <><Header workDark={workDark}/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><img className="donut" src="/assets/donut.avif" alt=""/></section>
     <ClientLogos/>
-    <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div><ProjectCTA/></section>
+    <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
+    <Testimonials/>
     <section className="testimonial quantum-results"><p className="eyebrow">OUR RESULTS</p><blockquote>One team. Connected capabilities. <em>Measurable growth.</em></blockquote><div className="result-grid"><div><strong>70+</strong><span>Brands served</span></div><div><strong>118+</strong><span>Projects delivered</span></div><div><strong>7+</strong><span>Markets reached</span></div></div></section>
     <section className="services-home"><div className="section-intro"><h2>From first idea<br/><em>to measurable impact.</em></h2><p>Seven capabilities working together across the full growth journey.</p></div><div className="service-list">{services.map((service,index)=><Link key={service} href={`/services/${slugify(service)}`}><span>0{index+1}</span><h3>{service}</h3><span>↗</span></Link>)}</div></section>
     <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><div className="latest-image-wrap"><ProjectVisual project={project}/></div><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
     <section className="faq"><h2>Questions we get asked.<br/><em>A lot.</em></h2><div>{questions.map(([question,answer],index)=><div className="faq-item" key={question}><button onClick={()=>setFaq(faq===index?-1:index)} aria-expanded={faq===index}>{question}<span>{faq===index?'−':'+'}</span></button>{faq===index&&<p>{answer}</p>}</div>)}</div></section>
-  </main><Footer/></>;
+  </main><Footer/><FloatingProjectCTA/></>;
 }
 function Projects() {
   const [filter,setFilter]=useState('All');

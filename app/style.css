@@ -138,3 +138,31 @@ header.header .quantum-brand img,header.header:has(.active) .quantum-brand img{f
 .dark-page>.project-cta-wrap{padding-bottom:90px}
 @media(max-width:480px){.project-cta{gap:10px;padding-left:16px;font-size:12px}.project-cta>a{padding:13px 15px;gap:8px}}
 @media(prefers-reduced-motion:reduce){.latest-grid>a:hover,.latest-grid>a:focus-visible,.latest-grid>a:hover .latest-image-wrap img,.latest-grid>a:focus-visible .latest-image-wrap img{transform:none}}
+
+/* Client stories, modeled on the reference's dark, horizontally scrolling cards. */
+.leaders-section{background:#171717;color:#fff;padding:110px var(--page-gutter) 105px;overflow:hidden}
+.leaders-section h2{font-size:clamp(28px,2.6vw,38px);font-weight:500;letter-spacing:-.035em;margin-bottom:48px}
+.leaders-track{display:flex;gap:24px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+.leaders-track::-webkit-scrollbar{display:none}
+.leaders-track:focus-visible{outline:2px solid #D56F01;outline-offset:5px}
+.leader-card{flex:0 0 calc((100% - 48px)/3.25);min-width:0;min-height:450px;border:1px solid #303030;padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;scroll-snap-align:start}
+.leader-avatar{width:108px;height:108px;border-radius:50%;background:#383838;display:grid;place-items:center;margin-bottom:24px}
+.leader-avatar svg{width:64%;fill:#aaa;stroke:#aaa;stroke-width:3;stroke-linecap:round}
+.leader-card h3{font-size:20px;font-weight:600;line-height:1.3}
+.leader-role{color:#999;font-size:15px;margin-top:4px}
+.leader-quote{font-size:17px;line-height:1.5;margin-top:30px;color:#ddd}
+.leader-brand{font-size:22px;font-weight:700;color:#D56F01;margin-top:35px}
+.leaders-controls{display:flex;gap:16px;margin-top:34px}
+.leaders-controls button{width:58px;height:58px;border-radius:50%;border:1px solid #aaa;background:transparent;color:#fff;font-size:23px;transition:background-color .25s ease,border-color .25s ease}
+.leaders-controls button:not(:disabled):hover,.leaders-controls button:not(:disabled):focus-visible{background:#D56F01;border-color:#D56F01}
+.leaders-controls button:disabled{opacity:.35;cursor:default}
+.floating-project-cta{position:fixed;z-index:30;bottom:24px;left:50%;transform:translateX(-50%);max-width:calc(100% - 30px);filter:drop-shadow(0 8px 22px rgba(0,0,0,.2));animation:floating-cta-in .3s ease both}
+.floating-project-cta .project-cta{white-space:nowrap}
+body:has(.menu) .floating-project-cta{visibility:hidden;pointer-events:none}
+@keyframes floating-cta-in{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(max-width:900px){.leader-card{flex-basis:calc((100% - 24px)/2.2)}}
+@media(max-width:600px){.leaders-section{padding-top:80px;padding-bottom:90px}.leaders-section h2{margin-bottom:32px}.leaders-track{gap:18px}.leader-card{flex-basis:min(88%,320px);min-height:410px;padding:24px 20px}.leader-avatar{width:86px;height:86px}.floating-project-cta{bottom:16px}.floating-project-cta .project-cta{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.floating-project-cta{animation:none}}
+
+/* Reserve space below the footer content for the persistent homepage CTA. */
+body:has(.leaders-section) footer{padding-bottom:120px}
