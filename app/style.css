@@ -254,3 +254,22 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .header.header-glass:has(.hamburger.active){background:rgba(23,23,23,.96);color:#fff}
 .quantum-footer-bottom .footer-identity{justify-content:flex-start}
 
+
+/* Keep each featured project's title visible as the next card stacks over it. */
+@media (prefers-reduced-motion:no-preference){
+  .featured-projects .project-card:nth-child(1){top:clamp(90px,10vh,110px)}
+  .featured-projects .project-card:nth-child(2){top:calc(clamp(90px,10vh,110px) + 56px)}
+  .featured-projects .project-card:nth-child(3){top:calc(clamp(90px,10vh,110px) + 112px)}
+  .featured-projects .project-card:nth-child(4){top:calc(clamp(90px,10vh,110px) + 168px)}
+  .featured-projects .project-meta{padding-top:14px}
+  .featured-projects .project-meta h3{align-self:start;font-size:clamp(22px,2.2vw,30px);line-height:1.2}
+  @media(max-width:767px){
+    .featured-projects .project-card:nth-child(1){top:82px}
+    .featured-projects .project-card:nth-child(2){top:130px}
+    .featured-projects .project-card:nth-child(3){top:178px}
+    .featured-projects .project-card:nth-child(4){top:226px}
+    .featured-projects .project-meta{padding-top:12px}
+    .featured-projects .project-meta h3{font-size:22px}
+  }
+}
+@media (prefers-reduced-motion:no-preference){.featured-projects::after{content:"";display:block;height:240px}}
