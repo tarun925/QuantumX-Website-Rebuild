@@ -10,6 +10,9 @@ const email = 'info@quantumx.one';
 function Button({href='/contact',children='Get in Touch',light=false}) {
   return <Link className={`pill ${light?'light':''}`} href={href}>{children}<span>↗</span></Link>;
 }
+function ProjectCTA() {
+  return <div className="project-cta-wrap"><div className="project-cta"><span>Let’s build something</span><Link href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div></div>;
+}
 function Header({dark=false,workDark=false}) {
   const [open,setOpen] = useState(false);
   const [navDark,setNavDark] = useState(dark);
@@ -95,17 +98,17 @@ function Home() {
   return <><Header workDark={workDark}/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><img className="donut" src="/assets/donut.avif" alt=""/></section>
     <ClientLogos/>
-    <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
+    <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div><ProjectCTA/></section>
     <section className="testimonial quantum-results"><p className="eyebrow">OUR RESULTS</p><blockquote>One team. Connected capabilities. <em>Measurable growth.</em></blockquote><div className="result-grid"><div><strong>70+</strong><span>Brands served</span></div><div><strong>118+</strong><span>Projects delivered</span></div><div><strong>7+</strong><span>Markets reached</span></div></div></section>
     <section className="services-home"><div className="section-intro"><h2>From first idea<br/><em>to measurable impact.</em></h2><p>Seven capabilities working together across the full growth journey.</p></div><div className="service-list">{services.map((service,index)=><Link key={service} href={`/services/${slugify(service)}`}><span>0{index+1}</span><h3>{service}</h3><span>↗</span></Link>)}</div></section>
-    <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><ProjectVisual project={project}/><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
+    <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><div className="latest-image-wrap"><ProjectVisual project={project}/></div><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
     <section className="faq"><h2>Questions we get asked.<br/><em>A lot.</em></h2><div>{questions.map(([question,answer],index)=><div className="faq-item" key={question}><button onClick={()=>setFaq(faq===index?-1:index)} aria-expanded={faq===index}>{question}<span>{faq===index?'−':'+'}</span></button>{faq===index&&<p>{answer}</p>}</div>)}</div></section>
   </main><Footer/></>;
 }
 function Projects() {
   const [filter,setFilter]=useState('All');
   const visible=filter==='All'?projects:projects.filter(project=>project.category===filter);
-  return <><Header dark/><main className="dark-page"><div className="page-hero projects-hero"><h1>CRAFTED<br/><em>for</em> GROWTH</h1><p>Identity, campaigns, digital experiences and connected marketing systems for brands across industries.</p><div className="filters" aria-label="Filter projects">{projectCategories.map(category=><button key={category} className={filter===category?'selected':''} onClick={()=>setFilter(category)} aria-pressed={filter===category}>{category}</button>)}</div></div><div className="project-grid">{visible.map(project=><ProjectCard compact key={project.slug} project={project}/>)}</div></main><Footer/></>;
+  return <><Header dark/><main className="dark-page"><div className="page-hero projects-hero"><h1>CRAFTED<br/><em>for</em> GROWTH</h1><p>Identity, campaigns, digital experiences and connected marketing systems for brands across industries.</p><div className="filters" aria-label="Filter projects">{projectCategories.map(category=><button key={category} className={filter===category?'selected':''} onClick={()=>setFilter(category)} aria-pressed={filter===category}>{category}</button>)}</div></div><div className="project-grid">{visible.map(project=><ProjectCard compact key={project.slug} project={project}/>)}</div><ProjectCTA/></main><Footer/></>;
 }
 function ProjectDetail({project}) {
   const related=projects.filter(item=>item.slug!==project.slug).slice(0,2);

@@ -113,3 +113,28 @@ header.header .quantum-brand img,header.header:has(.active) .quantum-brand img{f
 .featured-projects .project-image{max-height:calc(100vh - 220px)}
 @media(max-width:767px){.featured-projects .project-card{top:82px}.featured-projects .project-image{max-height:none}}
 @media(prefers-reduced-motion:reduce){.featured-projects .project-card{top:auto}}
+
+/* Interactive navigation and portfolio previews. */
+.desktop-nav a{position:relative;padding-block:8px;text-decoration:none}
+.desktop-nav a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.desktop-nav a:hover::after,.desktop-nav a:focus-visible::after{transform:scaleX(1)}
+.latest-grid>a{display:block;transition:transform .3s ease}
+.latest-grid>a:hover,.latest-grid>a:focus-visible{transform:translateY(-5px)}
+.latest-grid>a:focus-visible{outline:2px solid #D56F01;outline-offset:6px}
+.latest-image-wrap{position:relative;overflow:hidden}
+.latest-image-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.18));opacity:0;transition:opacity .35s ease;pointer-events:none}
+.latest-grid .latest-image-wrap img{display:block;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.latest-grid>a:hover .latest-image-wrap img,.latest-grid>a:focus-visible .latest-image-wrap img{transform:scale(1.045)}
+.latest-grid>a:hover .latest-image-wrap::after,.latest-grid>a:focus-visible .latest-image-wrap::after{opacity:1}
+.latest-grid h3{transition:color .3s ease}
+.latest-grid>a:hover h3,.latest-grid>a:focus-visible h3{color:#D56F01}
+
+/* A compact, centered invitation after each project listing. */
+.project-cta-wrap{display:flex;justify-content:center;padding:0 var(--page-gutter);margin:70px auto 24px}
+.project-cta{display:flex;align-items:center;gap:20px;max-width:100%;padding:7px 7px 7px 24px;border-radius:100px;background:#f2f0ed;color:#171717;font-size:14px}
+.project-cta>a{display:inline-flex;align-items:center;gap:15px;padding:14px 20px;border-radius:100px;background:#D56F01;color:#fff;white-space:nowrap;transition:background-color .25s ease}
+.project-cta>a:hover,.project-cta>a:focus-visible{background:#A85500}
+.project-cta>a span{font-size:18px;line-height:1}
+.dark-page>.project-cta-wrap{padding-bottom:90px}
+@media(max-width:480px){.project-cta{gap:10px;padding-left:16px;font-size:12px}.project-cta>a{padding:13px 15px;gap:8px}}
+@media(prefers-reduced-motion:reduce){.latest-grid>a:hover,.latest-grid>a:focus-visible,.latest-grid>a:hover .latest-image-wrap img,.latest-grid>a:focus-visible .latest-image-wrap img{transform:none}}
