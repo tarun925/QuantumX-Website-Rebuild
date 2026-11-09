@@ -35,10 +35,10 @@ function FloatingProjectCTA() {
   return visible ? <div className="floating-project-cta"><div className="project-cta"><span>Let’s build something</span><Link href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div></div> : null;
 }
 const testimonialBrands = [
-  {name:'ASET College',logo:'/assets/client-logos/aset.png',className:'leader-brand-aset'},
-  {name:'Snitch',logo:'/assets/client-logos/snitch.png'},
-  {name:'GoFloaters',logo:'/assets/client-logos/gofloaters.png',className:'leader-brand-gofloaters'},
-  {name:'Milky Mist',logo:'/assets/client-logos/milky-mist.jpg',className:'leader-brand-milky'},
+  {name:'ASET College',logo:'/assets/client-logos/aset.png',className:'leader-brand-aset',person:'Mohammed Rizwan',role:'Founder & CEO',quote:`QuantumX has played an important role in strengthening ASET's digital presence. The team helped us build a more structured approach to social media, design, and development, ensuring consistency across different platforms. Their understanding of our requirements and focus on creating a cohesive digital experience have been valuable to us.`},
+  {name:'Snitch',logo:'/assets/client-logos/snitch.png',person:'Manish Thanvi',role:'Head of Brand',quote:`Working with the QuantumX team has been a great experience. They've brought in fresh ideas for performance marketing, growth strategies, and building funnels across different social media platforms. What stood out was their proactive approach and willingness to explore new opportunities to help the brand grow.`},
+  {name:'GoFloaters',logo:'/assets/client-logos/gofloaters.png',className:'leader-brand-gofloaters',person:'Shyam Sundar',role:'Founder',quote:`We initially worked with QuantumX on a few standalone projects with tight timelines, and the team really impressed us with their execution. They understood our requirements, delivered within the expected timelines, and demonstrated a clear focus on results. That experience gave us the confidence to bring them on board as a long-term growth partner.`},
+  {name:'Milky Mist',logo:'/assets/client-logos/milky-mist.jpg',className:'leader-brand-milky',person:'Mitthra Senthilnathan',role:'Brand Manager',quote:`We worked with the QuantumX team on social media creatives and a few creative ideas for the brand. They brought fresh perspectives to how we could present our content while keeping it aligned with Milky Mist's brand identity. It was a good experience collaborating with a team that understood our creative requirements and translated them into engaging content.`},
 ];
 function Testimonials() {
   const track = useRef(null);
@@ -61,10 +61,10 @@ function Testimonials() {
   };
   return <section className="leaders-section" aria-labelledby="leaders-heading">
     <h2 id="leaders-heading">Hear from Industry Leaders</h2>
-    <div className="leaders-track" ref={track} onScroll={updateEdges} tabIndex={0} role="region" aria-label="Client testimonial placeholders">
+    <div className="leaders-track" ref={track} onScroll={updateEdges} tabIndex={0} role="region" aria-label="Client testimonials">
       {testimonialBrands.map(brand => <article className="leader-card" key={brand.name}>
         <div><div className="leader-avatar" role="img" aria-label="Photo to be added"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="23" r="10"/><path d="M13 55c1-12 8-19 19-19s18 7 19 19"/></svg></div>
-          <h3>Name to be added</h3><p className="leader-role">Role to be added</p><p className="leader-quote">Testimonial to be added.</p></div>
+          <h3>{brand.person}</h3><p className="leader-role">{brand.role}</p><p className="leader-quote">“{brand.quote}”</p></div>
         <div className={`leader-brand-logo ${brand.className || ''}`}><img src={brand.logo} alt={brand.name}/>{brand.className === 'leader-brand-gofloaters' && <img className="leader-brand-artwork" src={brand.logo} alt="" aria-hidden="true"/>}</div>
       </article>)}
     </div>
