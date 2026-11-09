@@ -274,3 +274,16 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 }
 @media (prefers-reduced-motion:no-preference){.featured-projects::after{content:"";display:block;height:240px}}
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){.featured-projects .project-card{display:flex;flex-direction:column;min-height:460px}.featured-projects .project-card>.project-meta{flex:none}.featured-projects .project-card>.project-image,.featured-projects .project-card>.project-typographic{flex:1;min-height:0;object-fit:cover}}
+
+/* Step the stacked card edges outward, like a neatly arranged file stack. */
+@media (prefers-reduced-motion:no-preference){
+  .featured-projects .project-card:nth-child(1){margin-inline:30px}
+  .featured-projects .project-card:nth-child(2){margin-inline:20px}
+  .featured-projects .project-card:nth-child(3){margin-inline:10px}
+  .featured-projects .project-card:nth-child(4){margin-inline:0}
+  @media(max-width:767px){
+    .featured-projects .project-card:nth-child(1){margin-inline:18px}
+    .featured-projects .project-card:nth-child(2){margin-inline:12px}
+    .featured-projects .project-card:nth-child(3){margin-inline:6px}
+  }
+}
