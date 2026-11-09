@@ -166,3 +166,6 @@ body:has(.menu) .floating-project-cta{visibility:hidden;pointer-events:none}
 
 /* Reserve space below the footer content for the persistent homepage CTA. */
 body:has(.leaders-section) footer{padding-bottom:120px}
+
+/* Keep these homepage sections on a clean white background. */
+.quantum-results,.latest{background:#fff}

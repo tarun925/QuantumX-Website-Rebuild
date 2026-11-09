@@ -18,8 +18,10 @@ function FloatingProjectCTA() {
   useEffect(() => {
     let frame;
     const update = () => {
-      const firstProject = document.querySelector('.featured-projects .project-card');
-      setVisible(Boolean(firstProject && firstProject.getBoundingClientRect().top <= window.innerHeight * .8));
+      const projectSummary = document.querySelector('.work-end');
+      const header = document.querySelector('.header');
+      const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+      setVisible(Boolean(projectSummary && projectSummary.getBoundingClientRect().bottom <= headerBottom));
       frame = null;
     };
     const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
