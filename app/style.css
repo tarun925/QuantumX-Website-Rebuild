@@ -253,3 +253,6 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .header.header-glass.header-dark{background:rgba(23,23,23,.58);box-shadow:0 1px 0 rgba(255,255,255,.1)}
 .header.header-glass:has(.hamburger.active){background:rgba(23,23,23,.96);color:#fff}
 .quantum-footer-bottom .footer-identity{justify-content:flex-start}
+
+/* Keep the newsletter readable against its dark background. */
+.cta.newsletter-section{background:#080808;color:#fff}
