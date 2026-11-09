@@ -313,3 +313,10 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .leader-brand-gofloaters{width:110px;height:92px}
 .leader-brand-gofloaters img{transform:scale(1.25)}
 .leader-brand-gofloaters .leader-brand-artwork{clip-path:inset(0 0 35% 0)}
+
+/* Keep these homepage headings and their outer edges consistent. */
+.quantum-news{padding-inline:var(--page-gutter)}
+.quantum-news>h2,.latest .section-intro h2,.faq h2{font-family:Jakarta,Arial,sans-serif;font-size:clamp(30px,3vw,42px);font-style:normal;font-weight:500;line-height:1.15;letter-spacing:-.035em}
+.latest .section-intro h2 em,.faq h2 em{font-family:inherit;font-style:normal;font-weight:inherit}
+.latest-grid{margin-top:55px}
+@media(max-width:767px){.quantum-news{padding-inline:var(--page-gutter)}.latest-grid{margin-top:40px}}
