@@ -90,7 +90,7 @@ function Header({dark=false,workDark=false}) {
       const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
       setNavGlass(Boolean(lastProject && capabilities && lastProject.getBoundingClientRect().bottom <= headerHeight && capabilities.getBoundingClientRect().bottom > line));
       const isDark = crossesLine(document.querySelector('main.dark-page')) ||
-        crossesLine(document.querySelector('.cta')) || crossesLine(document.querySelector('footer')) ||
+        crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
       setNavDark(Boolean(isDark));
