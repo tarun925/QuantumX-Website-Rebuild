@@ -8,11 +8,6 @@ const slugify = (value) => value.toLowerCase().replace(/&/g,'and').replace(/[^a-
 const title = (value='') => value.split('-').map(word=>word[0]?.toUpperCase()+word.slice(1)).join(' ');
 const email = 'info@quantumx.one';
 
-function newsIsLight() {
-  const section = document.querySelector('.quantum-news');
-  return Boolean(section && section.getBoundingClientRect().top <= window.innerHeight * .9);
-}
-
 function Button({href='/contact',children='Get in Touch',light=false}) {
   return <Link className={`pill ${light?'light':''}`} href={href}>{children}<span>↗</span></Link>;
 }
@@ -76,7 +71,7 @@ function Testimonials() {
     <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
   </section>;
 }
-function Header({dark=false,workDark=false}) {
+function Header({dark=false,workDark=false,newsLight=false}) {
   const [open,setOpen] = useState(false);
   const [navDark,setNavDark] = useState(dark);
   const [navGlass,setNavGlass] = useState(false);
@@ -95,7 +90,7 @@ function Header({dark=false,workDark=false}) {
       const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
       setNavGlass(Boolean(lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line));
       const news = document.querySelector('.quantum-news');
-      const isDark = (crossesLine(news) && !newsIsLight()) || crossesLine(document.querySelector('main.dark-page')) ||
+      const isDark = (crossesLine(news) && !newsLight) || crossesLine(document.querySelector('main.dark-page')) ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
@@ -107,7 +102,7 @@ function Header({dark=false,workDark=false}) {
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule);
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
-  }, [dark,workDark]);
+  }, [dark,workDark,newsLight]);
   return <>
     <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''}`}>
       <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
@@ -162,6 +157,7 @@ function ClientLogos() {
 function Home() {
   const [faq,setFaq]=useState(-1);
   const [workDark,setWorkDark]=useState(false);
+  const [newsLight,setNewsLight]=useState(false);
   useEffect(() => {
     let frame;
     const update = () => {
@@ -177,27 +173,33 @@ function Home() {
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
   }, []);
   useEffect(() => {
-    const section = document.querySelector('.quantum-news');
-    if (!section) return;
-    let frame;
+    const firstStory = document.querySelector('.quantum-news-row[href^="/projects/aset-college"]');
+    if (!firstStory) return;
+    let frame, timer, revealed = false;
     const update = () => {
-      section.dataset.theme = newsIsLight() ? 'light' : 'dark';
+      const entered = firstStory.getBoundingClientRect().top <= window.innerHeight * .9;
+      if (entered && !revealed && timer == null) {
+        timer = setTimeout(() => { timer = null; revealed = true; setNewsLight(true); }, 500);
+      } else if (!entered) {
+        if (timer != null) { clearTimeout(timer); timer = null; }
+        if (revealed) { revealed = false; setNewsLight(false); }
+      }
       frame = null;
     };
     const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
     update();
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule);
-    return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if (frame != null) cancelAnimationFrame(frame); };
+    return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if (frame != null) cancelAnimationFrame(frame); if (timer != null) clearTimeout(timer); };
   }, []);
   const questions=[['What does QuantumX do?','We connect strategy, creative, performance marketing, digital experience, CRM, data and AI into one growth system.'],['Which industries do you work with?','Our portfolio spans consumer brands, technology, education, hospitality, B2B, industrial businesses and real estate.'],['Where does QuantumX work?','We are based in Chennai and serve clients across India, North America, Europe, the Middle East and Asia-Pacific.']];
-  return <><Header workDark={workDark}/><main>
+  return <><Header workDark={workDark} newsLight={newsLight}/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><img className="donut" src="/assets/donut.avif" alt=""/></section>
     <ClientLogos/>
     <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
     <Testimonials/>
     <Capabilities/>
-    <section className="quantum-news" data-theme="dark" aria-labelledby="quantum-news-title"><h2 id="quantum-news-title">Latest at <span>QuantumX</span></h2><div className="quantum-news-columns"><div className="quantum-news-list">
+    <section className="quantum-news" data-theme={newsLight ? 'light' : 'dark'} aria-labelledby="quantum-news-title"><h2 id="quantum-news-title">Latest at <span>QuantumX</span></h2><div className="quantum-news-columns"><div className="quantum-news-list">
       <Link href="/projects/aset-college" className="quantum-news-row"><img src="/assets/portfolio/aset-college.png" alt=""/><div><p>ASET COLLEGE CASE STUDY</p><h3>Explore the connected digital journey behind ASET College’s growth. <span>↗</span></h3></div></Link>
       <Link href="/projects/zellify" className="quantum-news-row"><img src="/assets/portfolio/zellify-desktop.png" alt=""/><div><p>ZELLIFY CASE STUDY</p><h3>A conversion-focused digital experience built for a growing product. <span>↗</span></h3></div></Link>
       <div className="quantum-news-row"><div className="news-placeholder" aria-hidden="true">✦</div><div><p>TRENDS &amp; INSIGHTS <span>• COMING SOON</span></p><h3>Ideas and perspectives on building brands and digital experiences.</h3></div></div>
