@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 const capabilities = [
   {title:'Performance Marketing', href:'/services/performance-marketing', description:'Turn attention into measurable growth with campaigns, funnels and continuous optimisation.', visual:'performance'},
-  {title:'Branding', href:'/services/creative', description:'Create a distinctive identity and a consistent voice that connects with your audience.', visual:'branding'},
-  {title:'Website Development', href:'/services/digital-experience', description:'Build thoughtful, high-performing websites that make every interaction count.', visual:'website'},
-  {title:'Digital Products', href:'/services/digital-experience', description:'Bring useful digital experiences to life, from the first idea to the finished product.', visual:'product'},
-  {title:'Strategy', href:'/services/strategy', description:'Find clarity, connect the moving parts and build a practical path towards growth.', visual:'strategy'},
+  {title:'Branding', href:'/services/creative', description:'Create a distinctive brand identity and voice, tailored to resonate with your specific audience.', visual:'branding'},
+  {title:'Development', href:'/services/digital-experience', description:'Develop scalable SaaS platforms, web applications and mobile apps tailored to your business.', visual:'website'},
+  {title:'Agentic AI', href:'/services', description:'Build your own AI agent systems to automate repetitive tasks, streamline workflows and deliver scalable, seamless experiences.', visual:'product'},
+  {title:'Research & Strategy', href:'/services/strategy', description:'Research your business and audience to build a tailored strategy that connects teams, channels and systems for practical growth.', visual:'strategy'},
 ];
 
 function Visual({type}) {
