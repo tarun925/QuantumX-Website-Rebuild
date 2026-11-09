@@ -74,6 +74,7 @@ function Testimonials() {
 function Header({dark=false,workDark=false}) {
   const [open,setOpen] = useState(false);
   const [navDark,setNavDark] = useState(dark);
+  const [navGlass,setNavGlass] = useState(false);
   useEffect(() => {
     let frame;
     const update = () => {
@@ -84,8 +85,12 @@ function Header({dark=false,workDark=false}) {
         return rect.top <= line && rect.bottom > line;
       };
       const work = document.querySelector('.work-section');
+      const lastProject = document.querySelector('.featured-projects .project-card:last-child');
+      const capabilities = document.querySelector('.capabilities-section');
+      const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
+      setNavGlass(Boolean(lastProject && capabilities && lastProject.getBoundingClientRect().bottom <= headerHeight && capabilities.getBoundingClientRect().bottom > line));
       const isDark = crossesLine(document.querySelector('main.dark-page')) ||
-        crossesLine(document.querySelector('.cta')) || crossesLine(document.querySelector('footer')) ||
+        crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
       setNavDark(Boolean(isDark));
@@ -98,7 +103,7 @@ function Header({dark=false,workDark=false}) {
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
   }, [dark,workDark]);
   return <>
-    <header className={`header ${navDark?'header-dark':''}`}>
+    <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''}`}>
       <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/projects">Projects</Link><Link href="/industries">Industries</Link><Link href="/services">Services</Link></nav>
       <button className={`hamburger ${open?'active':''}`} aria-label={open?'Close menu':'Open menu'} aria-expanded={open} onClick={()=>setOpen(!open)}><i/><i/><i/></button>
@@ -120,7 +125,7 @@ function Footer() {
       <form className="newsletter-form" onSubmit={subscribe}><label htmlFor="newsletter-email">Sign up for our newsletter</label><div className="newsletter-fields"><input id="newsletter-email" type="email" placeholder="Enter email address" value={newsletterEmail} onChange={event=>setNewsletterEmail(event.target.value)} required/><button type="submit">Subscribe <span aria-hidden="true">↗</span></button></div></form>
     </section>
     <footer className="quantum-footer"><div className="footer-contact-grid"><div className="footer-talk"><p className="eyebrow">LET’S CONNECT</p><h2>Talk to us<span>.</span></h2><p>Have an idea? We’d love to hear from you.</p></div><div className="footer-contact"><div><p className="eyebrow">BUSINESS &amp; COLLABORATIONS</p><a href="mailto:info@quantumx.one">info@quantumx.one ↗</a></div><div><p className="eyebrow">CAREERS</p><a href="mailto:careers@quantumx.one">careers@quantumx.one ↗</a></div></div><div className="footer-presence"><p className="eyebrow">OUR PRESENCE</p><h3>Chennai, India</h3><p>No. 40 North Road,<br/>West C.I.T Nagar, Nandanam,<br/>Chennai - 600035</p><p>Working with brands across India and around the world.</p></div></div>
-      <div className="footer-bottom quantum-footer-bottom"><div className="footer-identity"><Link href="/" className="footer-logo" aria-label="QuantumX home"><img src="/assets/quantum-logo-white.svg" alt="QuantumX"/></Link><div className="footer-socials" aria-label="Social profiles to be added"><span className="footer-social" aria-label="Instagram profile coming soon" title="Instagram profile coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></span><span className="footer-social" aria-label="LinkedIn profile coming soon" title="LinkedIn profile coming soon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.1 3A2.1 2.1 0 1 0 5.1 7.2 2.1 2.1 0 0 0 5.1 3ZM3.3 8.8h3.6V21H3.3V8.8Zm5.8 0h3.4v1.7h.1a3.8 3.8 0 0 1 3.4-1.9c3.7 0 4.4 2.4 4.4 5.5V21h-3.6v-6.1c0-1.5 0-3.3-2-3.3s-2.1 1.6-2.1 3.2V21H9.1V8.8Z"/></svg></span></div></div><div className="footer-legal"><div className="footer-legal-links"><span title="Policy to be added">Privacy policy</span><span title="Terms to be added">Terms &amp; conditions</span></div><p>© 2026 QuantumX. All rights reserved.</p></div></div>
+      <div className="footer-bottom quantum-footer-bottom"><div className="footer-identity"><div className="footer-socials" aria-label="Social profiles to be added"><span className="footer-social" aria-label="Instagram profile coming soon" title="Instagram profile coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></span><span className="footer-social" aria-label="LinkedIn profile coming soon" title="LinkedIn profile coming soon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.1 3A2.1 2.1 0 1 0 5.1 7.2 2.1 2.1 0 0 0 5.1 3ZM3.3 8.8h3.6V21H3.3V8.8Zm5.8 0h3.4v1.7h.1a3.8 3.8 0 0 1 3.4-1.9c3.7 0 4.4 2.4 4.4 5.5V21h-3.6v-6.1c0-1.5 0-3.3-2-3.3s-2.1 1.6-2.1 3.2V21H9.1V8.8Z"/></svg></span></div></div><div className="footer-legal"><div className="footer-legal-links"><span title="Policy to be added">Privacy policy</span><span title="Terms to be added">Terms &amp; conditions</span></div><p>© 2026 QuantumX. All rights reserved.</p></div></div>
     </footer>
   </>;
 }
