@@ -73,11 +73,11 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
 }
 .quantum-logo-strip{max-width:1200px;column-gap:clamp(24px,4vw,56px);row-gap:24px}
 @media(prefers-reduced-motion:no-preference){
-  .quantum-logo-strip .client-logo{animation:client-logo-together 2.5s ease-in-out infinite backwards;animation-delay:calc(var(--logo-index, 0) * .1s)}
+  .quantum-logo-strip .client-logo{animation:client-logo-together 3.5s ease-in-out infinite backwards;animation-delay:calc(var(--logo-index, 0) * .2s)}
   @keyframes client-logo-together{
-    0%,5%{opacity:0;transform:translateY(16px)}
-    25%,78%{opacity:1;transform:translateY(0)}
-    95%,100%{opacity:0;transform:translateY(0)}
+    0%,3.57%{opacity:0;transform:translateY(16px)}
+    17.86%,84.29%{opacity:1;transform:translateY(0)}
+    96.43%,100%{opacity:0;transform:translateY(0)}
   }
 }
 @media(max-width:767px){.hero .donut{width:min(100%,390px);right:auto}.quantum-logo-strip{column-gap:24px}}
