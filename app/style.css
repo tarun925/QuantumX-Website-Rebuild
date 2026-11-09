@@ -249,8 +249,8 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(max-width:767px){.cta.newsletter-section{grid-template-columns:minmax(0,1fr)}.newsletter-form{min-width:0}.quantum-footer-bottom .footer-logo img{width:min(190px,44vw)}.quantum-footer-bottom .footer-identity{gap:16px}}
 
 /* Translucent navigation between the featured projects and capabilities. */
-.header.header-glass{background:rgba(255,255,255,.66);backdrop-filter:blur(22px) saturate(165%);box-shadow:0 1px 0 rgba(0,0,0,.07)}
-.header.header-glass.header-dark{background:rgba(23,23,23,.58);box-shadow:0 1px 0 rgba(255,255,255,.1)}
+.header.header-glass{background:rgba(255,255,255,.42);backdrop-filter:blur(22px) saturate(165%);box-shadow:0 1px 0 rgba(0,0,0,.07)}
+.header.header-glass.header-dark{background:rgba(23,23,23,.38);box-shadow:0 1px 0 rgba(255,255,255,.1)}
 .header.header-glass:has(.hamburger.active){background:rgba(23,23,23,.96);color:#fff}
 .quantum-footer-bottom .footer-identity{justify-content:flex-start}
 
