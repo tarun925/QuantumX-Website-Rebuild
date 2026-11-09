@@ -83,3 +83,19 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
 @media(max-width:767px){.hero .donut{width:min(100%,390px);right:auto}.quantum-logo-strip{column-gap:24px}}
 @media(prefers-reduced-motion:reduce){.hero .donut,.quantum-logo-strip .client-logo{animation:none;transform:none;opacity:1}}
 @media(min-width:768px){.hero-copy{width:52%}}
+
+/* Align the client strip to the same content edge as the header and hero. */
+.quantum-logo-strip{max-width:none;margin-inline:0;padding-inline:var(--page-gutter);justify-content:space-between;column-gap:clamp(28px,3vw,48px);row-gap:28px}
+@media(max-width:767px){.quantum-logo-strip{justify-content:space-between;column-gap:28px;row-gap:24px}}
+
+/* The hero artwork drifts without rotating. */
+.hero .donut{animation:hero-drift 12s ease-in-out infinite}
+@keyframes hero-drift{0%,100%{transform:translate(0,0)}25%{transform:translate(14px,-10px)}50%{transform:translate(0,-18px)}75%{transform:translate(-14px,-8px)}}
+
+/* Each featured project stays in place until the next card covers it. */
+.featured-projects{display:block}
+.featured-projects .project-card{position:sticky;top:clamp(20px,8vh,72px);margin-bottom:clamp(28px,4vw,56px);box-shadow:0 -12px 35px rgba(0,0,0,.16)}
+.featured-projects .project-image{max-height:calc(100vh - 200px)}
+@media(max-width:767px){.featured-projects .project-card{top:20px;margin-bottom:32px}.featured-projects .project-image{max-height:none}}
+@media(prefers-reduced-motion:reduce){.hero .donut{animation:none;transform:none}.featured-projects .project-card{position:relative;top:auto;box-shadow:none}}
+.featured-projects .compact-caption{display:none}
