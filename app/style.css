@@ -37,3 +37,17 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
 .loader-mark{font-family:Arial,sans-serif;font-variant-emoji:text}
 
 .loader-mark{width:48px;height:48px}.loader-mark svg{display:block;width:100%;height:100%}@media(max-width:767px){.loader-mark{width:40px;height:40px}}
+
+/* Center content across every page while keeping section backgrounds full width. */
+:root{--page-gutter:max(30px,calc((100% - 1200px)/2))}
+.header,.hero,.quantum-logo-strip,.work-section,.testimonial,.services-home,.latest,.faq,.cta,footer,.page-hero,.generic-hero,.generic-content,.generic-list,.impact-section,.detail-gallery,.contact-page,.detail-visual,.menu{padding-inline:var(--page-gutter)}
+.dark-page>.project-grid,.related>.project-grid{margin-inline:var(--page-gutter)}
+.related>h2{padding-inline:var(--page-gutter)}
+.hero .donut{right:var(--page-gutter);width:min(38vw,520px)}
+@media(max-width:767px){.hero{min-height:820px}.hero .donut{right:var(--page-gutter);width:min(68vw,350px);top:490px}}
+@media(max-width:767px){
+  .hero{height:auto;min-height:0;display:flex;flex-direction:column;align-items:stretch;padding-top:145px;padding-bottom:50px}
+  .hero-actions{flex-wrap:wrap;gap:16px 24px}
+  .hero-actions .text-link{white-space:nowrap}
+  .hero .donut{position:relative;top:auto;right:auto;align-self:center;width:min(80%,300px);margin-top:30px}
+}
