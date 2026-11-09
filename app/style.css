@@ -306,3 +306,10 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .quantum-news[data-theme="dark"] .quantum-news-row p span{color:#c3c3c3}
 
 @media(prefers-reduced-motion:reduce){.quantum-news{transition:none}}
+
+/* Size the supplied square GoFloaters mark clearly on both backgrounds. */
+.quantum-logo-strip .client-logo-gofloaters{height:80px}
+.quantum-logo-strip .client-logo-gofloaters img{transform:scale(1.3)}
+.leader-brand-gofloaters{width:110px;height:92px}
+.leader-brand-gofloaters img{transform:scale(1.25)}
+.leader-brand-gofloaters .leader-brand-artwork{clip-path:inset(0 0 35% 0)}

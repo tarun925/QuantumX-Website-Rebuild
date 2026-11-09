@@ -143,7 +143,7 @@ function ProjectCard({project,compact=false}) {
 const clientLogos = [
   {name:'ASET College', src:'/assets/client-logos/aset.png', className:'client-logo-aset'},
   {name:'Snitch', src:'/assets/client-logos/snitch.png'},
-  {name:'GoFloaters', src:'/assets/client-logos/gofloaters.png'},
+  {name:'GoFloaters', src:'/assets/client-logos/gofloaters.png', className:'client-logo-gofloaters'},
   {name:'Milky Mist', src:'/assets/client-logos/milky-mist.jpg', className:'client-logo-milky'},
   {name:'Chettinad Cement', src:'/assets/client-logos/chettinad.png'},
 ];
