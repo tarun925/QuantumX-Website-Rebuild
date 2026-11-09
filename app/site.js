@@ -21,7 +21,8 @@ function FloatingProjectCTA() {
       const projectSummary = document.querySelector('.work-end');
       const header = document.querySelector('.header');
       const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
-      setVisible(Boolean(projectSummary && projectSummary.getBoundingClientRect().bottom <= headerBottom));
+      const triggerLine = Math.max(headerBottom, Math.min(window.innerHeight * .4, 320));
+      setVisible(Boolean(projectSummary && projectSummary.getBoundingClientRect().bottom <= triggerLine));
       frame = null;
     };
     const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
@@ -32,7 +33,12 @@ function FloatingProjectCTA() {
   }, []);
   return visible ? <div className="floating-project-cta"><div className="project-cta"><span>Let’s build something</span><Link href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div></div> : null;
 }
-const testimonialBrands = ['ASET College','Snitch','GoFloaters','Milky Mist'];
+const testimonialBrands = [
+  {name:'ASET College',logo:'/assets/client-logos/aset.png',className:'leader-brand-aset'},
+  {name:'Snitch',logo:'/assets/client-logos/snitch.png'},
+  {name:'GoFloaters',logo:'/assets/client-logos/gofloaters.png',className:'leader-brand-gofloaters'},
+  {name:'Milky Mist',logo:'/assets/client-logos/milky-mist.jpg',className:'leader-brand-milky'},
+];
 function Testimonials() {
   const track = useRef(null);
   const [edges,setEdges] = useState({previous:false,next:false});
@@ -55,10 +61,10 @@ function Testimonials() {
   return <section className="leaders-section" aria-labelledby="leaders-heading">
     <h2 id="leaders-heading">Hear from Industry Leaders</h2>
     <div className="leaders-track" ref={track} onScroll={updateEdges} tabIndex={0} role="region" aria-label="Client testimonial placeholders">
-      {testimonialBrands.map(brand => <article className="leader-card" key={brand}>
+      {testimonialBrands.map(brand => <article className="leader-card" key={brand.name}>
         <div><div className="leader-avatar" role="img" aria-label="Photo to be added"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="23" r="10"/><path d="M13 55c1-12 8-19 19-19s18 7 19 19"/></svg></div>
           <h3>Name to be added</h3><p className="leader-role">Role to be added</p><p className="leader-quote">Testimonial to be added.</p></div>
-        <p className="leader-brand">{brand}</p>
+        <div className={`leader-brand-logo ${brand.className || ''}`}><img src={brand.logo} alt={brand.name}/>{brand.className === 'leader-brand-gofloaters' && <img className="leader-brand-artwork" src={brand.logo} alt="" aria-hidden="true"/>}</div>
       </article>)}
     </div>
     <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
