@@ -216,3 +216,11 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .quantum-recognition h3{font-size:15px;font-weight:500;margin:0 0 18px}.recognition-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.recognition-grid>div{min-height:190px;background:#d56f01;color:#fff;padding:22px;display:flex;flex-direction:column}.recognition-grid>div:nth-child(2){background:#202020}.recognition-grid>div:nth-child(3){background:#3d3d3d}.recognition-grid>div:nth-child(4){background:#a65000}.recognition-grid>div>span{font-size:45px;line-height:1}.recognition-grid p{font-size:17px;margin:auto 0 10px}.recognition-grid small{font-size:12px;opacity:.8}
 @media(max-width:767px){.capabilities-sticky{padding:90px 20px 70px}.capabilities-heading{display:block;margin-bottom:30px}.capabilities-heading p{font-size:16px;margin-top:22px}.capability-card{width:82vw;height:390px;padding:24px}.capability-card h3{font-size:22px}.capability-card>p{font-size:15px}.quantum-news{padding:80px 20px}.quantum-news>h2{margin-bottom:35px}.quantum-news-columns{grid-template-columns:1fr;gap:42px}.quantum-news-list{padding:0;border:0}.quantum-news-row{grid-template-columns:76px 1fr;gap:18px;min-height:120px;padding:20px 0}.quantum-news-row img,.news-placeholder{width:76px;height:76px}.quantum-news-row p{font-size:11px}.quantum-news-row h3{font-size:16px}.recognition-grid>div{min-height:155px}}
 @media(prefers-reduced-motion:reduce){.capability-art *{animation:none!important}.capability-card,.capability-card-top>span{transition:none}}
+
+/* Let the desktop capability cards travel from one edge of the screen to the other. */
+@media (min-width:768px) and (prefers-reduced-motion:no-preference){
+  .capabilities-section[data-scroll-ready] .capabilities-sticky{max-width:none;padding-left:0;padding-right:0}
+  .capabilities-section[data-scroll-ready] .capabilities-heading{width:calc(100% - 60px);max-width:1540px;margin-left:auto;margin-right:auto}
+  .capabilities-section[data-scroll-ready] .capabilities-viewport{width:100%}
+  .capabilities-section[data-scroll-ready] .capabilities-track{padding-left:100vw;padding-right:calc(100vw - min(520px, 78vw))}
+}

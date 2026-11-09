@@ -41,9 +41,10 @@ export default function Capabilities() {
       container.removeAttribute('data-scroll-ready');
       trackEl.style.transform = '';
       if (media.matches) {
+        container.setAttribute('data-scroll-ready','true');
         distance = Math.max(0, trackEl.scrollWidth - windowEl.clientWidth);
         container.style.setProperty('--scroll-distance', `${distance}px`);
-        if (distance) container.setAttribute('data-scroll-ready','true');
+        if (!distance) container.removeAttribute('data-scroll-ready');
       } else distance = 0;
       schedule();
     };
