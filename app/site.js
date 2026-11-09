@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import {projects,projectCategories,services,industries,markets} from './portfolio';
 
@@ -37,19 +37,41 @@ function ProjectCard({project,compact=false}) {
     <div className="compact-caption"><h3>{project.name}</h3><p>{project.category} ↗</p></div>
   </Link>;
 }
+const clientLogos = [
+  {name:'ASET College', src:'/assets/client-logos/aset.png', className:'client-logo-aset'},
+  {name:'Snitch', src:'/assets/client-logos/snitch.png'},
+  {name:'GoFloaters', src:'/assets/client-logos/gofloaters.png'},
+  {name:'Milky Mist', src:'/assets/client-logos/milky-mist.jpg', className:'client-logo-milky'},
+  {name:'Chettinad Cement', src:'/assets/client-logos/chettinad.png'},
+];
+function ClientLogos() {
+  const strip = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const element = strip.current;
+    if (!element || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let timer;
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      observer.disconnect();
+      // Let the initial page loader finish before the logo sequence starts.
+      timer = setTimeout(() => setVisible(true), document.querySelector('.loader') ? 1750 : 0);
+    }, {threshold:0.15});
+    observer.observe(element);
+    return () => { observer.disconnect(); clearTimeout(timer); };
+  }, []);
+  return <div ref={strip} className={`logo-strip quantum-logo-strip ${visible ? 'logos-revealed' : ''}`} aria-label="Selected brands">
+    {clientLogos.map((logo, index) => <span key={logo.name} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
+      <img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}
+    </span>)}
+  </div>;
+}
 function Home() {
   const [faq,setFaq]=useState(-1);
   const questions=[['What does QuantumX do?','We connect strategy, creative, performance marketing, digital experience, CRM, data and AI into one growth system.'],['Which industries do you work with?','Our portfolio spans consumer brands, technology, education, hospitality, B2B, industrial businesses and real estate.'],['Where does QuantumX work?','We are based in Chennai and serve clients across India, North America, Europe, the Middle East and Asia-Pacific.']];
   return <><Header/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><img className="donut" src="/assets/donut.avif" alt=""/></section>
-    <div className="logo-strip quantum-logo-strip" aria-label="Selected brands">
-      <span className="client-logo client-logo-aset"><img src="/assets/client-logos/aset.png" alt="ASET College"/><img className="aset-dark-word" src="/assets/client-logos/aset.png" alt="" aria-hidden="true"/></span>
-      <span className="client-logo"><img src="/assets/client-logos/snitch.png" alt="Snitch"/></span>
-      <span className="client-logo"><img src="/assets/client-logos/gofloaters.png" alt="GoFloaters"/></span>
-      <span className="client-logo"><img src="/assets/client-logos/zellify.png" alt="Zellify"/></span>
-      <span className="client-logo client-logo-milky"><img src="/assets/client-logos/milky-mist.jpg" alt="Milky Mist"/></span>
-      <span className="client-logo"><img src="/assets/client-logos/chettinad.png" alt="Chettinad Cement"/></span>
-    </div>
+    <ClientLogos/>
     <section className="work-section"><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
     <section className="testimonial quantum-results"><p className="eyebrow">OUR RESULTS</p><blockquote>One team. Connected capabilities. <em>Measurable growth.</em></blockquote><div className="result-grid"><div><strong>70+</strong><span>Brands served</span></div><div><strong>118+</strong><span>Projects delivered</span></div><div><strong>7+</strong><span>Markets reached</span></div></div></section>
     <section className="services-home"><div className="section-intro"><h2>From first idea<br/><em>to measurable impact.</em></h2><p>Seven capabilities working together across the full growth journey.</p></div><div className="service-list">{services.map((service,index)=><Link key={service} href={`/services/${slugify(service)}`}><span>0{index+1}</span><h3>{service}</h3><span>↗</span></Link>)}</div></section>

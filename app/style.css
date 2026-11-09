@@ -51,3 +51,13 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
   .hero-actions .text-link{white-space:nowrap}
   .hero .donut{position:relative;top:auto;right:auto;align-self:center;width:min(80%,300px);margin-top:30px}
 }
+
+/* Compact, centered client strip; flex wrapping accommodates future logos. */
+.quantum-logo-strip{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;width:100%;max-width:1060px;margin-inline:auto;padding:32px 30px 52px;gap:18px clamp(14px,2vw,28px)}
+.quantum-logo-strip .client-logo{flex:0 0 clamp(115px,15vw,150px);width:clamp(115px,15vw,150px);height:56px}
+@media(max-width:600px){.quantum-logo-strip{padding:28px 30px 44px;gap:16px 14px}.quantum-logo-strip .client-logo{height:52px}}
+
+@media(prefers-reduced-motion:no-preference){
+  .logos-revealed .client-logo{animation:client-logo-rise .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--logo-index) * 2s)}
+  @keyframes client-logo-rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+}
