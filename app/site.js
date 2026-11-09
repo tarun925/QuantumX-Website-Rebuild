@@ -35,10 +35,10 @@ function FloatingProjectCTA() {
   return visible ? <div className="floating-project-cta"><div className="project-cta"><span>Let’s build something</span><Link href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div></div> : null;
 }
 const testimonialBrands = [
-  {name:'ASET College',logo:'/assets/client-logos/aset.png',className:'leader-brand-aset',person:'Mohammed Rizwan',role:'Founder & CEO',quote:`QuantumX has played an important role in strengthening ASET's digital presence.`},
-  {name:'Snitch',logo:'/assets/client-logos/snitch.png',person:'Manish Thanvi',role:'Head of Brand',quote:`Their proactive approach and willingness to explore new opportunities to help the brand grow.`},
-  {name:'GoFloaters',logo:'/assets/client-logos/gofloaters.png',className:'leader-brand-gofloaters',person:'Shyam Sundar',role:'Founder',quote:`The team really impressed us with their execution.`},
-  {name:'Milky Mist',logo:'/assets/client-logos/milky-mist.jpg',className:'leader-brand-milky',person:'Mitthra Senthilnathan',role:'Brand Manager',quote:`A team that understood our creative requirements and translated them into engaging content.`},
+  {name:'ASET College',logo:'/assets/client-logos/aset.png',className:'leader-brand-aset',photo:'/assets/testimonials/aset.jpg',person:'Mohammed Rizwan',role:'Founder & CEO',quote:`QuantumX has played an important role in strengthening ASET's digital presence.`},
+  {name:'Snitch',logo:'/assets/client-logos/snitch.png',photo:'/assets/testimonials/snitch.jpg',person:'Manish Thanvi',role:'Head of Brand',quote:`Their proactive approach and willingness to explore new opportunities to help the brand grow.`},
+  {name:'GoFloaters',logo:'/assets/client-logos/gofloaters.png',className:'leader-brand-gofloaters',photo:'/assets/testimonials/gofloaters.jpg',person:'Shyam Sundar',role:'Founder',quote:`The team really impressed us with their execution.`},
+  {name:'Milky Mist',logo:'/assets/client-logos/milky-mist.jpg',className:'leader-brand-milky',photo:'/assets/testimonials/milky-mist.jpg',person:'Mitthra Senthilnathan',role:'Brand Manager',quote:`A team that understood our creative requirements and translated them into engaging content.`},
 ];
 function Testimonials() {
   const track = useRef(null);
@@ -63,7 +63,7 @@ function Testimonials() {
     <h2 id="leaders-heading">Hear from Industry Leaders</h2>
     <div className="leaders-track" ref={track} onScroll={updateEdges} tabIndex={0} role="region" aria-label="Client testimonials">
       {testimonialBrands.map(brand => <article className="leader-card" key={brand.name}>
-        <div><div className="leader-avatar" role="img" aria-label="Photo to be added"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="23" r="10"/><path d="M13 55c1-12 8-19 19-19s18 7 19 19"/></svg></div>
+        <div><div className={`leader-avatar ${brand.name === 'ASET College' ? 'leader-avatar-aset' : ''}`}><img src={brand.photo} alt={brand.person}/></div>
           <h3>{brand.person}</h3><p className="leader-role">{brand.role}</p><p className="leader-quote">“{brand.quote}”</p></div>
         <div className={`leader-brand-logo ${brand.className || ''}`}><img src={brand.logo} alt={brand.name}/>{brand.className === 'leader-brand-gofloaters' && <img className="leader-brand-artwork" src={brand.logo} alt="" aria-hidden="true"/>}</div>
       </article>)}

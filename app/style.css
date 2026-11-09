@@ -293,3 +293,8 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .leader-card .leader-quote{font-size:15px;line-height:1.6;margin-top:24px}
 .leader-card .leader-brand-logo{flex:none;margin-top:0}
 @media(max-width:600px){.leader-card .leader-quote{font-size:15px;line-height:1.6}.leader-card{gap:30px}}
+
+/* Client portraits use the supplied photographs, cropped to the existing circles. */
+.leader-avatar{overflow:hidden}
+.leader-avatar img{width:100%;height:100%;display:block;object-fit:cover}
+.leader-avatar-aset img{object-position:center 46%;transform:translateY(-24%) scale(2);transform-origin:38% 47%}
