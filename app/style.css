@@ -222,5 +222,5 @@ body:has(.leaders-section) footer{padding-bottom:120px}
   .capabilities-section[data-scroll-ready] .capabilities-sticky{max-width:none;padding-left:0;padding-right:0}
   .capabilities-section[data-scroll-ready] .capabilities-heading{width:auto;align-self:stretch;margin-left:var(--page-gutter);margin-right:var(--page-gutter)}
   .capabilities-section[data-scroll-ready] .capabilities-viewport{width:100%}
-  .capabilities-section[data-scroll-ready] .capabilities-track{padding-left:var(--page-gutter)}
+  .capabilities-section[data-scroll-ready] .capabilities-track{padding-inline:var(--page-gutter)}
 }
