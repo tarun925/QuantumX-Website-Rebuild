@@ -192,7 +192,28 @@ function Home() {
     window.addEventListener('resize',schedule);
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if (frame != null) cancelAnimationFrame(frame); if (timer != null) clearTimeout(timer); };
   }, []);
-  const questions=[['What does QuantumX do?','We connect strategy, creative, performance marketing, digital experience, CRM, data and AI into one growth system.'],['Which industries do you work with?','Our portfolio spans consumer brands, technology, education, hospitality, B2B, industrial businesses and real estate.'],['Where does QuantumX work?','We are based in Chennai and serve clients across India, North America, Europe, the Middle East and Asia-Pacific.']];
+  const questions=[
+  [
+    "What solutions does QuantumX deliver worldwide?",
+    "QuantumX delivers end-to-end digital solutions across branding, UI/UX, product design, software and SaaS development, enterprise solutions, performance marketing, and advertising. From strategy and prototyping to development and deployment, we combine creative expertise with AI-powered workflows to drive measurable business outcomes."
+  ],
+  [
+    "What is Agentic Integration Design, and does QuantumX offer it?",
+    "Agentic Integration Design focuses on building AI-powered systems where intelligent agents automate workflows and execute repetitive tasks. We design both the user-facing interfaces and backend integrations, enabling seamless human-AI collaboration with transparency, control, scalability, and measurable efficiency."
+  ],
+  [
+    "Which industries does QuantumX serve?",
+    "We work with enterprises, high-growth startups, and emerging businesses across 7+ industries, including SaaS, automotive, manufacturing, telecom, professional services, MSMEs, and consumer platforms. Our solutions are tailored to each industry's business objectives, user behaviour, and operational requirements."
+  ],
+  [
+    "How does QuantumX evaluate the impact of its design solutions?",
+    "We measure success through meaningful business and user metrics, including engagement, conversion rates, task completion, retention, and product performance. Every design decision is aligned with measurable objectives to ensure a tangible impact on business growth and user experience."
+  ],
+  [
+    "What are the typical timelines for design, development, or marketing projects?",
+    "Timelines depend on project scope, complexity, and business requirements. Focused design, development, and marketing engagements typically take 8–12 weeks, while larger enterprise platforms and end-to-end digital transformations may require 16–20+ weeks."
+  ]
+];
   return <><Header workDark={workDark} newsLight={newsLight}/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><img className="donut" src="/assets/donut.avif" alt=""/></section>
     <ClientLogos/>
