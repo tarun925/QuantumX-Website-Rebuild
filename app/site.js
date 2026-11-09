@@ -1,6 +1,7 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
+import Capabilities from './capabilities';
 import {projects,projectCategories,services,industries,markets} from './portfolio';
 
 const slugify = (value) => value.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -85,7 +86,7 @@ function Header({dark=false,workDark=false}) {
       const work = document.querySelector('.work-section');
       const isDark = crossesLine(document.querySelector('main.dark-page')) ||
         crossesLine(document.querySelector('.cta')) || crossesLine(document.querySelector('footer')) ||
-        crossesLine(document.querySelector('.leaders-section')) ||
+        crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
       setNavDark(Boolean(isDark));
       frame = null;
@@ -159,8 +160,14 @@ function Home() {
     <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
     <Testimonials/>
     <section className="testimonial quantum-results"><p className="eyebrow">OUR RESULTS</p><blockquote>One team. Connected capabilities. <em>Measurable growth.</em></blockquote><div className="result-grid"><div><strong>70+</strong><span>Brands served</span></div><div><strong>118+</strong><span>Projects delivered</span></div><div><strong>7+</strong><span>Markets reached</span></div></div></section>
-    <section className="services-home"><div className="section-intro"><h2>From first idea<br/><em>to measurable impact.</em></h2><p>Seven capabilities working together across the full growth journey.</p></div><div className="service-list">{services.map((service,index)=><Link key={service} href={`/services/${slugify(service)}`}><span>0{index+1}</span><h3>{service}</h3><span>↗</span></Link>)}</div></section>
     <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><div className="latest-image-wrap"><ProjectVisual project={project}/></div><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
+    <Capabilities/>
+    <section className="quantum-news" aria-labelledby="quantum-news-title"><h2 id="quantum-news-title">Latest at <span>QuantumX</span></h2><div className="quantum-news-columns"><div className="quantum-news-list">
+      <Link href="/projects/aset-college" className="quantum-news-row"><img src="/assets/portfolio/aset-college.png" alt=""/><div><p>ASET COLLEGE CASE STUDY</p><h3>Explore the connected digital journey behind ASET College’s growth. <span>↗</span></h3></div></Link>
+      <Link href="/projects/zellify" className="quantum-news-row"><img src="/assets/portfolio/zellify-desktop.png" alt=""/><div><p>ZELLIFY CASE STUDY</p><h3>A conversion-focused digital experience built for a growing product. <span>↗</span></h3></div></Link>
+      <div className="quantum-news-row"><div className="news-placeholder" aria-hidden="true">✦</div><div><p>TRENDS &amp; INSIGHTS <span>• COMING SOON</span></p><h3>Ideas and perspectives on building brands and digital experiences.</h3></div></div>
+      <div className="quantum-news-row"><div className="news-placeholder news-placeholder-light" aria-hidden="true">Q<span>✦</span></div><div><p>QUANTUMX BLOG <span>• COMING SOON</span></p><h3>News, stories and updates from the QuantumX team.</h3></div></div>
+    </div><aside className="quantum-recognition" aria-label="Reviews and recognition"><h3>Reviews &amp; recognition</h3><div className="recognition-grid"><div><span aria-hidden="true">✦</span><p>Client reviews</p><small>Coming soon</small></div><div><span aria-hidden="true">☆</span><p>Ratings</p><small>Coming soon</small></div><div><span aria-hidden="true">↗</span><p>Awards &amp; recognition</p><small>Coming soon</small></div><div><span aria-hidden="true">Q</span><p>QuantumX updates</p><small>Coming soon</small></div></div></aside></div></section>
     <section className="faq"><h2>Questions we get asked.<br/><em>A lot.</em></h2><div>{questions.map(([question,answer],index)=><div className="faq-item" key={question}><button onClick={()=>setFaq(faq===index?-1:index)} aria-expanded={faq===index}>{question}<span>{faq===index?'−':'+'}</span></button>{faq===index&&<p>{answer}</p>}</div>)}</div></section>
   </main><Footer/><FloatingProjectCTA/></>;
 }
