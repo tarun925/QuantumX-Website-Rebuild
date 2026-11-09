@@ -8,13 +8,10 @@ const slugify = (value) => value.toLowerCase().replace(/&/g,'and').replace(/[^a-
 const title = (value='') => value.split('-').map(word=>word[0]?.toUpperCase()+word.slice(1)).join(' ');
 const email = 'info@quantumx.one';
 
-function newsScrollProgress() {
-  const zellify = document.querySelector('.quantum-news-row[href^="/projects/zellify"]');
-  if (!zellify) return 1;
-  const height = window.innerHeight;
-  return Math.max(0, Math.min(1, (height * .65 - zellify.getBoundingClientRect().bottom) / (height * .3)));
+function newsIsLight() {
+  const section = document.querySelector('.quantum-news');
+  return Boolean(section && section.getBoundingClientRect().top <= window.innerHeight * .9);
 }
-
 
 function Button({href='/contact',children='Get in Touch',light=false}) {
   return <Link className={`pill ${light?'light':''}`} href={href}>{children}<span>↗</span></Link>;
@@ -98,7 +95,7 @@ function Header({dark=false,workDark=false}) {
       const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
       setNavGlass(Boolean(lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line));
       const news = document.querySelector('.quantum-news');
-      const isDark = (crossesLine(news) && newsScrollProgress() < .43) || crossesLine(document.querySelector('main.dark-page')) ||
+      const isDark = (crossesLine(news) && !newsIsLight()) || crossesLine(document.querySelector('main.dark-page')) ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
@@ -182,22 +179,16 @@ function Home() {
   useEffect(() => {
     const section = document.querySelector('.quantum-news');
     if (!section) return;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let frame;
     const update = () => {
-      let progress = newsScrollProgress();
-      if (reducedMotion.matches) progress = progress < .43 ? 0 : 1;
-      const shade = Math.round(21 + progress * 234);
-      section.style.backgroundColor = `rgb(${shade}, ${shade}, ${shade})`;
-      section.dataset.theme = progress < .43 ? 'dark' : 'light';
+      section.dataset.theme = newsIsLight() ? 'light' : 'dark';
       frame = null;
     };
     const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
     update();
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule);
-    reducedMotion.addEventListener('change',schedule);
-    return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); reducedMotion.removeEventListener('change',schedule); if (frame != null) cancelAnimationFrame(frame); };
+    return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if (frame != null) cancelAnimationFrame(frame); };
   }, []);
   const questions=[['What does QuantumX do?','We connect strategy, creative, performance marketing, digital experience, CRM, data and AI into one growth system.'],['Which industries do you work with?','Our portfolio spans consumer brands, technology, education, hospitality, B2B, industrial businesses and real estate.'],['Where does QuantumX work?','We are based in Chennai and serve clients across India, North America, Europe, the Middle East and Asia-Pacific.']];
   return <><Header workDark={workDark}/><main>

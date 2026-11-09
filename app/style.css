@@ -299,7 +299,7 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .leader-avatar img{width:100%;height:100%;display:block;object-fit:cover}
 .leader-avatar-aset img{object-position:center 46%;transform:translateY(-24%) scale(2);transform-origin:38% 47%}
 
-/* Latest at QuantumX changes from dark to light as its second story scrolls past. */
+/* Switch the news section directly to white as it enters the viewport. */
 .quantum-news[data-theme="dark"]{background:#151515;color:#fff}
 .quantum-news[data-theme="dark"] .quantum-news-list,.quantum-news[data-theme="dark"] .quantum-news-row{border-color:#555}
 .quantum-news[data-theme="dark"] .quantum-news-row p span{color:#c3c3c3}
