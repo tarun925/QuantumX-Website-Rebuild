@@ -152,7 +152,7 @@ const clientLogoGroups = [
     {name:'SRM Institute of Science and Technology',src:'/assets/client-logos/partners/srm-institute.webp'},
     {name:'Hyatt Regency',src:'/assets/client-logos/partners/hyatt-regency.webp'},
     {name:'Ashok Leyland',src:'/assets/client-logos/partners/ashok-leyland.webp'},
-    {name:'BLU',src:'/assets/client-logos/partners/blu.webp'},
+    {name:'Radisson Blu',placeholder:true},
     {name:'Living Structures',src:'/assets/client-logos/partners/living-structures.webp'},
   ],
   [
@@ -194,7 +194,7 @@ function ClientLogos() {
   return <section className="client-logo-section" aria-label="Selected client brands" data-paused={paused ? 'true' : 'false'} onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={event=>{if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);}}>
     <div className="logo-strip quantum-logo-strip" role="group" aria-label={`Brand group ${group + 1} of ${clientLogoGroups.length}`}>
       {clientLogoGroups[group].map((logo,index) => <span key={`${group}-${logo.name}`} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
-        <img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}
+        {logo.placeholder ? <span className="client-logo-placeholder" aria-label={`${logo.name} logo placeholder`}>{logo.name}</span> : <><img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}</>}
       </span>)}
     </div>
     <div className="client-logo-controls" aria-label="Choose a brand group">{clientLogoGroups.map((_,index)=><button type="button" key={index} className={group === index ? 'active' : ''} onClick={()=>setGroup(index)} aria-label={`Show brand group ${index + 1}`} aria-pressed={group === index}/>)}</div>

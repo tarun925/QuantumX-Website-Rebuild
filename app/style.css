@@ -332,3 +332,4 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .client-logo-controls button.active::after{background:#d56f01;transform:scale(1.3)}
 .client-logo-controls button:focus-visible{outline:2px solid #d56f01;outline-offset:2px}
 @media(max-width:767px){.quantum-logo-strip{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.quantum-logo-strip .client-logo{height:58px}.quantum-logo-strip .client-logo-gofloaters{height:58px}.client-logo-controls{margin-top:-42px;padding-bottom:22px}}
+.client-logo-placeholder{font-size:clamp(9px,1.1vw,14px);font-weight:500;line-height:1.15;text-align:center;color:#555}
