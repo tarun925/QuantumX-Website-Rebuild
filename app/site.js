@@ -3,6 +3,7 @@ import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import Capabilities from './capabilities';
 import {privacyPolicyContent} from './privacy-policy-content';
+import {termsContent} from './terms-content';
 import {projects,projectCategories,projectMatchesCategory,services,industries,markets} from './portfolio';
 
 const slugify = (value) => value.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -127,7 +128,7 @@ function Footer() {
       <form className="newsletter-form" onSubmit={subscribe}><label htmlFor="newsletter-email">Sign up for our newsletter</label><div className="newsletter-fields"><input id="newsletter-email" type="email" placeholder="Enter email address" value={newsletterEmail} onChange={event=>setNewsletterEmail(event.target.value)} required/><button type="submit">Subscribe <span aria-hidden="true">↗</span></button></div></form>
     </section>
     <footer className="quantum-footer"><div className="footer-contact-grid"><div className="footer-talk"><p className="eyebrow">LET’S CONNECT</p><h2>Talk to us<span>.</span></h2><p>Have an idea? We’d love to hear from you.</p></div><div className="footer-contact"><div><p className="eyebrow">BUSINESS &amp; COLLABORATIONS</p><a href="mailto:info@quantumx.one">info@quantumx.one ↗</a></div><div><p className="eyebrow">CAREERS</p><a href="mailto:careers@quantumx.one">careers@quantumx.one ↗</a></div></div><div className="footer-presence"><p className="eyebrow">OUR PRESENCE</p><h3>Chennai, India</h3><p>No. 40 North Road,<br/>West C.I.T Nagar, Nandanam,<br/>Chennai - 600035</p><p>Working with brands across India and around the world.</p></div></div>
-      <div className="footer-bottom quantum-footer-bottom"><div className="footer-identity"><div className="footer-socials" aria-label="Social profiles to be added"><span className="footer-social" aria-label="Instagram profile coming soon" title="Instagram profile coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></span><span className="footer-social" aria-label="LinkedIn profile coming soon" title="LinkedIn profile coming soon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.1 3A2.1 2.1 0 1 0 5.1 7.2 2.1 2.1 0 0 0 5.1 3ZM3.3 8.8h3.6V21H3.3V8.8Zm5.8 0h3.4v1.7h.1a3.8 3.8 0 0 1 3.4-1.9c3.7 0 4.4 2.4 4.4 5.5V21h-3.6v-6.1c0-1.5 0-3.3-2-3.3s-2.1 1.6-2.1 3.2V21H9.1V8.8Z"/></svg></span></div></div><div className="footer-legal"><div className="footer-legal-links"><Link href="/privacy-policy">Privacy policy</Link><span title="Terms to be added">Terms &amp; conditions</span></div><p>© 2026 QuantumX. All rights reserved.</p></div></div>
+      <div className="footer-bottom quantum-footer-bottom"><div className="footer-identity"><div className="footer-socials" aria-label="Social profiles to be added"><span className="footer-social" aria-label="Instagram profile coming soon" title="Instagram profile coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></span><span className="footer-social" aria-label="LinkedIn profile coming soon" title="LinkedIn profile coming soon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.1 3A2.1 2.1 0 1 0 5.1 7.2 2.1 2.1 0 0 0 5.1 3ZM3.3 8.8h3.6V21H3.3V8.8Zm5.8 0h3.4v1.7h.1a3.8 3.8 0 0 1 3.4-1.9c3.7 0 4.4 2.4 4.4 5.5V21h-3.6v-6.1c0-1.5 0-3.3-2-3.3s-2.1 1.6-2.1 3.2V21H9.1V8.8Z"/></svg></span></div></div><div className="footer-legal"><div className="footer-legal-links"><Link href="/privacy-policy">Privacy policy</Link><Link href="/terms-conditions">Terms &amp; conditions</Link></div><p>© 2026 QuantumX. All rights reserved.</p></div></div>
     </footer>
   </>;
 }
@@ -342,8 +343,17 @@ function PrivacyPolicy() {
     return <p key={index}>{block.text}</p>;
   })}</div></div></main><Footer/></>;
 }
+function TermsConditions() {
+  return <><Header/><main className="privacy-page"><div className="privacy-inner"><nav className="privacy-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Terms &amp; conditions</span></nav><h1>Terms &amp; Conditions<span>.</span></h1><p className="privacy-notice"><strong>Draft for review.</strong> These terms require review before publication.</p><div className="privacy-content"><p className="privacy-updated">Last updated: 11 November 2026</p>{termsContent.map((block,index)=>{
+    if (block.type === 'heading') return <h2 key={index}>{block.text}</h2>;
+    if (block.type === 'subheading') return <h3 key={index}>{block.text}</h3>;
+    if (block.type === 'list') return <ul key={index}>{block.items.map((item,i)=><li key={i}>{item}</li>)}</ul>;
+    if (block.type === 'table') return <div className="privacy-table-wrap" key={index}><table><tbody>{block.rows.map((row,i)=><tr key={i}>{row.map((cell,j)=><td key={j}>{cell}</td>)}</tr>)}</tbody></table></div>;
+    return <p key={index}>{block.text}</p>;
+  })}</div></div></main><Footer/></>;
+}
 export default function Site({path}) {
   useEffect(()=>{window.scrollTo(0,0)},[path.join('/')]);
   const project=path[0]==='projects'&&path[1]?projects.find(item=>item.slug===path[1]):null;
-  return <>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:path[0]==='contact'?<Contact/>:path[0]==='privacy-policy'?<PrivacyPolicy/>:<Generic path={path}/>}</>;
+  return <>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:path[0]==='contact'?<Contact/>:path[0]==='privacy-policy'?<PrivacyPolicy/>:path[0]==='terms-conditions'?<TermsConditions/>:<Generic path={path}/>}</>;
 }

@@ -168,7 +168,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "QuantumX will not intentionally use client personal data submitted for a client engagement to train a general-purpose AI model for QuantumX’s own purposes unless this is expressly agreed in writing and permitted by applicable law. The AI provider’s own handling of data is also subject to that provider’s terms and settings. [VERIFY THIS COMMITMENT AGAINST EACH AI PROVIDER AND ACCOUNT CONFIGURATION BEFORE PUBLICATION.]"
+    "text": "QuantumX does not use client personal data to train AI models. The AI provider’s handling of data is subject to that provider’s terms and settings."
   },
   {
     "type": "paragraph",
@@ -180,7 +180,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "Our website may use cookies, pixels, tags, SDKs, local storage and similar technologies. These technologies may be used for essential website functions, remembering preferences, measuring traffic and performance, understanding visitor behaviour, attributing marketing activity and, where enabled, delivering or measuring advertising."
+    "text": "Our website uses Google Analytics 4 (GA4) and a pixel to measure website usage and marketing activity. Cookies, tags or similar technologies may be used for essential website functions, remembering preferences, measuring traffic and performance, understanding visitor behaviour and, where enabled, measuring advertising."
   },
   {
     "type": "paragraph",
@@ -269,7 +269,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "The following schedule must be completed and aligned with actual systems before publication:"
+    "text": "The following schedule describes QuantumX’s retention periods:"
   },
   {
     "type": "table",
@@ -313,7 +313,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "These are QuantumX’s proposed internal retention periods. They must be followed in practice and may be extended where required by applicable law, a documented client instruction, an active dispute, or a legitimate security or compliance need."
+    "text": "These retention periods may be extended where required by applicable law, a documented client instruction, an active dispute, or a legitimate security or compliance need."
   },
   {
     "type": "heading",
@@ -437,6 +437,10 @@ export const privacyPolicyContent = [
       [
         "Company",
         "QuantumX Tech Sol LLP"
+      ],
+      [
+        "Privacy and grievance contact",
+        "Tarun Kumar, Founder & CEO"
       ],
       [
         "Email",
