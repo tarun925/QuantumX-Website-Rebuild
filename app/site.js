@@ -152,7 +152,7 @@ const clientLogoGroups = [
     {name:'SRM Institute of Science and Technology',src:'/assets/client-logos/partners/srm-institute.webp'},
     {name:'Hyatt Regency',src:'/assets/client-logos/partners/hyatt-regency.webp'},
     {name:'Ashok Leyland',src:'/assets/client-logos/partners/ashok-leyland.webp'},
-    {name:'Radisson Blu',placeholder:true},
+    {name:'Radisson Blu',src:'/assets/client-logos/partners/radisson-blu.svg'},
     {name:'Living Structures',src:'/assets/client-logos/partners/living-structures.webp'},
   ],
   [
