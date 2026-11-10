@@ -133,10 +133,10 @@ function Footer() {
 function ProjectVisual({project}) {
   return project.image?<img className="project-image" src={project.image} alt={`${project.name} portfolio visual`}/>:<div className={`project-typographic project-${project.slug}`}><span>{project.sector}</span><strong>{project.name}</strong><small>{project.impact||project.category}</small></div>;
 }
-function ProjectCard({project,compact=false,homepage=false}) {
-  return <Link href={`/projects/${project.slug}`} className={`project-card ${compact?'compact':''}`}>
+function ProjectCard({project,compact=false,homepage=false,listing=false}) {
+  return <Link href={`/projects/${project.slug}`} className={`project-card ${compact?'compact':''} project-card-${project.slug}`}>
     <div className="project-meta"><h3>{project.name}</h3><p>{project.description}</p><span className="project-link">View Project ↗</span></div>
-    <ProjectVisual project={homepage && project.homepageImage ? {...project, image:project.homepageImage} : project}/>
+    <ProjectVisual project={(homepage || (listing && ['snitch', 'gofloaters'].includes(project.slug))) && project.homepageImage ? {...project, image:project.homepageImage} : project}/>
     <div className="compact-caption"><h3>{project.name}</h3><p>{project.category} ↗</p></div>
   </Link>;
 }
@@ -280,7 +280,7 @@ function Home() {
 function Projects() {
   const [filter,setFilter]=useState('All / Enterprise');
   const visible=projects.filter(project=>projectMatchesCategory(project,filter));
-  return <><Header dark/><main className="dark-page projects-page"><div className="page-hero projects-hero"><h1>CRAFTED<br/><em>for</em> GROWTH</h1><p>Identity, campaigns, digital experiences and connected marketing systems for brands across industries.</p><div className="filters" aria-label="Filter projects">{projectCategories.map(category=><button key={category} className={filter===category?'selected':''} onClick={()=>setFilter(category)} aria-pressed={filter===category}>{category}</button>)}</div></div><div className="project-grid">{visible.map(project=><ProjectCard compact key={project.slug} project={project}/>)}</div><ProjectCTA/></main><Footer/></>;
+  return <><Header dark/><main className="dark-page projects-page"><div className="page-hero projects-hero"><h1>CRAFTED<br/><em>for</em> GROWTH</h1><p>Identity, campaigns, digital experiences and connected marketing systems for brands across industries.</p><div className="filters" aria-label="Filter projects">{projectCategories.map(category=><button key={category} className={filter===category?'selected':''} onClick={()=>setFilter(category)} aria-pressed={filter===category}>{category}</button>)}</div></div><div className="project-grid">{visible.map(project=><ProjectCard compact listing key={project.slug} project={project}/>)}</div><ProjectCTA/></main><Footer/></>;
 }
 const caseProcess = ['Discovery & research','Visual exploration','Wireframing','Visual design','Prototyping','Development & launch','Marketing & optimisation'];
 function CaseMediaPlaceholder({label,wide=false}) {
