@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import Capabilities from './capabilities';
+import {privacyPolicyContent} from './privacy-policy-content';
 import {projects,projectCategories,projectMatchesCategory,services,industries,markets} from './portfolio';
 
 const slugify = (value) => value.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -333,8 +334,13 @@ function Generic({path}) {
   return <><Header dark/><main className="dark-page generic"><section className="generic-hero"><p className="eyebrow">QUANTUMX / {family.toUpperCase()}</p><h1>{detail?name:headline}<span>.</span></h1><div className="generic-sub"><p>{family==='about'?'A growth and marketing company built to connect strategy, creativity, media, technology, data and AI.':'The right mix of strategy, creative, channels and technology changes with every audience and objective.'}</p><Button/></div></section><section className="generic-content"><div><p className="eyebrow">HOW WE WORK</p><h2>One connected system.</h2></div><p>We start with the customer and the growth problem, then connect the capabilities needed to build demand, turn attention into action and improve results over time.</p></section>{list.length>0&&<div className="generic-list">{list.map((item,index)=><Link key={item} href={`/${family}/${slugify(item)}`}><span>0{index+1}</span><h2>{item}</h2><span>↗</span></Link>)}</div>}{family==='about'&&<div className="generic-list">{markets.map((market,index)=><div className="presence-row" key={market}><span>0{index+1}</span><h2>{market}</h2></div>)}</div>}<div className="related"><h2>Selected work<span>.</span></h2><div className="project-grid">{projects.slice(0,2).map(project=><ProjectCard compact key={project.slug} project={project}/>)}</div></div></main><Footer/></>;
 }
 function PrivacyPolicy() {
-  const sections = ['About this policy', 'Personal information', 'Information we collect', 'How we use information', 'Sharing information', 'Security', 'Your choices', 'Consent and updates'];
-  return <><Header/><main className="privacy-page"><div className="privacy-inner"><nav className="privacy-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Privacy policy</span></nav><h1>Our Privacy Policy<span>.</span></h1><p className="privacy-notice">Draft layout — QuantumX’s privacy policy content will be added here.</p><div className="privacy-content">{sections.map(title=><section key={title}><h2>{title}</h2><p>Content to be provided.</p></section>)}</div></div></main><Footer/></>;
+  return <><Header/><main className="privacy-page"><div className="privacy-inner"><nav className="privacy-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Privacy policy</span></nav><h1>Our Privacy Policy<span>.</span></h1><p className="privacy-notice"><strong>Draft for review.</strong> This policy contains items that require confirmation before publication.</p><div className="privacy-content"><p className="privacy-updated">Last updated: 11 November 2026</p>{privacyPolicyContent.map((block,index)=>{
+    if (block.type === 'heading') return <h2 key={index}>{block.text}</h2>;
+    if (block.type === 'subheading') return <h3 key={index}>{block.text}</h3>;
+    if (block.type === 'list') return <ul key={index}>{block.items.map((item,i)=><li key={i}>{item}</li>)}</ul>;
+    if (block.type === 'table') return <div className="privacy-table-wrap" key={index}><table><tbody>{block.rows.map((row,i)=><tr key={i}>{row.map((cell,j)=>i===0 && row.length===3 ? <th key={j} scope="col">{cell}</th> : <td key={j}>{cell}</td>)}</tr>)}</tbody></table></div>;
+    return <p key={index}>{block.text}</p>;
+  })}</div></div></main><Footer/></>;
 }
 export default function Site({path}) {
   useEffect(()=>{window.scrollTo(0,0)},[path.join('/')]);
