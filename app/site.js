@@ -282,9 +282,39 @@ function Projects() {
   const visible=filter==='All'?projects:projects.filter(project=>project.category===filter);
   return <><Header dark/><main className="dark-page"><div className="page-hero projects-hero"><h1>CRAFTED<br/><em>for</em> GROWTH</h1><p>Identity, campaigns, digital experiences and connected marketing systems for brands across industries.</p><div className="filters" aria-label="Filter projects">{projectCategories.map(category=><button key={category} className={filter===category?'selected':''} onClick={()=>setFilter(category)} aria-pressed={filter===category}>{category}</button>)}</div></div><div className="project-grid">{visible.map(project=><ProjectCard compact key={project.slug} project={project}/>)}</div><ProjectCTA/></main><Footer/></>;
 }
+const caseProcess = ['Discovery & research','Visual exploration','Wireframing','Visual design','Prototyping','Development & launch','Marketing & optimisation'];
+function CaseMediaPlaceholder({label,wide=false}) {
+  return <div className={`case-media-placeholder ${wide?'case-media-wide':''}`}><span aria-hidden="true">✦</span><p>{label}</p></div>;
+}
 function ProjectDetail({project}) {
-  const related=projects.filter(item=>item.slug!==project.slug).slice(0,2);
-  return <><Header dark/><main className="dark-page generic"><section className="generic-hero"><p className="eyebrow"><Link href="/projects">PROJECTS</Link> / {project.category.toUpperCase()}</p><h1>{project.name}<span>.</span></h1><div className="generic-sub"><p>{project.description}</p><span className="detail-sector">{project.sector}</span></div></section><div className="detail-visual"><ProjectVisual project={project}/></div><section className="generic-content"><div><p className="eyebrow">THE WORK</p><h2>{project.challenge?'The challenge':'The project'}</h2></div><p>{project.challenge||project.description}</p></section>{project.solution&&<section className="generic-content"><div><p className="eyebrow">QUANTUMX SOLUTION</p><h2>Connected thinking.<br/><em>Focused execution.</em></h2></div><p>{project.solution}</p></section>}{project.impact&&<section className="impact-section"><p className="eyebrow">BUSINESS IMPACT</p><strong>{project.impact}</strong><p>{project.impactNote}</p></section>}{project.gallery?.length>0&&<div className="detail-gallery">{project.gallery.map((image,index)=><img key={image} src={image} alt={`${project.name} visual ${index+1}`}/>)}</div>}<div className="related"><h2>More selected work<span>.</span></h2><div className="project-grid">{related.map(item=><ProjectCard compact key={item.slug} project={item}/>)}</div></div></main><Footer/></>;
+  const main = useRef(null);
+  const details = project.caseStudy || {};
+  const related = projects.filter(item=>item.slug!==project.slug).slice(0,2);
+  const work = details.work || [
+    {title:'Visual exploration',description:'Project-specific visual explorations and creative direction will be added here.',media:'Visual explorations to be added'},
+    {title:'Design & development',description:'Design, prototyping and implementation details will be added as the case study is completed.',media:'Designs and project screenshots to be added'},
+    {title:'Outcomes & evidence',description:'Results, examples and supporting evidence will be added when available.',media:'Project proof and results to be added'},
+  ];
+  useEffect(() => {
+    const element = main.current;
+    if (!element || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const targets = element.querySelectorAll('[data-case-reveal]');
+    const observer = new IntersectionObserver(entries => entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('case-in-view');observer.unobserve(entry.target)}}),{threshold:.08});
+    element.classList.add('case-motion-ready');
+    targets.forEach(target=>observer.observe(target));
+    return () => {observer.disconnect();element.classList.remove('case-motion-ready')};
+  }, [project.slug]);
+  return <><Header dark/><main ref={main} className="dark-page case-project">
+    <section className="case-hero"><p className="case-back"><Link href="/projects">← All projects</Link></p><h1>{project.name}<span>.</span></h1><div className="case-focus"><span>Project focus</span><p>{project.category} <span>+</span> {project.sector}</p></div></section>
+    <div className="case-hero-media"><ProjectVisual project={project}/></div>
+    <section className="case-collaboration case-section" data-case-reveal><div className="case-collab-copy"><h2><span>The</span> collaboration</h2><p>{details.collaboration || project.description}</p>{details.collaboration && <p>{project.description}</p>}</div><dl className="case-facts"><div><dt>Industry</dt><dd>{project.sector}</dd></div><div><dt>Platform</dt><dd>{details.platform || 'To be added'}</dd></div><div><dt>Services</dt><dd>{details.services || project.category}</dd></div><div><dt>Website / app</dt><dd>{details.url?<a href={details.url} target="_blank" rel="noreferrer">Visit website ↗</a>:<span className="case-pending">Link to be added</span>}</dd></div></dl></section>
+    <section className="case-problem case-section" data-case-reveal><p className="case-eyebrow">THE CHALLENGE</p><div className="case-split"><h2>Problem <span>definition.</span></h2><p>{details.challenge || project.challenge || 'Project challenge and goals will be added here.'}</p></div></section>
+    <section className="case-process case-section" data-case-reveal><div><p className="case-eyebrow">HOW WE WORK</p><h2>The process<br/><span>we follow.</span></h2><p className="case-muted">A flexible framework. Project-specific process details and examples can be added here.</p></div><ol>{caseProcess.map((step,index)=><li key={step}><span>{String(index+1).padStart(2,'0')}</span>{step}</li>)}</ol></section>
+    <section className="case-work case-section"><div className="case-work-intro" data-case-reveal><p className="case-eyebrow">THE WORK</p><h2>Opportunities<br/><span>and execution.</span></h2><p>Explore the work behind the project, from the first ideas to the finished experience.</p></div><div className="case-work-list">{work.map((item,index)=><article className="case-work-item" key={item.title} data-case-reveal><div className="case-work-copy"><span className="case-number">{String(index+1).padStart(2,'0')}</span><h3>{item.title}</h3><p>{item.description}</p></div><CaseMediaPlaceholder label={item.media}/></article>)}</div></section>
+    <section className="case-experience case-section" data-case-reveal><p className="case-eyebrow">THE EXPERIENCE</p><div className="case-split"><h2>What we <span>created.</span></h2><div>{details.experience && <h3 className="case-experience-title">Connected thinking. Focused execution.</h3>}<p>{details.experience || project.solution || project.description}</p></div></div><div className="case-gallery">{project.gallery?.filter(image=>image!==project.image).slice(0,2).map((image,index)=><div className="case-gallery-image" key={image}><img src={image} alt={`${project.name} project visual ${index+1}`} loading="lazy"/></div>)}<CaseMediaPlaceholder label="Screenshots and visual designs to be added"/><CaseMediaPlaceholder label="Prototypes and project details to be added"/></div></section>
+    <section className="case-impact case-section" data-case-reveal><p className="case-eyebrow">THE IMPACT</p><div className="case-split"><h2>Results <span>that matter.</span></h2><div>{project.impact?<><strong>{project.impact}</strong><p>{project.impactNote || 'Project outcomes.'}</p></>:<p>Project results and supporting evidence will be added here.</p>}</div></div><CaseMediaPlaceholder label="Results, screenshots and supporting proof to be added" wide/></section>
+    <div className="case-related related" data-case-reveal><div className="case-related-heading"><h2>Related <span>projects.</span></h2><Link href="/projects">View all projects ↗</Link></div><div className="project-grid">{related.map(item=><ProjectCard compact key={item.slug} project={item}/>)}</div></div>
+  </main><Footer/></>;
 }
 function Contact() {
   const [sent,setSent]=useState(false);
