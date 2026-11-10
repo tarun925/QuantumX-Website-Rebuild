@@ -140,20 +140,67 @@ function ProjectCard({project,compact=false}) {
     <div className="compact-caption"><h3>{project.name}</h3><p>{project.category} ↗</p></div>
   </Link>;
 }
-const clientLogos = [
-  {name:'ASET College', src:'/assets/client-logos/aset.png', className:'client-logo-aset'},
-  {name:'Snitch', src:'/assets/client-logos/snitch.png'},
-  {name:'GoFloaters', src:'/assets/client-logos/gofloaters.png', className:'client-logo-gofloaters'},
-  {name:'Milky Mist', src:'/assets/client-logos/milky-mist.jpg', className:'client-logo-milky'},
-  {name:'Chettinad Cement', src:'/assets/client-logos/chettinad.png'},
+const clientLogoGroups = [
+  [
+    {name:'ASET College',src:'/assets/client-logos/aset.png',className:'client-logo-aset'},
+    {name:'Snitch',src:'/assets/client-logos/snitch.png'},
+    {name:'GoFloaters',src:'/assets/client-logos/gofloaters.png',className:'client-logo-gofloaters'},
+    {name:'Milky Mist',src:'/assets/client-logos/milky-mist.jpg',className:'client-logo-milky'},
+    {name:'Chettinad Cement',src:'/assets/client-logos/chettinad.png'},
+  ],
+  [
+    {name:'SRM Institute of Science and Technology',src:'/assets/client-logos/partners/srm-institute.webp'},
+    {name:'Hyatt Regency',src:'/assets/client-logos/partners/hyatt-regency.webp'},
+    {name:'Ashok Leyland',src:'/assets/client-logos/partners/ashok-leyland.webp'},
+    {name:'BLU',src:'/assets/client-logos/partners/blu.webp'},
+    {name:'Living Structures',src:'/assets/client-logos/partners/living-structures.webp'},
+  ],
+  [
+    {name:'Healthsoft',src:'/assets/client-logos/partners/healthsoft.webp'},
+    {name:'Zayn Studios',src:'/assets/client-logos/partners/zayn-studios.webp'},
+    {name:'BDM',src:'/assets/client-logos/partners/bdm.webp'},
+    {name:'TOPX',src:'/assets/client-logos/partners/topx.webp'},
+    {name:'Authoringminds',src:'/assets/client-logos/partners/authoringminds.webp'},
+  ],
+  [
+    {name:'Axis',src:'/assets/client-logos/partners/axis.webp'},
+    {name:'The Artment',src:'/assets/client-logos/partners/the-artment.webp'},
+    {name:'Lakmé Academy',src:'/assets/client-logos/partners/lakme-academy.webp'},
+    {name:'Salt and Cure',src:'/assets/client-logos/partners/salt-and-cure.webp'},
+    {name:'RYDT',src:'/assets/client-logos/partners/rydt.webp'},
+  ],
+  [
+    {name:'Aurenor Salon',src:'/assets/client-logos/partners/aurenor.webp'},
+    {name:'Maa Naturals',src:'/assets/client-logos/partners/maa-naturals.webp'},
+    {name:'Universal Bridge Logistics',src:'/assets/client-logos/partners/universal-bridge.webp'},
+    {name:'Infec Services',src:'/assets/client-logos/partners/infec.webp'},
+    {name:'Zellify',src:'/assets/client-logos/partners/zellify.webp'},
+  ],
 ];
 function ClientLogos() {
-  return <div className="logo-strip quantum-logo-strip" aria-label="Selected brands">
-    {clientLogos.map((logo,index) => <span key={logo.name} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
-      <img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}
-    </span>)}
-  </div>;
+  const [group,setGroup] = useState(0);
+  const [paused,setPaused] = useState(false);
+  useEffect(() => {
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let timer;
+    const reset = () => {
+      clearInterval(timer);
+      if (!paused && !motion.matches) timer = setInterval(() => setGroup(current => (current + 1) % clientLogoGroups.length), 4300);
+    };
+    reset();
+    motion.addEventListener('change',reset);
+    return () => { clearInterval(timer); motion.removeEventListener('change',reset); };
+  }, [paused]);
+  return <section className="client-logo-section" aria-label="Selected client brands" data-paused={paused ? 'true' : 'false'} onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={event=>{if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);}}>
+    <div className="logo-strip quantum-logo-strip" role="group" aria-label={`Brand group ${group + 1} of ${clientLogoGroups.length}`}>
+      {clientLogoGroups[group].map((logo,index) => <span key={`${group}-${logo.name}`} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
+        <img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}
+      </span>)}
+    </div>
+    <div className="client-logo-controls" aria-label="Choose a brand group">{clientLogoGroups.map((_,index)=><button type="button" key={index} className={group === index ? 'active' : ''} onClick={()=>setGroup(index)} aria-label={`Show brand group ${index + 1}`} aria-pressed={group === index}/>)}</div>
+  </section>;
 }
+
 function Home() {
   const [faq,setFaq]=useState(-1);
   const [workDark,setWorkDark]=useState(false);
