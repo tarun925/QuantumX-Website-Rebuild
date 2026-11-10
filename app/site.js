@@ -187,7 +187,7 @@ const clientLogoGroups = [
 function ClientLogos() {
   const [group,setGroup] = useState(0);
   useEffect(() => {
-    const timer = setInterval(() => setGroup(current => (current + 1) % clientLogoGroups.length), 4300);
+    const timer = setInterval(() => setGroup(current => (current + 1) % clientLogoGroups.length), 5600);
     return () => clearInterval(timer);
   }, []);
   return <section className="client-logo-section" aria-label="Selected client brands">
