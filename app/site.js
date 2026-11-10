@@ -158,9 +158,9 @@ const clientLogoGroups = [
   [
     {name:'Healthsoft',src:'/assets/client-logos/partners/healthsoft.webp'},
     {name:'Zayn Studios',src:'/assets/client-logos/partners/zayn-studios.webp'},
-    {name:'BDM',src:'/assets/client-logos/partners/bdm.webp'},
+    {name:'Sakura',src:'/assets/client-logos/partners/sakura.png'},
     {name:'TOPX',src:'/assets/client-logos/partners/topx.webp'},
-    {name:'Authoringminds',src:'/assets/client-logos/partners/authoringminds.webp'},
+    {name:'Authoringminds',src:'/assets/client-logos/partners/authoringminds.webp',className:'client-logo-authoring'},
   ],
   [
     {name:'Axis',src:'/assets/client-logos/partners/axis.webp'},
