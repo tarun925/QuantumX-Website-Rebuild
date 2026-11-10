@@ -35,9 +35,9 @@ function FloatingProjectCTA() {
   return visible ? <div className="floating-project-cta"><div className="project-cta"><span>Let’s build something</span><Link href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div></div> : null;
 }
 const testimonialBrands = [
-  {name:'ASET College',logo:'/assets/client-logos/aset.png',className:'leader-brand-aset',photo:'/assets/testimonials/aset.jpg',person:'Mohammed Rizwan',role:'Founder & CEO',quote:`QuantumX has played an important role in strengthening ASET's digital presence.`},
-  {name:'Snitch',logo:'/assets/client-logos/snitch.png',photo:'/assets/testimonials/snitch.jpg',person:'Manish Thanvi',role:'Head of Brand',quote:`Their proactive approach and willingness to explore new opportunities to help the brand grow.`},
-  {name:'GoFloaters',logo:'/assets/client-logos/gofloaters.png',className:'leader-brand-gofloaters',photo:'/assets/testimonials/gofloaters.jpg',person:'Shyam Sundar',role:'Founder',quote:`The team really impressed us with their execution.`},
+  {name:'ASET College',logo:'/assets/client-logos/aset.png',className:'leader-brand-aset',photo:'/assets/testimonials/aset.jpg',person:'Mohammed Rizwan',role:'Founder & CEO',quote:`QuantumX strengthened ASET's digital presence through connected platforms, development and marketing.`},
+  {name:'Snitch',logo:'/assets/client-logos/snitch.png',photo:'/assets/testimonials/snitch.jpg',person:'Manish Thanvi',role:'Head of Brand',quote:`Their proactive team built 40+ marketing funnels and unlocked new growth opportunities.`},
+  {name:'GoFloaters',logo:'/assets/client-logos/gofloaters.png',className:'leader-brand-gofloaters',photo:'/assets/testimonials/gofloaters.jpg',person:'Shyam Sundar',role:'Founder',quote:`The team delivered development, performance marketing and omnichannel outreach with impressive speed.`},
   {name:'Milky Mist',logo:'/assets/client-logos/milky-mist.jpg',className:'leader-brand-milky',photo:'/assets/testimonials/milky-mist.jpg',person:'Mitthra Senthilnathan',role:'Brand Manager',quote:`A team that understood our creative requirements and translated them into engaging content.`},
 ];
 function Testimonials() {
