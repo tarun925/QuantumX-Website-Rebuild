@@ -136,7 +136,7 @@ function ProjectVisual({project}) {
 function ProjectCard({project,compact=false,homepage=false,listing=false}) {
   return <Link href={`/projects/${project.slug}`} className={`project-card ${compact?'compact':''} project-card-${project.slug}`}>
     <div className="project-meta"><h3>{project.name}</h3><p>{project.description}</p><span className="project-link">View Project ↗</span></div>
-    <ProjectVisual project={(homepage || (listing && ['snitch', 'gofloaters'].includes(project.slug))) && project.homepageImage ? {...project, image:project.homepageImage} : project}/>
+    <ProjectVisual project={listing && project.listingImage ? {...project, image:project.listingImage} : (homepage || (listing && ['snitch', 'gofloaters', 'zellify'].includes(project.slug))) && project.homepageImage ? {...project, image:project.homepageImage} : project}/>
     <div className="compact-caption"><h3>{project.name}</h3><p>{project.category} ↗</p></div>
   </Link>;
 }
