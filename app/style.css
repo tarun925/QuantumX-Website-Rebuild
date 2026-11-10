@@ -369,3 +369,7 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .case-work-item:nth-child(even) .case-proof-image{order:1}
 .case-impact-visual{max-width:1000px;margin:55px auto 0}
 @media(max-width:767px){.case-work-item:nth-child(even) .case-proof-image{order:initial}.case-impact-visual{margin-top:40px}}
+
+/* Keep the ASET website screenshot aligned with the page and at its natural proportions. */
+.case-hero-media-aset{width:calc(100% - 2 * var(--page-gutter));max-width:1200px;height:auto;margin:0 auto;background:transparent}
+.case-hero-media-aset .project-image{width:100%;height:auto;object-fit:contain;animation:none}
