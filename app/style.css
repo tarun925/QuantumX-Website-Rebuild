@@ -339,3 +339,6 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(max-width:767px){.quantum-logo-strip .client-logo-authoring{overflow:visible}.quantum-logo-strip .client-logo-authoring img{transform:scale(1.08)}}
 /* Keep all five marks inside their cells on narrow screens. */
 .quantum-logo-strip .client-logo img{min-width:0}
+/* Keep BDM's lettering legible on white while preserving its blue symbol. */
+.quantum-logo-strip .client-logo-bdm img:first-child{filter:brightness(0)}
+.quantum-logo-strip .client-logo-bdm .bdm-colored-icon{position:absolute;inset:0;clip-path:inset(0 0 34% 68%)}

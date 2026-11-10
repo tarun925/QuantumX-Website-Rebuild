@@ -167,7 +167,7 @@ const clientLogoGroups = [
     {name:'The Artment',src:'/assets/client-logos/partners/the-artment.webp'},
     {name:'Lakmé Academy',src:'/assets/client-logos/partners/lakme-academy.webp'},
     {name:'Salt and Cure',src:'/assets/client-logos/partners/salt-and-cure.webp'},
-    {name:'RYDT',src:'/assets/client-logos/partners/rydt.webp'},
+    {name:'BDM',src:'/assets/client-logos/partners/bdm.webp',className:'client-logo-bdm'},
   ],
   [
     {name:'Aurenor Salon',src:'/assets/client-logos/partners/aurenor.webp'},
@@ -194,7 +194,7 @@ function ClientLogos() {
   return <section className="client-logo-section" aria-label="Selected client brands" data-paused={paused ? 'true' : 'false'} onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={event=>{if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);}}>
     <div className="logo-strip quantum-logo-strip" role="group" aria-label={`Brand group ${group + 1} of ${clientLogoGroups.length}`}>
       {clientLogoGroups[group].map((logo,index) => <span key={`${group}-${logo.name}`} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
-        {logo.placeholder ? <span className="client-logo-placeholder" aria-label={`${logo.name} logo placeholder`}>{logo.name}</span> : <><img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}</>}
+        {logo.placeholder ? <span className="client-logo-placeholder" aria-label={`${logo.name} logo placeholder`}>{logo.name}</span> : <><img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}{logo.className === 'client-logo-bdm' && <img className="bdm-colored-icon" src={logo.src} alt="" aria-hidden="true"/>}</>}
       </span>)}
     </div>
     <div className="client-logo-controls" aria-label="Choose a brand group">{clientLogoGroups.map((_,index)=><button type="button" key={index} className={group === index ? 'active' : ''} onClick={()=>setGroup(index)} aria-label={`Show brand group ${index + 1}`} aria-pressed={group === index}/>)}</div>
