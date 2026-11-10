@@ -28,7 +28,16 @@ export const projects = [
   {slug:'ambuja-cement', name:'Ambuja Cement', category:'Product Creative', sector:'Building Materials', image:asset('ambuja.jpg'), sourceSlide:16, description:'Product creative for a water-resistant cement range.'},
 ];
 
-export const projectCategories = ['All','Growth & Digital Experience','Websites','Brand Identity','Campaign Creative','Product Creative','Photography'];
+export const projectCategories = ['All / Enterprise','UI / UX','Websites & Apps','Branding','Performance Marketing','Photography'];
+
+export function projectMatchesCategory(project, category) {
+  if (category === 'All / Enterprise') return true;
+  if (category === 'UI / UX') return project.category === 'Websites' || ['aset-college', 'gofloaters'].includes(project.slug);
+  if (category === 'Websites & Apps') return project.category === 'Websites' || ['aset-college', 'gofloaters'].includes(project.slug);
+  if (category === 'Branding') return project.category === 'Brand Identity';
+  if (category === 'Performance Marketing') return ['Growth & Digital Experience', 'Campaign Creative', 'Product Creative'].includes(project.category);
+  return category === 'Photography' && project.category === 'Photography';
+}
 export const services = ['Strategy','Creative','Performance Marketing','B2B Growth','Digital Experience','CRM & Automation','Data & Analytics'];
 export const industries = ['Consumer & D2C','Hospitality & Travel','Technology','Education & Healthcare','B2B & Industrial','Real Estate & Lifestyle'];
 export const markets = ['Chennai HQ','India','North America','Europe','Middle East','Asia-Pacific'];

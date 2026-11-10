@@ -2,7 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import Capabilities from './capabilities';
-import {projects,projectCategories,services,industries,markets} from './portfolio';
+import {projects,projectCategories,projectMatchesCategory,services,industries,markets} from './portfolio';
 
 const slugify = (value) => value.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const title = (value='') => value.split('-').map(word=>word[0]?.toUpperCase()+word.slice(1)).join(' ');
@@ -278,9 +278,9 @@ function Home() {
   </main><Footer/><FloatingProjectCTA/></>;
 }
 function Projects() {
-  const [filter,setFilter]=useState('All');
-  const visible=filter==='All'?projects:projects.filter(project=>project.category===filter);
-  return <><Header dark/><main className="dark-page"><div className="page-hero projects-hero"><h1>CRAFTED<br/><em>for</em> GROWTH</h1><p>Identity, campaigns, digital experiences and connected marketing systems for brands across industries.</p><div className="filters" aria-label="Filter projects">{projectCategories.map(category=><button key={category} className={filter===category?'selected':''} onClick={()=>setFilter(category)} aria-pressed={filter===category}>{category}</button>)}</div></div><div className="project-grid">{visible.map(project=><ProjectCard compact key={project.slug} project={project}/>)}</div><ProjectCTA/></main><Footer/></>;
+  const [filter,setFilter]=useState('All / Enterprise');
+  const visible=projects.filter(project=>projectMatchesCategory(project,filter));
+  return <><Header dark/><main className="dark-page projects-page"><div className="page-hero projects-hero"><h1>CRAFTED<br/><em>for</em> GROWTH</h1><p>Identity, campaigns, digital experiences and connected marketing systems for brands across industries.</p><div className="filters" aria-label="Filter projects">{projectCategories.map(category=><button key={category} className={filter===category?'selected':''} onClick={()=>setFilter(category)} aria-pressed={filter===category}>{category}</button>)}</div></div><div className="project-grid">{visible.map(project=><ProjectCard compact key={project.slug} project={project}/>)}</div><ProjectCTA/></main><Footer/></>;
 }
 const caseProcess = ['Discovery & research','Visual exploration','Wireframing','Visual design','Prototyping','Development & launch','Marketing & optimisation'];
 function CaseMediaPlaceholder({label,wide=false}) {

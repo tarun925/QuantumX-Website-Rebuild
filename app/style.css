@@ -373,3 +373,10 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 /* Keep the ASET website screenshot aligned with the page and at its natural proportions. */
 .case-hero-media-aset{width:calc(100% - 2 * var(--page-gutter));max-width:1200px;height:auto;margin:0 auto;background:transparent}
 .case-hero-media-aset .project-image{width:100%;height:auto;object-fit:contain;animation:none}
+
+/* Projects filters and grid extend slightly beyond the main page alignment. */
+.projects-page .filters{margin-inline:-15px;display:flex;flex-wrap:wrap;overflow:visible;gap:8px 0}
+.projects-page .filters button,.projects-page .filters button:first-child{padding:14px clamp(12px, 1.6vw, 24px);font-family:inherit;font-size:clamp(11px, 1vw, 14px);font-style:normal;text-transform:uppercase}
+.projects-page .filters button.selected{color:#fff}
+.projects-page>.project-grid{margin-inline:max(16px, calc(var(--page-gutter) - 30px));column-gap:4px;row-gap:32px}
+@media(max-width:767px){.projects-page .filters{margin-inline:0}.projects-page .filters button,.projects-page .filters button:first-child{padding:10px 12px}.projects-page>.project-grid{row-gap:28px}}
