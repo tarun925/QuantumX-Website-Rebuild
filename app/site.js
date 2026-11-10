@@ -74,7 +74,7 @@ function Testimonials() {
     <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
   </section>;
 }
-function Header({dark=false,workDark=false,newsLight=false}) {
+function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false}) {
   const [open,setOpen] = useState(false);
   const [navDark,setNavDark] = useState(dark);
   const [navGlass,setNavGlass] = useState(false);
@@ -91,9 +91,9 @@ function Header({dark=false,workDark=false,newsLight=false}) {
       const lastProject = document.querySelector('.featured-projects .project-card:last-child');
       const capabilities = document.querySelector('.capabilities-section');
       const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
-      setNavGlass(Boolean(lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line));
+      setNavGlass(Boolean((glassOnScroll && window.scrollY > 24) || (lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line)));
       const news = document.querySelector('.quantum-news');
-      const isDark = (crossesLine(news) && !newsLight) || crossesLine(document.querySelector('main.dark-page')) ||
+      const isDark = (crossesLine(news) && !newsLight) || crossesLine(document.querySelector('main.dark-page, main.industries-page')) ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
@@ -105,14 +105,14 @@ function Header({dark=false,workDark=false,newsLight=false}) {
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule);
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
-  }, [dark,workDark,newsLight]);
+  }, [dark,workDark,newsLight,glassOnScroll]);
   return <>
     <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''}`}>
       <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/projects">Projects</Link><Link href="/industries">Industries</Link><Link href="/services">Services</Link></nav>
       <button className={`hamburger ${open?'active':''}`} aria-label={open?'Close menu':'Open menu'} aria-expanded={open} onClick={()=>setOpen(!open)}><i/><i/><i/></button>
     </header>
-    {open&&<div className="menu"><div className="menu-links">{['About','Projects','Services','Industries','Contact'].map(item=><Link key={item} href={`/${slugify(item)}`} onClick={()=>setOpen(false)}>{item}<span>↗</span></Link>)}</div><div className="menu-side"><p>Have a project in mind?</p><a href={`mailto:${email}`}>{email} ↗</a><small>CHENNAI · INDIA · NORTH AMERICA · EUROPE · MIDDLE EAST · ASIA-PACIFIC</small></div></div>}
+    {open&&<div className="menu"><div className="menu-links">{['About','Projects','Services','Industries','Blogs','Contact'].map(item=><Link key={item} href={`/${slugify(item)}`} onClick={()=>setOpen(false)}>{item}<span>↗</span></Link>)}</div><div className="menu-side"><p>Have a project in mind?</p><a href={`mailto:${email}`}>{email} ↗</a><small>CHENNAI · INDIA · NORTH AMERICA · EUROPE · MIDDLE EAST · ASIA-PACIFIC</small></div></div>}
   </>;
 }
 function Footer() {
@@ -342,6 +342,31 @@ function IndustryDetail({industry}) {
   const index=industryContent.indexOf(industry);
   return <><Header dark/><main className="industries-page"><section className="industry-hero industry-detail-hero"><Link className="industry-back" href="/industries">← All industries</Link><p className="industry-kicker">INDUSTRY {String(index+1).padStart(2,'0')}</p><h1>{industry.name}<span>.</span></h1><p>{industry.intro}</p><div className="industry-stats"><div><strong>6+</strong><span>Years of QuantumX experience</span></div><div><strong>05</strong><span>Industry challenges explored</span></div><div><strong>07</strong><span>Capability areas</span></div></div></section><section className="industry-section industry-understanding"><div><p className="industry-kicker">UNDERSTANDING THE INDUSTRY</p><h2>Built around<br/><span>your business.</span></h2></div><p>{industry.understanding}</p></section><section className="industry-section industry-challenges"><div className="industry-section-head"><p className="industry-kicker">THE CHALLENGES</p><h2>What businesses<br/><span>are navigating.</span></h2></div><div className="industry-challenge-grid">{industry.challenges.map((challenge,i)=><article key={challenge}><span>{String(i+1).padStart(2,'0')}</span><p>{challenge}</p></article>)}</div></section><section className="industry-section industry-understanding"><div><p className="industry-kicker">HOW QUANTUMX HELPS</p><h2>One connected<br/><span>approach.</span></h2></div><p>{industry.approach}</p></section><section className="industry-section industry-capabilities"><div className="industry-section-head"><p className="industry-kicker">OUR CAPABILITIES</p><h2>Solutions shaped<br/><span>for your industry.</span></h2></div><div className="industry-capability-list">{industry.capabilities.map((capability,i)=><div key={capability}><span>{String(i+1).padStart(2,'0')}</span><h3>{capability}</h3><span aria-hidden="true">↗</span></div>)}</div></section><section className="industry-contact"><p className="industry-kicker">LET’S BUILD WHAT’S NEXT</p><h2>Ready to move<br/><span>forward?</span></h2><p>Tell us what your business needs next, and let’s build a connected path to growth.</p><Button/></section></main><Footer/></>;
 }
+const blogTopics = [
+  {name:'Strategy',title:'Thinking beyond the next campaign.',description:'Ideas for connecting the decisions that drive lasting growth.',className:'strategy'},
+  {name:'Branding',title:'Brands built to be remembered.',description:'Perspectives on identity, creativity and meaningful connection.',className:'branding'},
+  {name:'Digital experiences',title:'Better experiences, built together.',description:'Exploring the details that make digital products work for people.',className:'digital'},
+  {name:'AI & growth',title:'New tools. Human direction.',description:'A closer look at technology, automation and the future of growth.',className:'ai'},
+];
+const blogCategories = ['All', 'UI/UX', 'Branding', 'Growth', 'Technology', 'AI'];
+const publishedArticles = [];
+function Blogs() {
+  const [current,setCurrent]=useState(0);
+  const [paused,setPaused]=useState(false);
+  const [hovered,setHovered]=useState(false);
+  const [query,setQuery]=useState('');
+  const [category,setCategory]=useState('All');
+  useEffect(()=>{
+    const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
+    let timer;
+    const update=()=>{clearInterval(timer);if(!paused && !hovered && !motion.matches) timer=setInterval(()=>setCurrent(value=>(value+1)%blogTopics.length),5000)};
+    update();motion.addEventListener('change',update);
+    return ()=>{clearInterval(timer);motion.removeEventListener('change',update)};
+  },[paused,hovered]);
+  const visible=publishedArticles.filter(article=>(category==='All'||article.categories.includes(category)) && article.title.toLowerCase().includes(query.trim().toLowerCase()));
+  const topic=blogTopics[current];
+  return <><Header glassOnScroll/><main className="blog-page"><section className="blog-intro"><nav className="blog-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Blogs</span></nav><div className="blog-hero-heading"><div><p className="eyebrow">THE QUANTUMX JOURNAL</p><h1>Ideas for<br/><span>what’s next.</span></h1></div><p>Perspectives on brands, technology, digital experiences and growth.</p></div><div className="blog-feature" onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}><div className={`blog-feature-art blog-art-${topic.className}`} aria-hidden="true"><span>Q<span>✦</span></span><i/></div><div className="blog-feature-copy" aria-live="polite"><p className="blog-feature-label">TOPICS WE’RE EXPLORING <span> / {String(current+1).padStart(2,'0')}</span></p><p className="blog-feature-category">{topic.name}</p><h2>{topic.title}</h2><p>{topic.description}</p><div className="blog-feature-controls"><button type="button" aria-label="Previous topic" onClick={()=>setCurrent((current+blogTopics.length-1)%blogTopics.length)}>←</button><button type="button" aria-label="Next topic" onClick={()=>setCurrent((current+1)%blogTopics.length)}>→</button><button type="button" className="blog-pause" onClick={()=>setPaused(value=>!value)} aria-label={paused?'Resume carousel':'Pause carousel'}>{paused?'Play':'Pause'}</button></div></div></div></section><section className="blog-library" aria-labelledby="blog-library-title"><div className="blog-library-heading"><div><p className="eyebrow">EXPLORE THE JOURNAL</p><h2 id="blog-library-title">Fresh thinking<span>.</span></h2></div><p>Explore stories and insights from the QuantumX team.</p></div><div className="blog-tools"><label className="blog-search"><span className="sr-only">Search blog articles</span><span aria-hidden="true">⌕</span><input type="search" placeholder="Search articles" value={query} onChange={event=>setQuery(event.target.value)}/></label><div className="blog-filters" aria-label="Filter blog articles by topic">{blogCategories.map(item=><button type="button" key={item} className={category===item?'active':''} aria-pressed={category===item} onClick={()=>setCategory(item)}>{item}</button>)}</div></div>{visible.length ? <div className="blog-article-grid">{visible.map(article=><Link key={article.href} href={article.href}><h3>{article.title}</h3></Link>)}</div> : <div className="blog-empty-state" role="status"><span aria-hidden="true">✦</span><h3>{publishedArticles.length===0?'Stories are coming soon.':'No articles found.'}</h3><p>{publishedArticles.length===0?'Our journal is taking shape. Check back for ideas and insights from the QuantumX team.':'Try another search or choose a different topic.'}</p>{(query || category!=='All') && <button type="button" onClick={()=>{setQuery('');setCategory('All')}}>Clear filters ↗</button>}</div>}</section></main><Footer/></>;
+}
 function PrivacyPolicy() {
   return <><Header/><main className="privacy-page"><div className="privacy-inner"><nav className="privacy-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Privacy policy</span></nav><h1>Our Privacy Policy<span>.</span></h1><p className="privacy-notice"><strong>Draft for review.</strong> This policy contains items that require confirmation before publication.</p><div className="privacy-content"><p className="privacy-updated">Last updated: 11 November 2026</p>{privacyPolicyContent.map((block,index)=>{
     if (block.type === 'heading') return <h2 key={index}>{block.text}</h2>;
@@ -364,5 +389,5 @@ export default function Site({path}) {
   useEffect(()=>{window.scrollTo(0,0)},[path.join('/')]);
   const project=path[0]==='projects'&&path[1]?projects.find(item=>item.slug===path[1]):null;
   const industry=path[0]==='industries'&&path[1]?industryContent.find(item=>item.slug===path[1]):null;
-  return <>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:industry?<IndustryDetail industry={industry}/>:path[0]==='industries'&&!path[1]?<IndustryOverview/>:path[0]==='contact'?<Contact/>:path[0]==='privacy-policy'?<PrivacyPolicy/>:path[0]==='terms-conditions'?<TermsConditions/>:<Generic path={path}/>}</>;
+  return <>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:industry?<IndustryDetail industry={industry}/>:path[0]==='industries'&&!path[1]?<IndustryOverview/>:path[0]==='contact'?<Contact/>:path[0]==='blogs'?<Blogs/>:path[0]==='privacy-policy'?<PrivacyPolicy/>:path[0]==='terms-conditions'?<TermsConditions/>:<Generic path={path}/>}</>;
 }
