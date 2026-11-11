@@ -1,0 +1,31 @@
+/* A self-contained illustration so it can be reviewed without changing the rest of the site. */
+.hero-quantum-node{position:absolute;z-index:1;top:92px;right:max(0px,calc(var(--page-gutter) - 90px));width:min(49vw,650px);pointer-events:none;animation:qnode-whole-float 9s ease-in-out infinite}
+.qnode-art{display:block;width:100%;height:auto;overflow:visible}
+.qnode-wire{fill:none;stroke:#b99a78;stroke-width:1.35;opacity:.55}
+.qnode-energy{fill:none;stroke:#ec8812;stroke-width:3;stroke-linecap:round;filter:url(#qnode-glow);animation:qnode-travel 3s linear infinite}
+.qnode-circuit{stroke:#bc8b58;stroke-width:2;opacity:.8}
+.qnode-branch-wire{fill:none;stroke:#c99b6a;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.68}
+.qnode-branch-junction{fill:#db790f}
+.qnode-branch-halo{fill:#f19929;opacity:.22;animation:qnode-branch-glow 3s ease-in-out infinite}
+.qnode-branch-pulses{filter:url(#qnode-glow)}
+.qnode-branch-energy{fill:none;stroke:#f18d17;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;animation:qnode-travel 3.6s linear infinite}
+.qnode-center-beam{fill:none;stroke:#e8942e;stroke-width:1.5;stroke-dasharray:3 7;opacity:.5}
+.qnode-position{color:#c56b08;transition:transform 1s cubic-bezier(.22,1,.36,1);will-change:transform}
+.qnode-floating{animation:qnode-float 5s ease-in-out infinite}
+.qnode-node-ring{fill:#fff;fill-opacity:.9;stroke:#d5ccc2;stroke-width:1.5;transition:stroke .5s,fill .5s,filter .5s}
+.qnode-node-glow{fill:#ee8a18;opacity:.08;transition:opacity .5s}
+.qnode-position.is-active{color:#e77d08}
+.qnode-position.is-active .qnode-node-ring{stroke:#e79132;filter:url(#qnode-glow)}
+.qnode-position.is-active .qnode-node-glow{opacity:.2}
+.qnode-label{font-family:Jakarta,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:.01em;fill:#776b60;stroke:none}
+.qnode-position.is-active .qnode-label{fill:#bc6000}
+.qnode-brand{opacity:0;transition:opacity .55s ease;animation:qnode-float 5s ease-in-out infinite}
+.qnode-brand.is-visible{opacity:1}
+.qnode-core-glow{animation:qnode-breathe 3s ease-in-out infinite}
+@keyframes qnode-travel{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes qnode-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes qnode-whole-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes qnode-breathe{0%,100%{opacity:.65}50%{opacity:1}}
+@keyframes qnode-branch-glow{0%,100%{opacity:.12}50%{opacity:.42}}
+@media(max-width:767px){.hero .hero-quantum-node{position:relative;top:auto;right:auto;width:min(100%,480px);align-self:center;margin:32px auto -5px}.qnode-label{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.hero-quantum-node,.qnode-floating,.qnode-brand,.qnode-core-glow{animation:none;transform:none}.qnode-energy,.qnode-branch-pulses{display:none}.qnode-branch-halo{animation:none}.qnode-position{transition:none;will-change:auto}}
