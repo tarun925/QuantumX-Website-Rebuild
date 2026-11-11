@@ -29,6 +29,7 @@ export default function AboutPage({ContactButtonContents}) {
     const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
     const opening=container.querySelector('.about-hero');
     const story=container.querySelector('.about-story');
+    const whiteZone=container.querySelector('.about-white-zone');
     const split=container.querySelector('.about-split-wrap');
     const teamMotion=container.querySelector('.about-team-motion');
     const teamGrid=container.querySelector('.about-team-grid');
@@ -39,6 +40,7 @@ export default function AboutPage({ContactButtonContents}) {
       if(motion.matches){
         opening?.style.setProperty('--about-hero-fade','0');
         story?.style.setProperty('--about-drift','0px');
+        whiteZone?.style.removeProperty('--about-zone-color');
         split?.style.removeProperty('--about-split-x');
         split?.style.removeProperty('--about-split-y');
         split?.style.removeProperty('--about-split-rotation');
@@ -54,6 +56,13 @@ export default function AboutPage({ContactButtonContents}) {
         const rect=story.getBoundingClientRect();
         const progress=clamp((window.innerHeight*.85-rect.top)/(window.innerHeight*.8));
         story.style.setProperty('--about-drift',`${(1-progress)*Math.min(window.innerWidth*.32,340)}px`);
+      }
+      if(whiteZone){
+        const rect=whiteZone.getBoundingClientRect();
+        const progress=clamp((window.innerHeight-rect.top)/(window.innerHeight*.6));
+        const eased=progress*progress*(3-2*progress);
+        const shade=Math.round(23+232*eased);
+        whiteZone.style.setProperty('--about-zone-color',`rgb(${shade}, ${shade}, ${shade})`);
       }
       if(split){
         const rect=split.getBoundingClientRect();
@@ -98,8 +107,8 @@ export default function AboutPage({ContactButtonContents}) {
       <div className="about-hero-inner">
         <div className="about-hero-top"><p>ABOUT QUANTUMX</p><p>CHENNAI, INDIA <span aria-hidden="true">↗</span></p></div>
         <div className="about-hero-layout"><div className="about-hero-copy"><p className="about-overline">STRATEGY · CREATIVITY · TECHNOLOGY</p><h1>Good ideas.<br/><span>Better</span> together<span className="about-dot">.</span></h1><p className="about-hero-description">We’re a team of thinkers, makers and problem solvers connecting the dots between brands, technology and growth.</p><Link className="pill contact-motion" href="/contact"><ContactButtonContents/></Link></div>
-          <div className="about-hero-art" aria-hidden="true"><div className="about-art-ring"><div className="about-art-center"><img src="/assets/quantum-logo-white.svg" alt=""/><small>IDEAS IN MOTION</small></div><div className="about-orbit-track about-orbit-years"><div className="about-sticker about-sticker-years"><strong>05</strong><span>YEARS<br/>IN MOTION</span></div></div><div className="about-orbit-track about-orbit-ideas"><div className="about-sticker about-sticker-build"><span>MADE OF</span><strong>good<br/>ideas ✦</strong></div></div></div><div className="about-art-spark">✦</div><div className="about-art-caption">HUMAN-LED <span>↗</span><br/>BUILT TO CONNECT</div></div>
-        </div><div className="about-scroll-cue"><span>SCROLL TO EXPLORE</span><span aria-hidden="true">↓</span></div>
+          <div className="about-hero-art" aria-hidden="true" onPointerMove={event=>{if(event.pointerType!=='mouse')return;const rect=event.currentTarget.getBoundingClientRect();event.currentTarget.style.setProperty('--about-interact-x',`${((event.clientX-rect.left)/rect.width-.5)*24}px`)}} onPointerLeave={event=>event.currentTarget.style.removeProperty('--about-interact-x')}><div className="about-art-ring"><div className="about-art-center"><img src="/assets/quantum-logo-white.svg" alt=""/><small>IDEAS IN MOTION</small></div><div className="about-orbit-track about-orbit-years"><div className="about-sticker about-sticker-years"><strong>05</strong><span>YEARS<br/>IN MOTION</span></div></div><div className="about-orbit-track about-orbit-ideas"><div className="about-sticker about-sticker-build"><span>MADE OF</span><strong>good<br/>ideas ✦</strong></div></div></div><div className="about-art-spark">✦</div><div className="about-art-caption">HUMAN-LED <span>↗</span><br/>BUILT TO CONNECT</div></div>
+        </div>
       </div>
     </section>
     <div className="about-dark">

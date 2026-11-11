@@ -99,11 +99,12 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
       const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
       setNavGlass(Boolean((glassOnScroll && window.scrollY > 24) || (lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line)));
       const news = document.querySelector('.quantum-news');
-      const lightAbout = crossesLine(document.querySelector('.about-white-zone'));
+      const lightAbout = crossesLine(document.querySelector('.about-white-zone')) || (aboutPage && crossesLine(document.querySelector('.newsletter-section')));
+      const darkAboutSection = [...document.querySelectorAll('.about-team, .about-culture, .about-final-cta')].some(crossesLine);
       setAboutLight(lightAbout);
       const isDark = (crossesLine(news) && !newsLight) || crossesLine(document.querySelector('main.dark-page, main.industries-page, main.blog-page, main.blog-article-page')) ||
         crossesLine(document.querySelector('.services-catalog')) || crossesLine(document.querySelector('.services-end')) ||
-        crossesLine(document.querySelector('.about-hero')) || (crossesLine(document.querySelector('.about-dark')) && !lightAbout) || crossesLine(document.querySelector('.about-team, .about-culture, .about-final-cta')) ||
+        crossesLine(document.querySelector('.about-hero')) || (crossesLine(document.querySelector('.about-dark')) && !lightAbout) || darkAboutSection ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
@@ -115,7 +116,7 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule);
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
-  }, [dark,workDark,newsLight,glassOnScroll]);
+  }, [dark,workDark,newsLight,glassOnScroll,aboutPage]);
   return <>
     <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''} ${aboutPage?'header-about':''} ${aboutPage && aboutLight?'header-about-light':''}`}>
       <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
