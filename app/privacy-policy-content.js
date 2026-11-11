@@ -5,7 +5,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "This Privacy Policy explains how QuantumX Tech Sol LLP (“QuantumX”, “we”, “us” or “our”) collects, uses, stores, shares and otherwise processes personal data when you visit https://quantumx.one, contact us, request information, subscribe to communications, create or use an account, engage us for services, or interact with our digital products and services."
+    "text": "This Privacy Policy explains how QuantumX Tech Sol LLP (“QuantumX”, “we”, “us” or “our”) collects, uses, stores, shares and otherwise processes personal data when you visit https://quantumx1.in, contact us, request information, subscribe to communications, create or use an account, engage us for services, or interact with our digital products and services."
   },
   {
     "type": "paragraph",
@@ -32,7 +32,7 @@ export const privacyPolicyContent = [
       ],
       [
         "Website",
-        "https://quantumx.one"
+        "https://quantumx1.in"
       ],
       [
         "Registered office",
@@ -40,7 +40,7 @@ export const privacyPolicyContent = [
       ],
       [
         "Privacy contact",
-        "info@quantumx.one"
+        "growth@quantumx1.in"
       ]
     ]
   },
@@ -349,11 +349,11 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "You may also opt out of promotional emails by using the unsubscribe link in the message or by contacting info@quantumx.one. You may continue to receive transactional or service-related communications where necessary."
+    "text": "You may also opt out of promotional emails by using the unsubscribe link in the message or by contacting growth@quantumx1.in. You may continue to receive transactional or service-related communications where necessary."
   },
   {
     "type": "paragraph",
-    "text": "To make a privacy request, email info@quantumx.one with the subject line “Privacy Request”. Please describe your request and provide enough information for us to identify the relevant interaction or account. We may request reasonable information to verify your identity and protect against unauthorised disclosure. We will respond in accordance with applicable law and may explain if a request cannot be fulfilled because of a legal obligation, an exception or another lawful reason."
+    "text": "To make a privacy request, email growth@quantumx1.in with the subject line “Privacy Request”. Please describe your request and provide enough information for us to identify the relevant interaction or account. We may request reasonable information to verify your identity and protect against unauthorised disclosure. We will respond in accordance with applicable law and may explain if a request cannot be fulfilled because of a legal obligation, an exception or another lawful reason."
   },
   {
     "type": "paragraph",
@@ -369,7 +369,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "We may send business updates, newsletters, invitations, product or service information and promotional communications where permitted by applicable law and consistent with your preferences. You can opt out at any time by using the unsubscribe mechanism or contacting info@quantumx.one. We may retain a limited record of your opt-out so that we do not send further promotional communications."
+    "text": "We may send business updates, newsletters, invitations, product or service information and promotional communications where permitted by applicable law and consistent with your preferences. You can opt out at any time by using the unsubscribe mechanism or contacting growth@quantumx1.in. We may retain a limited record of your opt-out so that we do not send further promotional communications."
   },
   {
     "type": "paragraph",
@@ -385,7 +385,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "If you believe a child has provided personal data to QuantumX in a context where it should not have been collected, contact info@quantumx.one so we can review the matter and take appropriate steps."
+    "text": "If you believe a child has provided personal data to QuantumX in a context where it should not have been collected, contact growth@quantumx1.in so we can review the matter and take appropriate steps."
   },
   {
     "type": "heading",
@@ -421,7 +421,7 @@ export const privacyPolicyContent = [
   },
   {
     "type": "paragraph",
-    "text": "We may update this Policy from time to time to reflect changes in our services, data practices, technology, legal requirements or business operations. The revised version will be posted on https://quantumx.one with an updated “Last updated” date. Where required by law, we will provide additional notice or seek consent for material changes."
+    "text": "We may update this Policy from time to time to reflect changes in our services, data practices, technology, legal requirements or business operations. The revised version will be posted on https://quantumx1.in with an updated “Last updated” date. Where required by law, we will provide additional notice or seek consent for material changes."
   },
   {
     "type": "heading",
@@ -444,11 +444,11 @@ export const privacyPolicyContent = [
       ],
       [
         "Email",
-        "info@quantumx.one"
+        "growth@quantumx1.in"
       ],
       [
         "Website",
-        "https://quantumx.one"
+        "https://quantumx1.in"
       ],
       [
         "Postal address",

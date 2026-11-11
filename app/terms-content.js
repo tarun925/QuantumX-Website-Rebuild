@@ -5,7 +5,7 @@ export const termsContent = [
   },
   {
     "type": "paragraph",
-    "text": "The website https://quantumx.one (the “Website”) is owned and operated by QuantumX Tech Sol LLP (“QuantumX”, “Company”, “we”, “us” or “our”), a limited liability partnership organised under the laws of India."
+    "text": "The website https://quantumx1.in (the “Website”) is owned and operated by QuantumX Tech Sol LLP (“QuantumX”, “Company”, “we”, “us” or “our”), a limited liability partnership organised under the laws of India."
   },
   {
     "type": "paragraph",
@@ -436,11 +436,11 @@ export const termsContent = [
       ],
       [
         "Email",
-        "info@quantumx.one"
+        "growth@quantumx1.in"
       ],
       [
         "Website",
-        "https://quantumx.one"
+        "https://quantumx1.in"
       ],
       [
         "Registered office",
