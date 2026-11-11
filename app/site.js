@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import Capabilities from './capabilities';
+import AboutPage from './about-page';
 import {privacyPolicyContent} from './privacy-policy-content';
 import {termsContent} from './terms-content';
 import {industryContent} from './industry-content';
@@ -78,7 +79,7 @@ function Testimonials() {
     <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
   </section>;
 }
-function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,showContact=false}) {
+function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,showContact=false,aboutPage=false}) {
   const [open,setOpen] = useState(false);
   const [navDark,setNavDark] = useState(dark);
   const [navGlass,setNavGlass] = useState(false);
@@ -99,6 +100,7 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
       const news = document.querySelector('.quantum-news');
       const isDark = (crossesLine(news) && !newsLight) || crossesLine(document.querySelector('main.dark-page, main.industries-page, main.blog-page, main.blog-article-page')) ||
         crossesLine(document.querySelector('.services-catalog')) || crossesLine(document.querySelector('.services-end')) ||
+        crossesLine(document.querySelector('.about-dark')) || crossesLine(document.querySelector('.about-soundtrack')) ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));
@@ -112,7 +114,7 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
   }, [dark,workDark,newsLight,glassOnScroll]);
   return <>
-    <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''}`}>
+    <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''} ${aboutPage?'header-about':''}`}>
       <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
       <nav className="desktop-nav" aria-label="Main navigation"><Link href="/projects">Projects</Link><Link href="/industries">Industries</Link><Link href="/services">Services</Link></nav>
       {showContact && <Link href="/contact" className="header-contact contact-motion" onClick={()=>setOpen(false)}><ContactButtonContents/></Link>}
@@ -273,8 +275,7 @@ function Home() {
     <section className="quantum-news" data-theme={newsLight ? 'light' : 'dark'} aria-labelledby="quantum-news-title"><h2 id="quantum-news-title">Latest at <span>QuantumX</span></h2><div className="quantum-news-columns"><div className="quantum-news-list">
       <Link href="/projects/aset-college" className="quantum-news-row"><img src={projectThumbnail(projects.find(project=>project.slug==='aset-college'))} alt=""/><div><p>ASET COLLEGE CASE STUDY</p><h3>Explore the connected digital journey behind ASET College’s growth. <span>↗</span></h3></div></Link>
       <Link href="/projects/zellify" className="quantum-news-row"><img src={projectThumbnail(projects.find(project=>project.slug==='zellify'))} alt=""/><div><p>ZELLIFY CASE STUDY</p><h3>A conversion-focused digital experience built for a growing product. <span>↗</span></h3></div></Link>
-      <div className="quantum-news-row"><div className="news-placeholder" aria-hidden="true">✦</div><div><p>TRENDS &amp; INSIGHTS <span>• COMING SOON</span></p><h3>Ideas and perspectives on building brands and digital experiences.</h3></div></div>
-      <div className="quantum-news-row"><div className="news-placeholder news-placeholder-light" aria-hidden="true">Q<span>✦</span></div><div><p>QUANTUMX BLOG <span>• COMING SOON</span></p><h3>News, stories and updates from the QuantumX team.</h3></div></div>
+      {blogArticles.slice(0,2).map((article,index)=><Link href={`/blogs/${article.slug}`} className="quantum-news-row" key={article.slug}><div className={`news-placeholder ${index===1?'news-placeholder-light':''}`} aria-hidden="true">{index===0?'✦':<>Q<span>✦</span></>}</div><div><p>{index===0?'TRENDS & INSIGHTS':'QUANTUMX BLOG'} · {article.readTime}</p><h3>{article.title} <span>↗</span></h3></div></Link>)}
     </div><aside className="quantum-recognition" aria-label="Reviews and recognition"><h3>Reviews &amp; recognition</h3><div className="recognition-grid"><div><span aria-hidden="true">✦</span><p>Client reviews</p><small>Coming soon</small></div><div><span aria-hidden="true">☆</span><p>Ratings</p><small>Coming soon</small></div><div><span aria-hidden="true">↗</span><p>Awards &amp; recognition</p><small>Coming soon</small></div><div><span aria-hidden="true">Q</span><p>QuantumX updates</p><small>Coming soon</small></div></div></aside></div></section>
     <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><div className="latest-image-wrap"><ProjectVisual project={{...project, image:projectThumbnail(project)}}/></div><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
     <section className="faq"><h2>Questions we get asked.<br/><em>A lot.</em></h2><div>{questions.map(([question,answer],index)=><div className="faq-item" key={question}><button onClick={()=>setFaq(faq===index?-1:index)} aria-expanded={faq===index}>{question}<span>{faq===index?'−':'+'}</span></button>{faq===index&&<p>{answer}</p>}</div>)}</div></section>
@@ -436,5 +437,5 @@ export default function Site({path}) {
   const blogArticle=path[0]==='blogs'&&path[1]?blogArticles.find(item=>item.slug===path[1]):null;
   const project=path[0]==='projects'&&path[1]?projects.find(item=>item.slug===path[1]):null;
   const industry=path[0]==='industries'&&path[1]?industryContent.find(item=>item.slug===path[1]):null;
-  return <>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:path[0]==='services'&&!path[1]?<ServicesOverview/>:industry?<IndustryDetail industry={industry}/>:path[0]==='industries'&&!path[1]?<IndustryOverview/>:path[0]==='contact'?<Contact/>:blogArticle?<BlogArticle article={blogArticle}/>:path[0]==='blogs'?<Blogs/>:path[0]==='privacy-policy'?<PrivacyPolicy/>:path[0]==='terms-conditions'?<TermsConditions/>:<Generic path={path}/>}</>;
+  return <>{path.length===0?<Home/>:project?<ProjectDetail project={project}/>:path[0]==='projects'?<Projects/>:path[0]==='services'&&!path[1]?<ServicesOverview/>:industry?<IndustryDetail industry={industry}/>:path[0]==='industries'&&!path[1]?<IndustryOverview/>:path[0]==='about'&&!path[1]?<><Header aboutPage glassOnScroll/><AboutPage ContactButtonContents={ContactButtonContents}/><Footer/></>:path[0]==='contact'?<Contact/>:blogArticle?<BlogArticle article={blogArticle}/>:path[0]==='blogs'?<Blogs/>:path[0]==='privacy-policy'?<PrivacyPolicy/>:path[0]==='terms-conditions'?<TermsConditions/>:<Generic path={path}/>}</>;
 }
