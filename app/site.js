@@ -103,7 +103,7 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
       setAboutLight(lightAbout);
       const isDark = (crossesLine(news) && !newsLight) || crossesLine(document.querySelector('main.dark-page, main.industries-page, main.blog-page, main.blog-article-page')) ||
         crossesLine(document.querySelector('.services-catalog')) || crossesLine(document.querySelector('.services-end')) ||
-        (crossesLine(document.querySelector('.about-dark')) && !lightAbout) || crossesLine(document.querySelector('.about-team, .about-culture, .about-final-cta')) ||
+        crossesLine(document.querySelector('.about-hero')) || (crossesLine(document.querySelector('.about-dark')) && !lightAbout) || crossesLine(document.querySelector('.about-team, .about-culture, .about-final-cta')) ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
         (workDark && crossesLine(work));

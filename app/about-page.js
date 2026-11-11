@@ -19,7 +19,7 @@ const principles = [
   {number:'03',title:'Build for people',detail:'Technology with care',tone:'lilac'},
   {number:'04',title:'Grow together',detail:'Progress as a team',tone:'lime'},
 ];
-const team = [{name:'Tarun Kumar',role:'Founder & CEO'},...Array.from({length:9},()=>({name:'Team member',role:'Name & role to be added'}))];
+const team = [{name:'Tarun Kumar',role:'Founder & CEO'},...Array.from({length:5},()=>({name:'Team member',role:'Name & role to be added'}))];
 
 export default function AboutPage({ContactButtonContents}) {
   const root=useRef(null);
@@ -30,6 +30,8 @@ export default function AboutPage({ContactButtonContents}) {
     const opening=container.querySelector('.about-hero');
     const story=container.querySelector('.about-story');
     const split=container.querySelector('.about-split-wrap');
+    const teamMotion=container.querySelector('.about-team-motion');
+    const teamGrid=container.querySelector('.about-team-grid');
     let frame=null;
     const clamp=value=>Math.max(0,Math.min(1,value));
     const update=()=>{
@@ -40,6 +42,7 @@ export default function AboutPage({ContactButtonContents}) {
         split?.style.removeProperty('--about-split-x');
         split?.style.removeProperty('--about-split-y');
         split?.style.removeProperty('--about-split-rotation');
+        teamGrid?.querySelectorAll('.about-person').forEach(card=>{card.style.removeProperty('--team-x');card.style.removeProperty('--team-y');card.style.removeProperty('--team-scale');card.style.removeProperty('--team-rotation')});
         return;
       }
       if(opening){
@@ -61,9 +64,23 @@ export default function AboutPage({ContactButtonContents}) {
         split.style.setProperty('--about-split-y',`${eased*Math.min(window.innerHeight*.15,135)}px`);
         split.style.setProperty('--about-split-rotation',`${eased*7}deg`);
       }
+      if(teamMotion && teamGrid){
+        const rect=teamMotion.getBoundingClientRect();
+        const travel=Math.max(1,rect.height-window.innerHeight*.7);
+        const progress=clamp((window.innerHeight*.7-rect.top)/travel);
+        const eased=progress*progress*(3-2*progress);
+        teamGrid.querySelectorAll('.about-person').forEach((card,index)=>{
+          const dx=teamGrid.clientWidth/2-(card.offsetLeft+card.offsetWidth/2);
+          const dy=teamGrid.clientHeight/2-(card.offsetTop+card.offsetHeight/2);
+          card.style.setProperty('--team-x',`${dx*(1-eased)}px`);
+          card.style.setProperty('--team-y',`${dy*(1-eased)}px`);
+          card.style.setProperty('--team-scale',String(.72+.28*eased));
+          card.style.setProperty('--team-rotation',`${(index%2===0?-1:1)*(1-eased)*8}deg`);
+        });
+      }
     };
     const schedule=()=>{if(frame===null)frame=requestAnimationFrame(update)};
-    const revealItems=container.querySelectorAll('.about-person, .about-stat-item');
+    const revealItems=container.querySelectorAll('.about-stat-item');
     let revealObserver;
     if(!motion.matches && 'IntersectionObserver' in window){
       revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('about-revealed');revealObserver.unobserve(entry.target)}}),{threshold:.08});
@@ -87,11 +104,11 @@ export default function AboutPage({ContactButtonContents}) {
     </section>
     <div className="about-dark">
       <section className="about-story"><div className="about-container"><p className="about-label">A LITTLE ABOUT US <span>✦</span></p><div className="about-story-heading"><div className="about-story-line about-story-left">A better way</div><div className="about-story-line about-story-right"><span>to build.</span></div></div><div className="about-story-bottom"><p>We believe growth happens when the right ideas, people and capabilities come together. QuantumX brings strategy, creativity, performance and technology into one connected system.</p><Link href="/projects" className="about-outline-link">Explore our work <span aria-hidden="true">↗</span></Link></div></div></section>
-      <div className="about-white-zone"><section className="about-numbers"><div className="about-container"><div className="about-section-heading"><div><p className="about-label">OUR JOURNEY SO FAR <span>✦</span></p><h2>Built together.<br/><span>Going further.</span></h2></div><p>Five years of bringing ideas to life, building partnerships and making meaningful work together.</p></div><div className="about-stat-grid"><div className="about-stat-item" style={{'--about-person-delay':'0ms'}}><strong>05<span>✦</span></strong><p>Years of QuantumX</p></div><div className="about-stat-item" style={{'--about-person-delay':'80ms'}}><strong>10<span>+</span></strong><p>People on our team</p></div><div className="about-stat-item" style={{'--about-person-delay':'160ms'}}><strong>118<span>+</span></strong><p>Projects delivered</p></div><div className="about-stat-item" style={{'--about-person-delay':'240ms'}}><strong>07<span>✦</span></strong><p>Industries explored</p></div></div></div><div className="about-partners"><div className="about-container"><p className="about-label">SOME OF THE BRANDS WE’VE WORKED WITH</p></div><div className="about-partner-window"><div className="about-partner-track">{[0,1].map(copy=><div className="about-partner-group" key={copy} aria-hidden={copy===1?'true':undefined}>{partnerLogos.map(logo=><div className="about-logo-sticker" key={logo.name}><img src={logo.src} alt={copy===0?logo.name:''}/></div>)}</div>)}</div></div></div></section>
+      <div className="about-white-zone"><section className="about-numbers"><div className="about-container"><div className="about-section-heading"><div><p className="about-label">OUR JOURNEY SO FAR <span>✦</span></p><h2>Built together.<br/><span>Going further.</span></h2></div><p>Five years of bringing ideas to life, building partnerships and making meaningful work together.</p></div><div className="about-stat-grid"><div className="about-stat-item" style={{'--about-person-delay':'0ms'}}><strong>05<span>✦</span></strong><p>Years of QuantumX</p></div><div className="about-stat-item" style={{'--about-person-delay':'80ms'}}><strong>20<span>+</span></strong><p>People on our team</p></div><div className="about-stat-item" style={{'--about-person-delay':'160ms'}}><strong>118<span>+</span></strong><p>Projects delivered</p></div><div className="about-stat-item" style={{'--about-person-delay':'240ms'}}><strong>07<span>✦</span></strong><p>Industries explored</p></div></div></div><div className="about-partners"><div className="about-container"><p className="about-label">SOME OF THE BRANDS WE’VE WORKED WITH</p></div><div className="about-partner-window"><div className="about-partner-track">{[0,1].map(copy=><div className="about-partner-group" key={copy} aria-hidden={copy===1?'true':undefined}>{partnerLogos.map(logo=><div className="about-logo-sticker" key={logo.name}><img src={logo.src} alt={copy===0?logo.name:''}/></div>)}</div>)}</div></div></div></section>
       <section className="about-split-wrap" aria-labelledby="about-split-title"><div className="about-split-sticky"><div className="about-split-head"><p className="about-label">WHAT DRIVES US <span>✦</span></p><h2 id="about-split-title"><span>Different ideas.</span><br/><em>One direction.</em></h2><p>Good work comes from connecting different ways of thinking.</p></div><div className="about-split-cards">{principles.map((card,index)=><article className={`about-split-card about-card-${index} about-card-${card.tone}`} key={card.title}><span>{card.number} / 04</span><div className="about-card-mark" aria-hidden="true">✦</div><div><h3>{card.title}</h3><p>{card.detail}</p></div></article>)}</div></div></section></div>
       <section className="about-recognition"><div className="about-container about-recognition-inner"><div><p className="about-label">RECOGNITION <span>✦</span></p><h2>Good work<br/><span>speaks for itself.</span></h2></div><div className="about-recognition-note"><span aria-hidden="true">✦</span><p>Our recognition and milestones will be shared here.</p><Link href="/projects">Explore the work ↗</Link></div></div></section>
     </div>
-    <section className="about-team"><div className="about-container"><div className="about-team-intro"><div><p className="about-label">MEET THE PEOPLE <span>✦</span></p><h2>Made by<br/><span>people.</span></h2></div><p>Behind every idea is a group of people bringing different perspectives together. Meet the team making things happen at QuantumX.</p></div><div className="about-team-grid">{team.map((person,index)=><article className="about-person" style={{'--about-person-delay':`${(index%5)*60}ms`}} key={index}><div className={`about-person-image about-person-tone-${index%4}`}><div className="about-person-shape" aria-hidden="true"><span/><i/></div><small>PHOTO TO BE ADDED</small><span className="about-person-mark" aria-hidden="true">✦</span></div><div className="about-person-caption"><h3>{person.name}</h3><p>{person.role}</p></div></article>)}</div><div className="about-team-footer"><p>10+ people. Different perspectives.<br/><strong>One connected team.</strong></p><a href="mailto:careers@quantumx.one" className="about-outline-link">Work with us <span aria-hidden="true">↗</span></a></div></div></section>
+    <section className="about-team"><div className="about-container"><div className="about-team-intro"><div><p className="about-label">MEET THE PEOPLE <span>✦</span></p><h2>Made by<br/><span>people.</span></h2></div><p>Behind every idea is a group of people bringing different perspectives together. Meet the team making things happen at QuantumX.</p></div><div className="about-team-motion"><div className="about-team-sticky"><div className="about-team-grid">{team.map((person,index)=><article className="about-person" onPointerMove={event=>{if(event.pointerType!=='mouse')return;const rect=event.currentTarget.getBoundingClientRect();event.currentTarget.style.setProperty('--tilt-y',`${((event.clientX-rect.left)/rect.width-.5)*10}deg`);event.currentTarget.style.setProperty('--tilt-x',`${(.5-(event.clientY-rect.top)/rect.height)*10}deg`)}} onPointerLeave={event=>{event.currentTarget.style.removeProperty('--tilt-x');event.currentTarget.style.removeProperty('--tilt-y')}} key={index}><div className={`about-person-image about-person-tone-${index%4}`}><div className="about-person-shape" aria-hidden="true"><span/><i/></div><small>PHOTO TO BE ADDED</small><span className="about-person-mark" aria-hidden="true">✦</span></div><div className="about-person-caption"><h3>{person.name}</h3><p>{person.role}</p></div></article>)}</div></div></div><div className="about-team-footer"><p>20+ people. Different perspectives.<br/><strong>One connected team.</strong></p><a href="mailto:careers@quantumx.one" className="about-outline-link">Work with us <span aria-hidden="true">↗</span></a></div></div></section>
     <section className="about-culture"><div className="about-container"><div className="about-section-heading"><div><p className="about-label">LIFE AT QUANTUMX <span>✦</span></p><h2>Curious minds.<br/><span>Shared momentum.</span></h2></div><p>We make space for different ideas, open conversations and the kind of collaboration that moves good work forward.</p></div><div className="about-culture-grid"><article><span>01 / THE PEOPLE</span><h3>Better together.</h3><p>Different perspectives make the work stronger.</p></article><article><span>02 / THE PROCESS</span><h3>Always curious.</h3><p>Ask questions. Explore possibilities. Keep learning.</p></article><article><span>03 / THE WORK</span><h3>Made with care.</h3><p>Thoughtful details add up to meaningful experiences.</p></article></div></div></section>
     <section className="about-final-cta"><div className="about-container"><p className="about-label">LET’S MAKE SOMETHING <span>✦</span></p><h2>Have an idea?<br/><span>Let’s build it.</span></h2><Link className="pill contact-motion" href="/contact"><ContactButtonContents/></Link></div></section>
   </main>;
