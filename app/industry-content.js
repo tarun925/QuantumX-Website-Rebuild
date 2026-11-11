@@ -22,8 +22,8 @@ export const industryContent = [
     "understanding": "We understand product-led businesses across e-commerce, direct-to-consumer, fashion, beauty, food, beverage and lifestyle. These businesses need to present products clearly, build trust quickly and create a consistent experience across storefronts, campaigns and customer touchpoints.",
     "approach": "QuantumX connects brand communication, commerce experiences and digital growth. We help businesses present products more effectively, improve the path to purchase and build marketing systems that support both customer acquisition and long-term engagement.",
     "projectCount": 25,
-    "clientCount": "≈10",
-    "rating": "≈4.9"
+    "clientCount": "10",
+    "rating": "4.9"
   },
   {
     "name": "Technology & Digital Products",
@@ -48,8 +48,8 @@ export const industryContent = [
     "understanding": "We work with the needs of SaaS platforms, software businesses, IT services, mobile applications, IoT solutions and digital products. These businesses often need to explain technical features to different audiences while making the product experience intuitive and credible.",
     "approach": "QuantumX helps technology businesses translate product value into clear digital experiences. We combine product thinking, interface design, web development and automation to support launches, adoption and business growth.",
     "projectCount": 20,
-    "clientCount": "≈8",
-    "rating": "≈4.8"
+    "clientCount": "8",
+    "rating": "4.8"
   },
   {
     "name": "Education & Healthcare",
@@ -74,8 +74,8 @@ export const industryContent = [
     "understanding": "We understand the distinct needs of educational institutions, learning platforms, healthcare services and health technology businesses. Education journeys often involve programme discovery, admissions and student communication. Healthcare journeys require clarity, confidence and accessible service information.",
     "approach": "QuantumX helps education and healthcare organisations improve digital discovery, communicate their value and create connected enquiry journeys. We bring together websites, campaigns, content and digital systems around the needs of students, patients and decision-makers.",
     "projectCount": 19,
-    "clientCount": "≈6",
-    "rating": "≈4.8"
+    "clientCount": "6",
+    "rating": "4.8"
   },
   {
     "name": "B2B, Industrial & Logistics",
@@ -100,8 +100,8 @@ export const industryContent = [
     "understanding": "We understand the needs of B2B service providers, industrial businesses, manufacturers, consultants and logistics-related organisations. Their offerings can be technical or operationally complex, and purchase decisions may involve multiple stakeholders and longer consideration cycles.",
     "approach": "QuantumX helps B2B organisations strengthen their digital positioning and create practical systems for visibility, enquiry generation and sales support. Our approach combines business-focused communication with digital platforms and measurable acquisition.",
     "projectCount": 18,
-    "clientCount": "≈6",
-    "rating": "≈4.6"
+    "clientCount": "6",
+    "rating": "4.6"
   },
   {
     "name": "Real Estate & Built Environment",
@@ -126,8 +126,8 @@ export const industryContent = [
     "understanding": "We understand the communication needs of property developers, real estate businesses, architecture practices, construction-related companies and interior design brands. Strong visual presentation and clear project information are central to helping prospective customers evaluate an offering.",
     "approach": "QuantumX helps built-environment businesses translate their projects into strong digital presentations. We combine website experiences, visual communication and targeted campaigns to improve discovery, credibility and enquiry generation.",
     "projectCount": 13,
-    "clientCount": "≈4",
-    "rating": "≈4.7"
+    "clientCount": "4",
+    "rating": "4.7"
   },
   {
     "name": "Hospitality & Experiences",
@@ -152,8 +152,8 @@ export const industryContent = [
     "understanding": "We understand businesses where the customer experience is central to the offering, including hospitality and flexible workspace models. These businesses need clear service information, strong visual storytelling and simple paths for customers to explore and take action.",
     "approach": "QuantumX helps experience-led businesses create a stronger digital presence and clearer customer journeys. We bring together website design, brand communication, content and growth campaigns to support discovery and customer action.",
     "projectCount": 12,
-    "clientCount": "≈5",
-    "rating": "≈4.8"
+    "clientCount": "5",
+    "rating": "4.8"
   },
   {
     "name": "Media & Entertainment",
@@ -178,7 +178,7 @@ export const industryContent = [
     "understanding": "We understand the needs of content-led businesses, creative studios, production environments and entertainment brands. Their digital presence must reflect the quality of their work while making services, content and commercial opportunities easy to explore.",
     "approach": "QuantumX helps media and entertainment businesses translate creative identity into digital experiences. We support the presentation, promotion and discovery of creative work through brand, web and campaign capabilities.",
     "projectCount": 11,
-    "clientCount": "≈6",
-    "rating": "≈4.9"
+    "clientCount": "6",
+    "rating": "4.9"
   }
 ];
