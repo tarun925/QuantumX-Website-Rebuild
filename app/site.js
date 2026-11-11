@@ -137,7 +137,7 @@ function Footer() {
   };
   return <>
     <section className="cta newsletter-section" aria-labelledby="newsletter-heading">
-      <h2 id="newsletter-heading">Trusted by <em>100+ global companies.</em></h2>
+      <h2 id="newsletter-heading">Trusted by <em>20+ global companies.</em></h2>
       <form className="newsletter-form" onSubmit={subscribe}><label htmlFor="newsletter-email">Sign up for our newsletter</label><div className="newsletter-fields"><input id="newsletter-email" type="email" placeholder="Enter email address" value={newsletterEmail} onChange={event=>setNewsletterEmail(event.target.value)} required/><button type="submit">Subscribe <span aria-hidden="true">↗</span></button></div></form>
     </section>
     <footer className="quantum-footer"><div className="footer-contact-grid"><div className="footer-talk"><p className="eyebrow">LET’S CONNECT</p><h2>Talk to us<span>.</span></h2><p>Have an idea? We’d love to hear from you.</p></div><div className="footer-contact"><div><p className="eyebrow">BUSINESS &amp; COLLABORATIONS</p><a href="mailto:growth@quantumx1.in">growth@quantumx1.in ↗</a></div><div><p className="eyebrow">CAREERS</p><a href="mailto:growth@quantumx1.in">growth@quantumx1.in ↗</a></div></div><div className="footer-presence"><p className="eyebrow">OUR PRESENCE</p><h3>Chennai, India</h3><p>No. 40 North Road,<br/>West C.I.T Nagar, Nandanam,<br/>Chennai - 600035</p><p>Working with brands across India and around the world.</p></div></div>
