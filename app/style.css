@@ -461,3 +461,51 @@ body:has(.leaders-section) footer{padding-bottom:120px}
   /* 16px form text prevents iOS from zooming the page on focus. */
   .newsletter-fields input,.contact-page input,.contact-page textarea,.blog-search input{font-size:16px}
 }
+
+/* Contact page: a clear choice between booking a call and sending an enquiry. */
+.contact-page-new{display:block;padding-top:138px;padding-bottom:110px;background:#fff;color:#171717}
+.contact-page-new .contact-intro{max-width:1200px;margin:0 auto 66px}
+.contact-page-new .contact-intro h1{font-size:clamp(54px,7vw,100px);max-width:830px;margin:22px 0 25px}
+.contact-page-new .contact-intro p:not(.eyebrow){max-width:620px;font-size:18px;margin-bottom:20px}
+.contact-intro-details{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:center;font-size:15px;color:#bfbfbf}
+.contact-intro-details a{font-weight:600}
+.contact-content{max-width:1200px;margin:auto}
+.contact-switch{display:inline-flex;padding:5px;border:1px solid #e8e6e3;border-radius:100px;background:#f8f7f5;margin-bottom:28px;gap:4px}
+.contact-switch button{border:0;border-radius:100px;color:#666;background:transparent;padding:16px 25px;font-size:16px;transition:background .25s,color .25s,transform .25s}
+.contact-switch button:hover{color:#171717;transform:translateY(-2px)}
+.contact-switch button.active{background:#171717;color:#fff}
+.contact-switch button:focus-visible,.contact-submit:focus-visible,.contact-source input:focus-visible+span{outline:2px solid #e9882c;outline-offset:3px}
+.contact-page-new .contact-enquiry-form,.contact-call-panel{background:#f8f7f5;color:#171717;padding:clamp(26px,3vw,48px);border-radius:4px}
+.contact-page-new .contact-enquiry-form label{color:#171717;font-size:15px;margin:0;font-weight:500}
+.contact-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}
+.contact-fields label{display:block}
+.contact-fields label>span,.contact-source legend>span{color:#cf4a2f}
+.contact-page-new .contact-fields input,.contact-page-new .contact-fields textarea{display:block;width:100%;margin-top:10px;padding:18px 16px;border:1px solid #7e7d7b;border-radius:4px;background:transparent;color:#171717;outline:none;font-size:16px;transition:border-color .2s,box-shadow .2s}
+.contact-page-new .contact-fields input::placeholder,.contact-page-new .contact-fields textarea::placeholder{color:#777}
+.contact-page-new .contact-fields input:focus,.contact-page-new .contact-fields textarea:focus{border-color:#d56f01;box-shadow:0 0 0 3px rgba(213,111,1,.14)}
+.contact-fields .contact-message{grid-column:1/-1}
+.contact-fields .contact-message small{font-size:13px;font-weight:400}
+.contact-page-new .contact-fields textarea{min-height:128px;resize:vertical}
+.contact-source{border:0;padding:0;margin:28px 0 32px;min-width:0}
+.contact-source legend{font-size:15px;font-weight:500;margin-bottom:14px}
+.contact-source-options{display:flex;flex-wrap:wrap;gap:9px}
+.contact-page-new .contact-source-options label{position:relative;cursor:pointer}
+.contact-source-options input{position:absolute;opacity:0;width:1px;height:1px}
+.contact-source-options span{display:inline-flex;align-items:center;justify-content:center;border:1px solid #333;border-radius:100px;min-height:44px;padding:8px 22px;transition:background .2s,color .2s,border-color .2s}
+.contact-source-options label:hover span,.contact-source-options input:checked+span{background:#171717;color:#fff}
+.contact-actions{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.contact-page-new .contact-actions p:not(.eyebrow){color:#666;margin:0;font-size:13px}
+.contact-page-new .contact-submit{display:inline-flex;align-items:center;justify-content:center;gap:22px;background:#d34a2d;color:#fff;border:0;border-radius:100px;padding:17px 28px;min-width:190px;white-space:nowrap;font-weight:600;transition:background .2s,transform .2s}
+.contact-page-new .contact-submit:hover{background:#af351e;transform:translateY(-2px)}
+.contact-submit:disabled{cursor:wait;opacity:.65;transform:none}
+.contact-page-new .contact-error{color:#b91c1c!important;margin:18px 0 0!important}
+.contact-page-new .form-success h2{font-size:clamp(32px,4vw,54px);margin-bottom:10px}
+.contact-page-new .form-success p:not(.eyebrow){color:#444;margin:0}
+.contact-call-panel{min-height:330px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.contact-page-new .contact-call-panel h2{font-size:clamp(32px,4vw,56px);letter-spacing:-.04em;line-height:1.08;max-width:650px;margin:12px 0 20px}
+.contact-page-new .contact-call-panel p:not(.eyebrow){color:#555;max-width:660px;margin-bottom:28px}
+.contact-call-panel{display:block;padding:18px}
+.contact-call-panel iframe{display:block;width:100%;height:760px;border:0;background:#fff}
+.contact-page-new .contact-call-panel p:not(.eyebrow){margin:12px 8px 0;max-width:none;font-size:13px}
+.contact-call-panel a{color:#b94725;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:767px){.contact-page-new{padding-top:125px;padding-bottom:70px}.contact-page-new .contact-intro{margin-bottom:44px}.contact-page-new .contact-intro h1{font-size:clamp(52px,12vw,78px)}.contact-switch{display:flex;width:100%}.contact-switch button{flex:1;padding:14px 8px;font-size:13px}.contact-fields{grid-template-columns:1fr;gap:22px}.contact-fields .contact-message{grid-column:auto}.contact-page-new .contact-enquiry-form,.contact-call-panel{padding:25px 20px}.contact-actions{align-items:stretch;flex-direction:column}.contact-actions .contact-submit{width:100%}.contact-intro-details{flex-direction:column;align-items:flex-start}}

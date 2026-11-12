@@ -6,6 +6,7 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://www.facebook.com https://www.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com",
   "font-src 'self' data:",
   `connect-src 'self'${isDevelopment ? ' ws: wss:' : ''} https://www.facebook.com https://www.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://formspree.io`,
+  "frame-src https://cal.com https://*.cal.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
