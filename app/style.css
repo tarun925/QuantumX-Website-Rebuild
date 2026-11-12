@@ -437,3 +437,27 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .footer-social{transition:color .25s ease,transform .25s ease}.footer-social:hover,.footer-social:focus-visible{color:#e48119;transform:translateY(-3px)}.footer-legal-links a{position:relative;transition:color .25s ease}.footer-legal-links a:after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:1px;background:#e48119;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}.footer-legal-links a:hover,.footer-legal-links a:focus-visible{color:#e48119}.footer-legal-links a:hover:after,.footer-legal-links a:focus-visible:after{transform:scaleX(1)}.footer-social:focus-visible,.footer-legal-links a:focus-visible{outline:2px solid #e48119;outline-offset:5px}@media(prefers-reduced-motion:reduce){.footer-social,.footer-legal-links a,.footer-legal-links a:after{transition:none}.footer-social:hover,.footer-social:focus-visible{transform:none}}
 
 .industry-stats strong span{font-size:inherit;color:inherit;font-variant-numeric:tabular-nums}
+
+/* Responsive refinements for touch devices and intermediate tablet widths. */
+.hamburger{position:relative;flex-shrink:0}
+.hamburger:focus-visible{outline:2px solid #d56f01;outline-offset:6px}
+@media(pointer:coarse){.hamburger:before{content:"";position:absolute;inset:-10px}}
+@media(min-width:768px) and (max-width:1050px){
+  .header{gap:clamp(18px,2.4vw,26px)}
+  .desktop-nav{gap:clamp(20px,3vw,30px)}
+  .header .quantum-brand{flex:0 0 clamp(140px,18vw,180px)}
+}
+@media(max-width:767px){
+  .header:has(.header-contact){gap:10px}
+  .header-contact{padding-inline:10px}
+  .services-intro{display:flex;flex-direction:column;align-items:stretch;min-height:0}
+  .services-intro-content{display:contents}
+  .services-lede{max-width:none}
+  .services-orbit{position:relative;top:auto;right:auto;order:1;align-self:center;width:min(66vw,250px);margin:16px auto 24px;opacity:.75;transform:none;will-change:auto}
+  .services-intro-bottom{order:2;margin-top:0}
+  .projects-page .project-card-aset-college .project-image{height:auto;aspect-ratio:auto;object-fit:contain}
+}
+@media(max-width:767px){
+  /* 16px form text prevents iOS from zooming the page on focus. */
+  .newsletter-fields input,.contact-page input,.contact-page textarea,.blog-search input{font-size:16px}
+}

@@ -72,9 +72,9 @@ function Testimonials() {
     <h2 id="leaders-heading">Hear from Industry Leaders</h2>
     <div className="leaders-track" ref={track} onScroll={updateEdges} tabIndex={0} role="region" aria-label="Client testimonials">
       {testimonialBrands.map(brand => <article className="leader-card" key={brand.name}>
-        <div><div className={`leader-avatar ${brand.name === 'ASET College' ? 'leader-avatar-aset' : ''}`}><img src={brand.photo} alt={brand.person}/></div>
+        <div><div className={`leader-avatar ${brand.name === 'ASET College' ? 'leader-avatar-aset' : ''}`}><img src={brand.photo} alt={brand.person} loading="lazy" decoding="async"/></div>
           <h3>{brand.person}</h3><p className="leader-role">{brand.role}</p><p className="leader-quote">“{brand.quote}”</p></div>
-        <div className={`leader-brand-logo ${brand.className || ''}`}><img src={brand.logo} alt={brand.name}/>{brand.className === 'leader-brand-gofloaters' && <img className="leader-brand-artwork" src={brand.logo} alt="" aria-hidden="true"/>}</div>
+        <div className={`leader-brand-logo ${brand.className || ''}`}><img src={brand.logo} alt={brand.name} loading="lazy" decoding="async"/>{brand.className === 'leader-brand-gofloaters' && <img className="leader-brand-artwork" src={brand.logo} alt="" aria-hidden="true" loading="lazy" decoding="async"/>}</div>
       </article>)}
     </div>
     <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
@@ -128,18 +128,35 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
     {open&&<div className="menu"><div className="menu-links">{['About','Projects','Services','Industries','Blogs','Contact'].map(item=><Link key={item} href={`/${slugify(item)}`} onClick={()=>setOpen(false)}>{item}<span>↗</span></Link>)}</div><div className="menu-side"><p>Have a project in mind?</p><a href={`mailto:${email}`}>{email} ↗</a><small>CHENNAI · INDIA · NORTH AMERICA · EUROPE · MIDDLE EAST · ASIA-PACIFIC</small></div></div>}
   </>;
 }
-function Footer() {
-  const [newsletterEmail,setNewsletterEmail] = useState('');
-  const subscribe = event => {
+const formspreeEndpoint = 'https://formspree.io/f/mljbewdd';
+function useFormspree(formName) {
+  const [status,setStatus] = useState('idle');
+  const pending = useRef(false);
+  const submit = async event => {
     event.preventDefault();
-    const subject = encodeURIComponent('QuantumX newsletter signup');
-    const body = encodeURIComponent(`Please add ${newsletterEmail} to the QuantumX newsletter.`);
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    if (pending.current) return;
+    pending.current = true;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    data.set('form_name', formName);
+    data.set('page_url', window.location.href);
+    setStatus('sending');
+    try {
+      const response = await fetch(formspreeEndpoint, {method:'POST', body:data, headers:{Accept:'application/json'}});
+      if (!response.ok) throw new Error('Submission failed');
+      form.reset();
+      setStatus('success');
+    } catch { setStatus('error'); }
+    finally { pending.current = false; }
   };
+  return {status,submit};
+}
+function Footer() {
+  const {status,submit} = useFormspree('Newsletter signup');
   return <>
     <section className="cta newsletter-section" aria-labelledby="newsletter-heading">
       <h2 id="newsletter-heading">Trusted by <em>20+ global companies.</em></h2>
-      <form className="newsletter-form" onSubmit={subscribe}><label htmlFor="newsletter-email">Sign up for our newsletter</label><div className="newsletter-fields"><input id="newsletter-email" type="email" placeholder="Enter email address" value={newsletterEmail} onChange={event=>setNewsletterEmail(event.target.value)} required/><button type="submit">Subscribe <span aria-hidden="true">↗</span></button></div></form>
+      <form className="newsletter-form" onSubmit={submit}><label htmlFor="newsletter-email">Sign up for our newsletter</label><div className="newsletter-fields"><input id="newsletter-email" type="email" autoComplete="email" inputMode="email" placeholder="Enter email address" name="email" required/><button type="submit" disabled={status==='sending'}>{status==='sending'?'Sending…':'Subscribe'} <span aria-hidden="true">↗</span></button></div>{status==='success' && <p role="status">Thank you for subscribing.</p>}{status==='error' && <p role="alert">Unable to subscribe. Please try again.</p>}</form>
     </section>
     <footer className="quantum-footer"><div className="footer-contact-grid"><div className="footer-talk"><p className="eyebrow">LET’S CONNECT</p><h2>Talk to us<span>.</span></h2><p>Have an idea? We’d love to hear from you.</p></div><div className="footer-contact"><div><p className="eyebrow">BUSINESS &amp; COLLABORATIONS</p><a href="mailto:growth@quantumx1.in">growth@quantumx1.in ↗</a></div><div><p className="eyebrow">CAREERS</p><a href="mailto:growth@quantumx1.in">growth@quantumx1.in ↗</a></div></div><div className="footer-presence"><p className="eyebrow">OUR PRESENCE</p><h3>Chennai, India</h3><p>No. 40 North Road,<br/>West C.I.T Nagar, Nandanam,<br/>Chennai - 600035</p><p>Working with brands across India and around the world.</p></div></div>
       <div className="footer-bottom quantum-footer-bottom"><div className="footer-identity"><div className="footer-socials" aria-label="Social media"><span className="footer-social" aria-label="Instagram profile coming soon" title="Instagram profile coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></span><a className="footer-social" href="https://www.linkedin.com/company/quantumx1/" target="_blank" rel="noopener noreferrer" aria-label="QuantumX on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.1 3A2.1 2.1 0 1 0 5.1 7.2 2.1 2.1 0 0 0 5.1 3ZM3.3 8.8h3.6V21H3.3V8.8Zm5.8 0h3.4v1.7h.1a3.8 3.8 0 0 1 3.4-1.9c3.7 0 4.4 2.4 4.4 5.5V21h-3.6v-6.1c0-1.5 0-3.3-2-3.3s-2.1 1.6-2.1 3.2V21H9.1V8.8Z"/></svg></a></div></div><div className="footer-legal"><div className="footer-legal-links"><Link href="/privacy-policy">Privacy policy</Link><Link href="/terms-conditions">Terms &amp; conditions</Link></div><p>© 2026 QuantumX. All rights reserved.</p></div></div>
@@ -149,8 +166,8 @@ function Footer() {
 function projectThumbnail(project) {
   return project.listingImage || project.homepageImage || project.image;
 }
-function ProjectVisual({project}) {
-  return project.image?<img className="project-image" src={project.image} alt={`${project.name} portfolio visual`}/>:<div className={`project-typographic project-${project.slug}`}><span>{project.sector}</span><strong>{project.name}</strong><small>{project.impact||project.category}</small></div>;
+function ProjectVisual({project,eager=false}) {
+  return project.image?<img className="project-image" src={project.image} alt={`${project.name} portfolio visual`} loading={eager?'eager':'lazy'} decoding="async"/>:<div className={`project-typographic project-${project.slug}`}><span>{project.sector}</span><strong>{project.name}</strong><small>{project.impact||project.category}</small></div>;
 }
 function ProjectCard({project,compact=false}) {
   return <Link href={`/projects/${project.slug}`} className={`project-card ${compact?'compact':''} project-card-${project.slug}`}>
@@ -278,8 +295,8 @@ function Home() {
     <Testimonials/>
     <Capabilities/>
     <section className="quantum-news" data-theme={newsLight ? 'light' : 'dark'} aria-labelledby="quantum-news-title"><h2 id="quantum-news-title">Latest at <span>QuantumX</span></h2><div className="quantum-news-columns"><div className="quantum-news-list">
-      <Link href="/projects/aset-college" className="quantum-news-row"><img src={projectThumbnail(projects.find(project=>project.slug==='aset-college'))} alt=""/><div><p>ASET COLLEGE CASE STUDY</p><h3>Explore the connected digital journey behind ASET College’s growth. <span>↗</span></h3></div></Link>
-      <Link href="/projects/zellify" className="quantum-news-row"><img src={projectThumbnail(projects.find(project=>project.slug==='zellify'))} alt=""/><div><p>ZELLIFY CASE STUDY</p><h3>A conversion-focused digital experience built for a growing product. <span>↗</span></h3></div></Link>
+      <Link href="/projects/aset-college" className="quantum-news-row"><img src={projectThumbnail(projects.find(project=>project.slug==='aset-college'))} alt="" loading="lazy" decoding="async"/><div><p>ASET COLLEGE CASE STUDY</p><h3>Explore the connected digital journey behind ASET College’s growth. <span>↗</span></h3></div></Link>
+      <Link href="/projects/zellify" className="quantum-news-row"><img src={projectThumbnail(projects.find(project=>project.slug==='zellify'))} alt="" loading="lazy" decoding="async"/><div><p>ZELLIFY CASE STUDY</p><h3>A conversion-focused digital experience built for a growing product. <span>↗</span></h3></div></Link>
       {blogArticles.slice(0,2).map((article,index)=><Link href={`/blogs/${article.slug}`} className="quantum-news-row" key={article.slug}><div className={`news-placeholder ${index===1?'news-placeholder-light':''}`} aria-hidden="true">{index===0?'✦':<>Q<span>✦</span></>}</div><div><p>{index===0?'TRENDS & INSIGHTS':'QUANTUMX BLOG'} · {article.readTime}</p><h3>{article.title} <span>↗</span></h3></div></Link>)}
     </div><aside className="quantum-recognition" aria-label="Reviews and recognition"><h3>Reviews &amp; recognition</h3><div className="recognition-grid"><div><span aria-hidden="true">✦</span><p>Client reviews</p><small>Coming soon</small></div><div><span aria-hidden="true">☆</span><p>Ratings</p><small>Coming soon</small></div><div><span aria-hidden="true">↗</span><p>Awards &amp; recognition</p><small>Coming soon</small></div><div><span aria-hidden="true">Q</span><p>QuantumX updates</p><small>Coming soon</small></div></div></aside></div></section>
     <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><div className="latest-image-wrap"><ProjectVisual project={{...project, image:projectThumbnail(project)}}/></div><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
@@ -318,7 +335,7 @@ function ProjectDetail({project}) {
   }, [project.slug]);
   return <><Header dark showContact/><main ref={main} className="dark-page case-project">
     <section className="case-hero"><p className="case-back"><Link href="/projects">← All projects</Link></p><h1>{project.name}<span>.</span></h1><div className="case-focus"><span>Project focus</span><p>{project.category} <span>+</span> {project.sector}</p></div></section>
-    <div className="case-hero-media"><ProjectVisual project={project.caseHeroImage ? {...project, image:project.caseHeroImage} : project}/></div>
+    <div className="case-hero-media"><ProjectVisual project={project.caseHeroImage ? {...project, image:project.caseHeroImage} : project} eager/></div>
     <section className="case-collaboration case-section" data-case-reveal><div className="case-collab-copy"><h2><span>The</span> collaboration</h2><p>{details.collaboration || project.description}</p>{details.collaboration && <p>{project.description}</p>}</div><dl className="case-facts"><div><dt>Industry</dt><dd>{project.sector}</dd></div><div><dt>Platform</dt><dd>{details.platform || 'To be added'}</dd></div><div><dt>Services</dt><dd>{details.services || project.category}</dd></div><div><dt>Website / app</dt><dd>{details.url?<a href={details.url} target="_blank" rel="noreferrer">Visit website ↗</a>:<span className="case-pending">Link to be added</span>}</dd></div></dl></section>
     <section className="case-problem case-section" data-case-reveal><p className="case-eyebrow">THE CHALLENGE</p><div className="case-split"><h2>Problem <span>definition.</span></h2><p>{details.challenge || project.challenge || 'Project challenge and goals will be added here.'}</p></div></section>
     {(details.process === undefined || details.process.length > 0) && <section className="case-process case-section" data-case-reveal><div><p className="case-eyebrow">HOW WE WORK</p><h2>The process<br/><span>we follow.</span></h2>{details.process === undefined && <p className="case-muted">A flexible framework. Project-specific process details and examples can be added here.</p>}</div><ol>{(details.process || caseProcess).map((step,index)=><li key={step}><span>{String(index+1).padStart(2,'0')}</span>{step}</li>)}</ol></section>}
@@ -329,8 +346,8 @@ function ProjectDetail({project}) {
   </main><Footer/></>;
 }
 function Contact() {
-  const [sent,setSent]=useState(false);
-  return <><Header dark showContact/><main className="dark-page contact-page"><div><p className="eyebrow">LET'S TALK</p><h1>Let’s build<br/><em>what’s next</em><span>.</span></h1><p>Tell us what you are working towards. We would welcome an introductory conversation about your growth objectives.</p><a href={`mailto:${email}`}>{email} ↗</a><p>+91 9789960251</p></div><form onSubmit={event=>{event.preventDefault();setSent(true)}}>{sent?<div className="form-success"><h2>Thank you.</h2><p>This local demo does not send submissions. Please email {email} directly.</p></div>:<><label>Your name<input required placeholder="Name"/></label><label>Email address<input required type="email" placeholder="Email"/></label><label>Company<input placeholder="Company"/></label><label>Tell us about your project<textarea required placeholder="Your message"/></label><button className="pill">Prepare inquiry <span>↗</span></button></>}</form></main><Footer/></>;
+  const {status,submit}=useFormspree('Contact enquiry');
+  return <><Header dark showContact/><main className="dark-page contact-page"><div><p className="eyebrow">LET'S TALK</p><h1>Let’s build<br/><em>what’s next</em><span>.</span></h1><p>Tell us what you are working towards. We would welcome an introductory conversation about your growth objectives.</p><a href={`mailto:${email}`}>{email} ↗</a></div><form onSubmit={submit}>{status==='success'?<div className="form-success"><h2>Thank you.</h2><p>Your enquiry has been sent. We’ll be in touch soon.</p></div>:<><label>Your name<input required name="name" autoComplete="name" placeholder="Name"/></label><label>Email address<input required type="email" name="email" autoComplete="email" inputMode="email" placeholder="Email"/></label><label>Company<input name="company" autoComplete="organization" placeholder="Company"/></label><label>Tell us about your project<textarea required name="message" placeholder="Your message"/></label>{status==='error' && <p role="alert">Unable to send your enquiry. Please try again.</p>}<button className="pill" type="submit" disabled={status==='sending'}>{status==='sending'?'Sending…':'Prepare inquiry'} <span>↗</span></button></>}</form></main><Footer/></>;
 }
 function Generic({path}) {
   const [family,detail]=path;
