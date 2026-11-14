@@ -46,8 +46,9 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
 .hero .donut{right:var(--page-gutter);width:min(38vw,520px)}
 @media(max-width:767px){.hero{min-height:820px}.hero .donut{right:var(--page-gutter);width:min(68vw,350px);top:490px}}
 @media(max-width:767px){
-  .hero{height:auto;min-height:0;display:flex;flex-direction:column;align-items:stretch;padding-top:145px;padding-bottom:50px}
-  .hero-actions{flex-wrap:wrap;gap:16px 24px}
+  .hero{height:auto;min-height:0;display:flex;flex-direction:column;align-items:stretch;padding-top:105px;padding-bottom:50px}
+  .hero-description{margin-top:16px}
+  .hero-actions{flex-wrap:wrap;gap:16px 24px;margin-top:24px}
   .hero-actions .text-link{white-space:nowrap}
   .hero .donut{position:relative;top:auto;right:auto;align-self:center;width:min(80%,300px);margin-top:30px}
 }
@@ -513,6 +514,8 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .featured-projects .project-card > .project-image{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;flex:none}
 
 @media(max-width:767px){.quantum-logo-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 28px;padding:32px 8% 52px;overflow:visible}.quantum-logo-strip .client-logo,.quantum-logo-strip .client-logo-gofloaters{width:65%;max-width:111px;height:58px}}
+
+@media(max-width:360px){.hero .muted{font-size:13px}.hero h1{font-size:30px}.hero-description{font-size:14px}.hero-actions{margin-top:16px}}
 
 .faq-item button{color:#121212;-webkit-text-fill-color:currentColor;-webkit-tap-highlight-color:transparent}
 

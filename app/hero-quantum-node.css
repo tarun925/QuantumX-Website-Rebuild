@@ -27,5 +27,5 @@
 @keyframes qnode-whole-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 @keyframes qnode-breathe{0%,100%{opacity:.65}50%{opacity:1}}
 @keyframes qnode-branch-glow{0%,100%{opacity:.12}50%{opacity:.42}}
-@media(max-width:767px){.hero .hero-quantum-node{position:relative;top:auto;right:auto;width:min(100%,480px);align-self:center;margin:32px auto -5px}.qnode-label{font-size:14px}}
+@media(max-width:767px){.hero .hero-quantum-node{position:relative;top:auto;right:auto;width:min(100%,480px);align-self:center;margin:16px auto -5px}.qnode-label{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.hero-quantum-node,.qnode-floating,.qnode-brand,.qnode-core-glow{animation:none;transform:none}.qnode-energy,.qnode-branch-pulses{display:none}.qnode-branch-halo{animation:none}.qnode-position{transition:none;will-change:auto}}
