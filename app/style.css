@@ -102,7 +102,7 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
 .featured-projects .compact-caption{display:none}
 
 /* Keep navigation visible and match its colors to the section underneath. */
-.header{position:fixed;background:rgba(255,255,255,.96);transition:background-color .45s ease,color .45s ease;backdrop-filter:blur(22px) saturate(165%);-webkit-backdrop-filter:blur(22px) saturate(165%)}
+.header{position:fixed;background:rgba(255,255,255,.96);transition:background-color .45s ease,color .45s ease;backdrop-filter:blur(22px) saturate(165%)}
 .header.header-dark,.header:has(.active){color:#fff;background:rgba(23,23,23,.96)}
 header.header .quantum-brand img,header.header:has(.active) .quantum-brand img{filter:none}
 
@@ -537,10 +537,10 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .header.header-dark.header-glass:not(:has(.hamburger.active)){background:rgba(23,23,23,.15)}
 .header.header-about.header-dark:not(:has(.hamburger.active)){background:rgba(23,23,23,.255)}
 /* Keep the navbar translucent over light and dark sections throughout the site. */
-header.header:not(.header-dark):not(:has(.hamburger.active)),.header.header-about.header-about-light:not(.header-dark):not(:has(.active)),.header.header-about.header-about-light.header-glass:not(.header-dark):not(:has(.active)){background:rgba(255,255,255,.3);backdrop-filter:blur(22px) saturate(165%);-webkit-backdrop-filter:blur(22px) saturate(165%)}
-.header.header-about:not(.header-dark):not(:has(.active)),.header.header-about.header-glass:not(.header-dark):not(:has(.active)){background:rgba(255,202,153,.32)}
-.header.header-about.header-about-light:not(.header-dark):not(:has(.active)),.header.header-about.header-about-light.header-glass:not(.header-dark):not(:has(.active)){background:rgba(255,255,255,.3)}
-.header.header-dark:not(:has(.hamburger.active)),.header.header-dark.header-glass:not(:has(.hamburger.active)),.header.header-about.header-dark:not(:has(.hamburger.active)){background:rgba(23,23,23,.12);backdrop-filter:blur(22px) saturate(165%);-webkit-backdrop-filter:blur(22px) saturate(165%)}
+header.header:not(.header-dark):not(:has(.hamburger.active)),.header.header-about.header-about-light:not(.header-dark):not(:has(.active)),.header.header-about.header-about-light.header-glass:not(.header-dark):not(:has(.active)){background:rgba(255,255,255,.55);backdrop-filter:blur(32px) saturate(165%)}
+.header.header-about:not(.header-dark):not(:has(.active)),.header.header-about.header-glass:not(.header-dark):not(:has(.active)){background:rgba(255,202,153,.48);backdrop-filter:blur(32px) saturate(165%)}
+.header.header-about.header-about-light:not(.header-dark):not(:has(.active)),.header.header-about.header-about-light.header-glass:not(.header-dark):not(:has(.active)){background:rgba(255,255,255,.55)}
+.header.header-dark:not(:has(.hamburger.active)),.header.header-dark.header-glass:not(:has(.hamburger.active)),.header.header-about.header-dark:not(:has(.hamburger.active)){background:rgba(23,23,23,.12);backdrop-filter:blur(22px) saturate(165%)}
 @media(max-width:767px){.latest .section-intro .text-link{display:block;width:fit-content;margin:20px 0 0 auto;text-decoration:none}.latest .section-intro .text-link:hover,.latest .section-intro .text-link:focus-visible{text-decoration:underline}}
 
 /* Keep the homepage news, portfolio and FAQ sections evenly spaced. */
