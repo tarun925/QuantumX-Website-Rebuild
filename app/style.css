@@ -273,7 +273,7 @@ body:has(.leaders-section) footer{padding-bottom:120px}
   }
 }
 @media (prefers-reduced-motion:no-preference){.featured-projects::after{content:"";display:block;height:240px}}
-@media(max-width:767px) and (prefers-reduced-motion:no-preference){.featured-projects .project-card{display:flex;flex-direction:column;min-height:460px}.featured-projects .project-card>.project-meta{flex:none}.featured-projects .project-card>.project-image,.featured-projects .project-card>.project-typographic{flex:1;min-height:0;object-fit:cover}}
+@media(max-width:767px) and (prefers-reduced-motion:no-preference){.featured-projects .project-card{display:flex;flex-direction:column;min-height:0}.featured-projects .project-card>.project-meta{flex:none}.featured-projects .project-card>.project-image,.featured-projects .project-card>.project-typographic{flex:1;min-height:0;object-fit:cover}}
 
 /* Step the stacked card edges outward, like a neatly arranged file stack. */
 @media (prefers-reduced-motion:no-preference){
@@ -512,4 +512,4 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 
 .featured-projects .project-card > .project-image{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;flex:none}
 
-@media(max-width:767px){.quantum-logo-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 28px;padding:32px 8% 52px;overflow:visible}.quantum-logo-strip .client-logo,.quantum-logo-strip .client-logo-gofloaters{width:100%;max-width:170px;height:88px}}
+@media(max-width:767px){.quantum-logo-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 28px;padding:32px 8% 52px;overflow:visible}.quantum-logo-strip .client-logo,.quantum-logo-strip .client-logo-gofloaters{width:65%;max-width:111px;height:58px}}
