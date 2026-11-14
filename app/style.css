@@ -536,10 +536,10 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(max-width:767px){.latest .section-intro .text-link{display:block;width:fit-content;margin:20px 0 0 auto;text-decoration:none}.latest .section-intro .text-link:hover,.latest .section-intro .text-link:focus-visible{text-decoration:underline}}
 
 /* Keep the homepage news, portfolio and FAQ sections evenly spaced. */
-.quantum-news{padding-bottom:70px}
-.latest{padding-top:55px;padding-bottom:60px}
-.faq{padding-top:55px}
-@media(max-width:767px){.quantum-news{padding-bottom:45px}.latest{padding-top:40px;padding-bottom:45px}.faq{padding-top:40px}}
+.quantum-news{padding-bottom:90px}
+.latest{padding-top:75px;padding-bottom:80px}
+.faq{padding-top:75px}
+@media(max-width:767px){.quantum-news{padding-bottom:60px}.latest{padding-top:55px;padding-bottom:60px}.faq{padding-top:55px}}
 
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){
   .capabilities-section[data-scroll-ready]{height:calc(100svh + var(--scroll-distance))}
