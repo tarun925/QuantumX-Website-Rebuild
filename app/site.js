@@ -213,15 +213,25 @@ const clientLogoGroups = [
     {name:'Zellify',src:'/assets/client-logos/partners/zellify.webp'},
   ],
 ];
+const mobileClientLogos = clientLogoGroups.flat();
+const mobileClientLogoGroups = Array.from({length:Math.ceil(mobileClientLogos.length/4)},(_,group)=>Array.from({length:4},(_,index)=>mobileClientLogos[(group*4+index)%mobileClientLogos.length]));
 function ClientLogos() {
   const [group,setGroup] = useState(0);
+  const [mobile,setMobile] = useState(false);
   useEffect(() => {
-    const timer = setInterval(() => setGroup(current => (current + 1) % clientLogoGroups.length), 5600);
-    return () => clearInterval(timer);
+    const media=window.matchMedia('(max-width: 767px)');
+    const update=()=>{setMobile(media.matches);setGroup(0)};
+    update(); media.addEventListener('change',update);
+    return ()=>media.removeEventListener('change',update);
   }, []);
+  const groups=mobile?mobileClientLogoGroups:clientLogoGroups;
+  useEffect(() => {
+    const timer = setInterval(() => setGroup(current => (current + 1) % groups.length), 5600);
+    return () => clearInterval(timer);
+  }, [groups]);
   return <section className="client-logo-section" aria-label="Selected client brands">
-    <div className="logo-strip quantum-logo-strip" role="group" aria-label={`Brand group ${group + 1} of ${clientLogoGroups.length}`}>
-      {clientLogoGroups[group].map((logo,index) => <span key={`${group}-${logo.name}`} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
+    <div className="logo-strip quantum-logo-strip" role="group" aria-label={`Brand group ${group % groups.length + 1} of ${groups.length}`}>
+      {groups[group % groups.length].map((logo,index) => <span key={`${group}-${logo.name}`} className={`client-logo ${logo.className || ''}`} style={{'--logo-index':index}}>
         {logo.placeholder ? <span className="client-logo-placeholder" aria-label={`${logo.name} logo placeholder`}>{logo.name}</span> : <><img src={logo.src} alt={logo.name}/>{logo.className === 'client-logo-aset' && <img className="aset-dark-word" src={logo.src} alt="" aria-hidden="true"/>}{logo.className === 'client-logo-bdm' && <img className="bdm-colored-icon" src={logo.src} alt="" aria-hidden="true"/>}</>}
       </span>)}
     </div>
