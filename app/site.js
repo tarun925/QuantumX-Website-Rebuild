@@ -95,10 +95,11 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
         return rect.top <= line && rect.bottom > line;
       };
       const work = document.querySelector('.work-section');
+      const featuredProjects = document.querySelector('.featured-projects');
       const lastProject = document.querySelector('.featured-projects .project-card:last-child');
       const capabilities = document.querySelector('.capabilities-section');
       const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
-      setNavGlass(Boolean((glassOnScroll && window.scrollY > 24) || (lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line)));
+      const workIsDark = Boolean(work && featuredProjects && featuredProjects.getBoundingClientRect().top <= (window.innerWidth <= 767 ? 130 : 160) && work.getBoundingClientRect().bottom > line);
       const news = document.querySelector('.quantum-news');
       const lightAbout = crossesLine(document.querySelector('.about-white-zone')) || (aboutPage && crossesLine(document.querySelector('.newsletter-section')));
       const darkAboutSection = [...document.querySelectorAll('.about-team, .about-culture, .about-final-cta')].some(crossesLine);
@@ -108,8 +109,9 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
         crossesLine(document.querySelector('.about-hero')) || (crossesLine(document.querySelector('.about-dark')) && !lightAbout) || darkAboutSection ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
-        (workDark && crossesLine(work));
+        workIsDark;
       setNavDark(Boolean(isDark));
+      setNavGlass(Boolean((glassOnScroll && window.scrollY > 24) || (isDark && document.querySelector('.services-page')) || workIsDark || (lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line)));
       frame = null;
     };
     const schedule = () => { if (frame == null) frame = requestAnimationFrame(update); };
@@ -264,7 +266,7 @@ function Home() {
   useEffect(() => {
     let frame;
     const update = () => {
-      const firstProject = document.querySelector('.featured-projects .project-card');
+      const firstProject = document.querySelector('.featured-projects');
       const section = document.querySelector('.work-section');
       if (firstProject && section) setWorkDark(firstProject.getBoundingClientRect().top <= (window.innerWidth <= 767 ? 130 : 160) && section.getBoundingClientRect().bottom > 0);
       frame = null;
