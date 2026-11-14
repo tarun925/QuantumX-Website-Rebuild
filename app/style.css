@@ -519,7 +519,6 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(max-width:360px){.hero .muted{font-size:13px}.hero h1{font-size:30px}.hero-description{font-size:14px}.hero-actions{margin-top:16px}}
 
 .faq-item button{color:#121212;-webkit-text-fill-color:currentColor;-webkit-tap-highlight-color:transparent}
-.services-earth{display:block;width:100%;height:auto;filter:drop-shadow(0 0 22px rgba(226,104,19,.25))}
 
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){
   .capabilities-section[data-scroll-ready]{height:calc(100svh + var(--scroll-distance))}
