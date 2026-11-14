@@ -166,6 +166,7 @@ function Footer() {
   </>;
 }
 function projectThumbnail(project) {
+  if (project.slug === 'snitch') return '/assets/portfolio/projects/snitch-16x9.webp';
   return project.featured ? `/assets/home-mockups/${project.slug}.webp` : project.listingImage || project.homepageImage || project.image;
 }
 function ProjectVisual({project,eager=false}) {
