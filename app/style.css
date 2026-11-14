@@ -514,6 +514,8 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 
 @media(max-width:767px){.quantum-logo-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 28px;padding:32px 8% 52px;overflow:visible}.quantum-logo-strip .client-logo,.quantum-logo-strip .client-logo-gofloaters{width:65%;max-width:111px;height:58px}}
 
+.faq-item button{color:#121212;-webkit-text-fill-color:currentColor;-webkit-tap-highlight-color:transparent}
+
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){
   .capabilities-section[data-scroll-ready]{height:calc(100svh + var(--scroll-distance))}
   .capabilities-section[data-scroll-ready] .capabilities-sticky{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;padding:32px 0}

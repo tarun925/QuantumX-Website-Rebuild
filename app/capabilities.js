@@ -38,15 +38,21 @@ export default function Capabilities() {
     };
     const schedule = () => { if (frame === null) frame = requestAnimationFrame(update); };
     const measure = () => {
-      container.removeAttribute('data-scroll-ready');
-      trackEl.style.transform = '';
-      windowEl.scrollLeft = 0;
       if (media.matches) {
+        const wasReady = container.hasAttribute('data-scroll-ready');
+        if (!wasReady) windowEl.scrollLeft = 0;
         container.setAttribute('data-scroll-ready','true');
-        distance = Math.max(0, trackEl.scrollWidth - windowEl.clientWidth);
-        container.style.setProperty('--scroll-distance', `${distance}px`);
+        const nextDistance = Math.max(0, trackEl.scrollWidth - windowEl.clientWidth);
+        if (distance !== nextDistance || !wasReady) {
+          distance = nextDistance;
+          container.style.setProperty('--scroll-distance', `${distance}px`);
+        }
         if (!distance) container.removeAttribute('data-scroll-ready');
-      } else distance = 0;
+      } else {
+        distance = 0;
+        container.removeAttribute('data-scroll-ready');
+        trackEl.style.transform = '';
+      }
       schedule();
     };
     const observer = new ResizeObserver(measure);
