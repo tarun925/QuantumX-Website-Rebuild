@@ -541,16 +541,7 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .faq{padding-top:75px}
 @media(max-width:767px){.quantum-news{padding-bottom:60px}.latest{padding-top:55px;padding-bottom:60px}.faq{padding-top:55px}}
 
-.latest{transition:background-color .65s ease-in-out,color .25s ease .2s}
-.latest[data-theme="dark"]{background:#151515;color:#f7f7f7}
-.latest .latest-grid p{transition:color .25s ease .2s}
-.latest[data-theme="dark"] .latest-grid p{color:#bcbcbc}
-.faq{background:#151515;color:#f7f7f7}
-.faq .faq-item{border-color:#555}
-.faq .faq-item button{color:#f7f7f7}
-.faq .faq-item p{color:#bdbdbd}
 body:has(.faq) .cta.newsletter-section{background:#292929;color:#fff}
-@media(prefers-reduced-motion:reduce){.latest,.latest .latest-grid p{transition:none}}
 
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){
   .capabilities-section[data-scroll-ready]{height:calc(100svh + var(--scroll-distance))}
