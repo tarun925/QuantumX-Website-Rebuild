@@ -26,7 +26,7 @@ export default function Capabilities() {
   const track = useRef(null);
   useEffect(() => {
     const container = section.current, windowEl = viewport.current, trackEl = track.current;
-    const media = window.matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)');
+    const media = window.matchMedia('(prefers-reduced-motion: no-preference)');
     let frame = null, distance = 0;
     const update = () => {
       frame = null;
@@ -40,6 +40,7 @@ export default function Capabilities() {
     const measure = () => {
       container.removeAttribute('data-scroll-ready');
       trackEl.style.transform = '';
+      windowEl.scrollLeft = 0;
       if (media.matches) {
         container.setAttribute('data-scroll-ready','true');
         distance = Math.max(0, trackEl.scrollWidth - windowEl.clientWidth);
@@ -63,7 +64,7 @@ export default function Capabilities() {
   return <section className="capabilities-section" ref={section} aria-labelledby="capabilities-title">
     <div className="capabilities-sticky">
       <div className="capabilities-heading"><h2 id="capabilities-title"><span>Human-led.</span><br/>AI-accelerated.</h2><p>From strategy to digital experiences, we bring together the capabilities that help ambitious brands grow.</p></div>
-      <div className="capabilities-viewport" ref={viewport} tabIndex={0} role="region" aria-label="Our capabilities, scroll horizontally to explore">
+      <div className="capabilities-viewport" ref={viewport} tabIndex={0} role="region" aria-label="Our capabilities">
         <div className="capabilities-track" ref={track}>{capabilities.map((item,index)=><Link className="capability-card" href={item.href} key={item.title}>
           <div className="capability-card-top"><h3>{item.title}</h3><span aria-hidden="true">↗</span></div><p>{item.description}</p><Visual type={item.visual}/><span className="capability-number">0{index+1} / 05</span>
         </Link>)}</div>
