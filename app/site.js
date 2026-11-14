@@ -80,7 +80,7 @@ function Testimonials() {
     <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
   </section>;
 }
-function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,showContact=false,aboutPage=false}) {
+function Header({dark=false,workDark=false,newsLight=false,portfolioDark=false,glassOnScroll=false,showContact=false,aboutPage=false}) {
   const [open,setOpen] = useState(false);
   const [navDark,setNavDark] = useState(dark);
   const [navGlass,setNavGlass] = useState(false);
@@ -108,7 +108,7 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
         crossesLine(document.querySelector('.services-catalog')) || crossesLine(document.querySelector('.services-end')) ||
         crossesLine(document.querySelector('.about-hero')) || (crossesLine(document.querySelector('.about-dark')) && !lightAbout) || darkAboutSection ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
-        crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
+        crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) || (portfolioDark && crossesLine(document.querySelector('.latest'))) || crossesLine(document.querySelector('.faq')) || (document.querySelector('.faq') && crossesLine(document.querySelector('.newsletter-section'))) ||
         workIsDark;
       setNavDark(Boolean(isDark));
       setNavGlass(Boolean((glassOnScroll && window.scrollY > 24) || (isDark && document.querySelector('.services-page')) || workIsDark || (lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line)));
@@ -119,7 +119,7 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule);
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
-  }, [dark,workDark,newsLight,glassOnScroll,aboutPage]);
+  }, [dark,workDark,newsLight,portfolioDark,glassOnScroll,aboutPage]);
   return <>
     <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''} ${aboutPage?'header-about':''} ${aboutPage && aboutLight?'header-about-light':''}`}>
       <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
@@ -244,6 +244,15 @@ function Home() {
   const [faq,setFaq]=useState(-1);
   const [workDark,setWorkDark]=useState(false);
   const [newsLight,setNewsLight]=useState(false);
+  const [portfolioDark,setPortfolioDark]=useState(false);
+  useEffect(()=>{
+    const section=document.querySelector('.latest');if(!section)return;
+    let frame=null, active=false;
+    const update=()=>{frame=null;const top=section.getBoundingClientRect().top;const threshold=window.innerHeight*(active ? .65 : .5);const next=top<=threshold;if(next!==active){active=next;setPortfolioDark(next)}};
+    const schedule=()=>{if(frame===null)frame=requestAnimationFrame(update)};
+    schedule();window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);
+    return()=>{window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);if(frame!==null)cancelAnimationFrame(frame)};
+  },[]);
   useEffect(() => {
     const cards=[...document.querySelectorAll('.featured-projects .project-card')];
     const motion=window.matchMedia('(prefers-reduced-motion: no-preference)');
@@ -320,7 +329,7 @@ function Home() {
     "Timelines depend on project scope, complexity, and business requirements. Focused design, development, and marketing engagements typically take 8–12 weeks, while larger enterprise platforms and end-to-end digital transformations may require 16–20+ weeks."
   ]
 ];
-  return <><Header workDark={workDark} newsLight={newsLight}/><main>
+  return <><Header workDark={workDark} newsLight={newsLight} portfolioDark={portfolioDark}/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><HeroQuantumNode/></section>
     <ClientLogos/>
     <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project} homepage/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
@@ -331,7 +340,7 @@ function Home() {
       <Link href="/projects/zellify" className="quantum-news-row"><img src={projectThumbnail(projects.find(project=>project.slug==='zellify'))} alt="" loading="lazy" decoding="async"/><div><p>ZELLIFY CASE STUDY</p><h3>A conversion-focused digital experience built for a growing product. <span>↗</span></h3></div></Link>
       {blogArticles.slice(0,2).map((article,index)=><Link href={`/blogs/${article.slug}`} className="quantum-news-row" key={article.slug}><div className={`news-placeholder ${index===1?'news-placeholder-light':''}`} aria-hidden="true">{index===0?'✦':<>Q<span>✦</span></>}</div><div><p>{index===0?'TRENDS & INSIGHTS':'QUANTUMX BLOG'} · {article.readTime}</p><h3>{article.title} <span>↗</span></h3></div></Link>)}
     </div><aside className="quantum-recognition" aria-label="Reviews and recognition"><h3>Reviews &amp; recognition</h3><div className="recognition-grid"><div><span aria-hidden="true">✦</span><p>Client reviews</p><small>Coming soon</small></div><div><span aria-hidden="true">☆</span><p>Ratings</p><small>Coming soon</small></div><div><span aria-hidden="true">↗</span><p>Awards &amp; recognition</p><small>Coming soon</small></div><div><span aria-hidden="true">Q</span><p>QuantumX updates</p><small>Coming soon</small></div></div></aside></div></section>
-    <section className="latest"><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><div className="latest-image-wrap"><ProjectVisual project={{...project, image:projectThumbnail(project)}}/></div><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
+    <section className="latest" data-theme={portfolioDark?'dark':'light'}><div className="section-intro"><h2>More from<br/><em>our portfolio</em></h2><Link className="text-link" href="/projects">View all projects ↗</Link></div><div className="latest-grid">{projects.slice(4,7).map(project=><Link href={`/projects/${project.slug}`} key={project.slug}><div className="latest-image-wrap"><ProjectVisual project={{...project, image:projectThumbnail(project)}}/></div><p>{project.category}</p><h3>{project.name} ↗</h3></Link>)}</div></section>
     <section className="faq"><h2>Questions we get asked.<br/><em>A lot.</em></h2><div>{questions.map(([question,answer],index)=><div className="faq-item" key={question}><button onClick={()=>setFaq(faq===index?-1:index)} aria-expanded={faq===index}>{question}<span>{faq===index?'−':'+'}</span></button>{faq===index&&<p>{answer}</p>}</div>)}</div></section>
   </main><Footer/><FloatingProjectCTA/></>;
 }

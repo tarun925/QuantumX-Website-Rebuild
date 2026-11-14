@@ -250,8 +250,8 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(max-width:767px){.cta.newsletter-section{grid-template-columns:minmax(0,1fr)}.newsletter-form{min-width:0}.quantum-footer-bottom .footer-logo img{width:min(190px,44vw)}.quantum-footer-bottom .footer-identity{gap:16px}}
 
 /* Translucent navigation between the featured projects and capabilities. */
-.header.header-glass{background:rgba(255,255,255,.42);backdrop-filter:blur(22px) saturate(165%);box-shadow:0 1px 0 rgba(0,0,0,.07)}
-.header.header-glass.header-dark{background:rgba(23,23,23,.38);box-shadow:0 1px 0 rgba(255,255,255,.1)}
+.header.header-glass{background:rgba(255,255,255,.42);backdrop-filter:blur(22px) saturate(165%)}
+.header.header-glass.header-dark{background:rgba(23,23,23,.38)}
 .header.header-glass:has(.hamburger.active){background:rgba(23,23,23,.96);color:#fff}
 .quantum-footer-bottom .footer-identity{justify-content:flex-start}
 
@@ -540,6 +540,17 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .latest{padding-top:75px;padding-bottom:80px}
 .faq{padding-top:75px}
 @media(max-width:767px){.quantum-news{padding-bottom:60px}.latest{padding-top:55px;padding-bottom:60px}.faq{padding-top:55px}}
+
+.latest{transition:background-color .65s ease-in-out,color .25s ease .2s}
+.latest[data-theme="dark"]{background:#151515;color:#f7f7f7}
+.latest .latest-grid p{transition:color .25s ease .2s}
+.latest[data-theme="dark"] .latest-grid p{color:#bcbcbc}
+.faq{background:#151515;color:#f7f7f7}
+.faq .faq-item{border-color:#555}
+.faq .faq-item button{color:#f7f7f7}
+.faq .faq-item p{color:#bdbdbd}
+body:has(.faq) .cta.newsletter-section{background:#292929;color:#fff}
+@media(prefers-reduced-motion:reduce){.latest,.latest .latest-grid p{transition:none}}
 
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){
   .capabilities-section[data-scroll-ready]{height:calc(100svh + var(--scroll-distance))}
