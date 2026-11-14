@@ -535,6 +535,12 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(prefers-reduced-motion:reduce){.services-fluid-art,.services-fluid-energy,.services-fluid-ring:before{animation:none}.services-fluid-energy,.services-fluid-ring{opacity:0}}
 @media(max-width:767px){.latest .section-intro .text-link{display:block;width:fit-content;margin:20px 0 0 auto;text-decoration:none}.latest .section-intro .text-link:hover,.latest .section-intro .text-link:focus-visible{text-decoration:underline}}
 
+/* Keep the homepage news, portfolio and FAQ sections evenly spaced. */
+.quantum-news{padding-bottom:70px}
+.latest{padding-top:55px;padding-bottom:60px}
+.faq{padding-top:55px}
+@media(max-width:767px){.quantum-news{padding-bottom:45px}.latest{padding-top:40px;padding-bottom:45px}.faq{padding-top:40px}}
+
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){
   .capabilities-section[data-scroll-ready]{height:calc(100svh + var(--scroll-distance))}
   .capabilities-section[data-scroll-ready] .capabilities-sticky{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;padding:32px 0}
