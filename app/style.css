@@ -531,21 +531,3 @@ body:has(.leaders-section) footer{padding-bottom:120px}
   .capabilities-section[data-scroll-ready] .capability-card{height:min(390px,48svh)}
   .capabilities-section[data-scroll-ready] .capabilities-controls{display:none}
 }
-
-/* An India-centered horizon connects the services hero to a global network. */
-.services-intro{background:#05070b;color:#fff;min-height:900px;padding-bottom:320px}
-.services-intro:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(3,5,9,.8),rgba(3,5,9,.22) 75%),linear-gradient(180deg,#05070b 0%,transparent 55%,rgba(5,7,11,.15) 100%)}
-.services-intro .services-breadcrumb,.services-intro .services-eyebrow,.services-intro .services-facts span{color:#aaa}
-.services-intro .services-lede{color:#d0d0d0}
-.services-globe{position:absolute;z-index:0;bottom:0;left:0;width:100%;pointer-events:none;overflow:hidden}
-.services-globe img{display:block;width:100%;height:auto}
-.services-globe svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.globe-routes{fill:none;stroke:#aadfff;stroke-width:1.3;opacity:.8;filter:drop-shadow(0 0 4px #7bcfff)}
-.globe-routes-base{fill:none;stroke:#9bcfec;stroke-width:.8;opacity:.4}
-.globe-routes path{stroke-dasharray:10 650;animation:globe-flow 7s linear infinite}
-.globe-routes path:nth-child(2){animation-delay:-2s}.globe-routes path:nth-child(3){animation-delay:-4s}.globe-routes path:nth-child(4){animation-delay:-1s}.globe-routes path:nth-child(5){animation-delay:-3s}
-.globe-nodes{fill:#fff;filter:drop-shadow(0 0 5px #91d9ff);animation:globe-pulse 3s ease-in-out infinite}
-@keyframes globe-flow{to{stroke-dashoffset:-660}}
-@keyframes globe-pulse{50%{opacity:.45}}
-@media(max-width:767px){.services-intro{display:block;min-height:0;padding-top:125px;padding-bottom:0}.services-intro-content{display:block}.services-intro .services-intro-bottom{margin-top:38px}.services-intro:before{background:linear-gradient(180deg,#05070b 0%,transparent 78%)}.services-globe{position:relative;left:auto;bottom:auto;width:150%;margin:0 -25% -1px}.services-globe img{width:100%}}
-@media(prefers-reduced-motion:reduce){.globe-routes path,.globe-nodes{animation:none}.globe-routes path{stroke-dasharray:none}}
