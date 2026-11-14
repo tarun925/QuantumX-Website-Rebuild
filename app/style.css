@@ -519,6 +519,13 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(max-width:360px){.hero .muted{font-size:13px}.hero h1{font-size:30px}.hero-description{font-size:14px}.hero-actions{margin-top:16px}}
 
 .faq-item button{color:#121212;-webkit-text-fill-color:currentColor;-webkit-tap-highlight-color:transparent}
+.services-fluid-art{position:relative;animation:services-fluid-float 10s ease-in-out infinite;transform-origin:center}
+.services-fluid-art img{animation:none;display:block;width:100%;height:auto}
+.services-fluid-energy{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,235,158,.7) 48%,transparent 60%);background-size:250% 100%;opacity:.42;mix-blend-mode:screen;-webkit-mask:url('/assets/services-fluid-qx.webp') center/contain no-repeat;mask:url('/assets/services-fluid-qx.webp') center/contain no-repeat;animation:services-fluid-energy 7s ease-in-out infinite}
+@keyframes services-fluid-float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes services-fluid-energy{0%,15%{background-position:100% 0;opacity:.1}50%{opacity:.5}85%,100%{background-position:0 0;opacity:.1}}
+@media(max-width:767px){.services-orbit.services-fluid{width:min(90vw,370px);opacity:1}}
+@media(prefers-reduced-motion:reduce){.services-fluid-art,.services-fluid-energy{animation:none}.services-fluid-energy{opacity:0}}
 
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){
   .capabilities-section[data-scroll-ready]{height:calc(100svh + var(--scroll-distance))}
