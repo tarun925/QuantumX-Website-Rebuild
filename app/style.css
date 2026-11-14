@@ -376,7 +376,7 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .projects-page .filters{margin-inline:-15px;display:flex;flex-wrap:wrap;overflow:visible;gap:8px 0}
 .projects-page .filters button,.projects-page .filters button:first-child{padding:14px clamp(12px, 1.6vw, 24px);font-family:inherit;font-size:clamp(11px, 1vw, 14px);font-style:normal;text-transform:uppercase}
 .projects-page .filters button.selected{color:#fff}
-.projects-page>.project-grid{margin-inline:max(12px, calc(var(--page-gutter) - 50px));column-gap:4px;row-gap:48px;align-items:stretch}
+.projects-page>.project-grid{margin-inline:max(12px, calc(var(--page-gutter) - 50px));column-gap:4px;row-gap:48px;align-items:start}
 @media(max-width:767px){.projects-page .filters{margin-inline:0}.projects-page .filters button,.projects-page .filters button:first-child{padding:10px 12px}.projects-page>.project-grid{row-gap:40px}}
 
 
@@ -514,10 +514,7 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 @media(max-width:767px){.contact-page-new{padding-top:125px;padding-bottom:70px}.contact-page-new .contact-intro{margin-bottom:44px}.contact-page-new .contact-intro h1{font-size:clamp(52px,12vw,78px)}.contact-switch{display:flex;width:100%}.contact-switch button{flex:1;padding:14px 8px;font-size:13px}.contact-fields{grid-template-columns:1fr;gap:22px}.contact-fields .contact-message{grid-column:auto}.contact-page-new .contact-enquiry-form,.contact-call-panel{padding:25px 20px}.contact-actions{align-items:stretch;flex-direction:column}.contact-actions .contact-submit{width:100%}.contact-intro-details{flex-direction:column;align-items:flex-start}}
 
 .featured-projects .project-card > .project-image{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;flex:none}
-.projects-page .project-card{display:flex;flex-direction:column;background:#222}
-.projects-page .project-card .project-image{display:block;width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain;background:#f7f6f4}
-.projects-page .project-card .project-typographic{aspect-ratio:3/2}
-.projects-page .project-card .compact-caption{flex:1}
+.projects-page .project-card:is(.project-card-aset-college,.project-card-snitch,.project-card-gofloaters,.project-card-zellify) .project-image{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain}
 
 @media(max-width:767px){.quantum-logo-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 28px;padding:32px 8% 52px;overflow:visible}.quantum-logo-strip .client-logo,.quantum-logo-strip .client-logo-gofloaters{width:65%;max-width:111px;height:58px}}
 
