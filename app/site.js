@@ -280,7 +280,8 @@ function Home() {
     if (!firstStory) return;
     let frame, timer, revealed = false;
     const update = () => {
-      const entered = firstStory.getBoundingClientRect().top <= window.innerHeight * .9;
+      const position = firstStory.getBoundingClientRect().top;
+      const entered = position <= window.innerHeight * (revealed ? 1.05 : .9);
       if (entered && !revealed && timer == null) {
         timer = setTimeout(() => { timer = null; revealed = true; setNewsLight(true); }, 500);
       } else if (!entered) {
