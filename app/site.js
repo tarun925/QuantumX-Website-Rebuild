@@ -243,6 +243,25 @@ function Home() {
   const [workDark,setWorkDark]=useState(false);
   const [newsLight,setNewsLight]=useState(false);
   useEffect(() => {
+    const cards=[...document.querySelectorAll('.featured-projects .project-card')];
+    const motion=window.matchMedia('(prefers-reduced-motion: no-preference)');
+    let frame=null;
+    const update=()=>{
+      frame=null;
+      if(!motion.matches){cards.forEach(card=>card.style.clipPath='');return;}
+      const rects=cards.map(card=>card.getBoundingClientRect());
+      cards.forEach((card,index)=>{
+        const rect=rects[index];
+        const covering=rects.slice(index+1).filter(next=>next.top<rect.bottom && next.bottom>rect.top);
+        const bottom=covering.length ? Math.max(0,rect.bottom-Math.min(...covering.map(next=>next.bottom))) : 0;
+        card.style.clipPath=bottom>0?`inset(0 0 ${Math.min(bottom,rect.height)}px 0)`:'';
+      });
+    };
+    const schedule=()=>{if(frame===null)frame=requestAnimationFrame(update)};
+    window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);motion.addEventListener('change',schedule);schedule();
+    return ()=>{window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);motion.removeEventListener('change',schedule);if(frame!==null)cancelAnimationFrame(frame);cards.forEach(card=>card.style.clipPath='')};
+  },[]);
+  useEffect(() => {
     let frame;
     const update = () => {
       const firstProject = document.querySelector('.featured-projects .project-card');
