@@ -80,10 +80,10 @@ function Testimonials() {
     <div className="leaders-controls"><button type="button" onClick={()=>move(-1)} disabled={!edges.previous} aria-label="Previous testimonials">←</button><button type="button" onClick={()=>move(1)} disabled={!edges.next} aria-label="Next testimonials">→</button></div>
   </section>;
 }
-function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,showContact=false,aboutPage=false}) {
+function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,showContact=false,aboutPage=false,glassAlways=false}) {
   const [open,setOpen] = useState(false);
   const [navDark,setNavDark] = useState(dark);
-  const [navGlass,setNavGlass] = useState(false);
+  const [navGlass,setNavGlass] = useState(glassAlways);
   const [aboutLight,setAboutLight] = useState(false);
   useEffect(() => {
     let frame;
@@ -98,13 +98,13 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
       const lastProject = document.querySelector('.featured-projects .project-card:last-child');
       const capabilities = document.querySelector('.capabilities-section');
       const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 82;
-      setNavGlass(Boolean((glassOnScroll && window.scrollY > 24) || (lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line)));
+      setNavGlass(Boolean(glassAlways || (glassOnScroll && window.scrollY > 24) || (lastProject && capabilities && lastProject.getBoundingClientRect().top <= headerHeight + 72 && capabilities.getBoundingClientRect().bottom > line)));
       const news = document.querySelector('.quantum-news');
       const lightAbout = crossesLine(document.querySelector('.about-white-zone')) || (aboutPage && crossesLine(document.querySelector('.newsletter-section')));
       const darkAboutSection = [...document.querySelectorAll('.about-team, .about-culture, .about-final-cta')].some(crossesLine);
       setAboutLight(lightAbout);
       const isDark = (crossesLine(news) && !newsLight) || crossesLine(document.querySelector('main.dark-page, main.industries-page, main.blog-page, main.blog-article-page')) ||
-        crossesLine(document.querySelector('.services-catalog')) || crossesLine(document.querySelector('.services-end')) ||
+        crossesLine(document.querySelector('.services-intro')) || crossesLine(document.querySelector('.services-catalog')) || crossesLine(document.querySelector('.services-end')) ||
         crossesLine(document.querySelector('.about-hero')) || (crossesLine(document.querySelector('.about-dark')) && !lightAbout) || darkAboutSection ||
         crossesLine(document.querySelector('.cta:not(.newsletter-section)')) || crossesLine(document.querySelector('footer')) ||
         crossesLine(document.querySelector('.leaders-section')) || crossesLine(document.querySelector('.capabilities-section')) ||
@@ -117,7 +117,7 @@ function Header({dark=false,workDark=false,newsLight=false,glassOnScroll=false,s
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule);
     return () => { window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); if(frame != null) cancelAnimationFrame(frame); };
-  }, [dark,workDark,newsLight,glassOnScroll,aboutPage]);
+  }, [dark,workDark,newsLight,glassOnScroll,aboutPage,glassAlways]);
   return <>
     <header className={`header ${navDark?'header-dark':''} ${navGlass?'header-glass':''} ${aboutPage?'header-about':''} ${aboutPage && aboutLight?'header-about-light':''}`}>
       <Link href="/" className="brand quantum-brand" aria-label="QuantumX home"><img src={navDark || open ? "/assets/quantum-logo-white.svg" : "/assets/quantum-logo.svg"} alt="QuantumX"/></Link>
@@ -164,7 +164,7 @@ function Footer() {
   </>;
 }
 function projectThumbnail(project) {
-  return project.listingImage || project.homepageImage || project.image;
+  return project.featured ? `/assets/home-mockups/${project.slug}.webp` : project.listingImage || project.homepageImage || project.image;
 }
 function ProjectVisual({project,eager=false}) {
   return project.image?<img className="project-image" src={project.image} alt={`${project.name} portfolio visual`} loading={eager?'eager':'lazy'} decoding="async"/>:<div className={`project-typographic project-${project.slug}`}><span>{project.sector}</span><strong>{project.name}</strong><small>{project.impact||project.category}</small></div>;
@@ -406,18 +406,9 @@ function ServiceCounters() {
   return <div className="services-facts">{[{value:118,suffix:'+',label:'Projects'},{value:7,suffix:'',label:'Industries'},{value:6,suffix:'+',label:'Years of experience'}].map(({value,suffix,label})=><div key={label}><strong aria-label={`${value}${suffix}`}><span aria-hidden="true">{Math.floor(value*progress)}{suffix}</span></strong><span>{label}</span></div>)}</div>;
 }
 function ServicesOverview() {
-  const hero=useRef(null);
   const [active,setActive]=useState(0);
-  useEffect(()=>{
-    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
-    let frame;
-    const update=()=>{if(!hero.current)return;const progress=Math.min(1,Math.max(0,window.scrollY / Math.max(hero.current.offsetHeight,1)));hero.current.style.setProperty('--services-progress',reduce.matches ? 0 : progress);frame=null};
-    const schedule=()=>{if(frame==null)frame=requestAnimationFrame(update)};
-    update();window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);reduce.addEventListener('change',schedule);
-    return ()=>{window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);reduce.removeEventListener('change',schedule);if(frame!=null)cancelAnimationFrame(frame)};
-  },[]);
   useEffect(()=>{const nodes=document.querySelectorAll('[data-service-section]');if(!('IntersectionObserver' in window))return;const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)setActive(Number(entry.target.dataset.serviceSection))}),{rootMargin:'-20% 0px -65% 0px',threshold:0});nodes.forEach(node=>observer.observe(node));return ()=>observer.disconnect()},[]);
-  return <><Header showContact/><main className="services-page"><section className="services-intro" ref={hero}><div className="services-intro-content"><nav className="services-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Services</span></nav><p className="services-eyebrow">QUANTUMX / SERVICES</p><h1>Connected thinking.<br/><span>Built for growth.</span></h1><p className="services-lede">Strategy, creativity and technology work better together. We connect the capabilities your business needs to move forward.</p><div className="services-intro-bottom"><ServiceCounters/><Button/></div></div><div className="services-orbit" aria-hidden="true"><img src="/assets/donut.avif" alt=""/></div></section><section className="services-catalog"><div className="services-catalog-heading"><p className="services-eyebrow">OUR CAPABILITIES</p><h2>One connected<br/><span>system.</span></h2><p>From first idea to ongoing growth, explore the services that bring your business ambitions together.</p></div><div className="services-catalog-layout"><nav className="services-index" aria-label="Jump to a service">{serviceOverview.map((item,index)=><a href={`#service-${index+1}`} key={item.title} className={active===index?'active':''} aria-current={active===index?'true':undefined}><span>{String(index+1).padStart(2,'0')}</span><span className="services-index-name">{item.title}</span></a>)}</nav><div className="services-rows">{serviceOverview.map((item,index)=><article className="services-row" id={`service-${index+1}`} data-service-section={index} key={item.title}><p className="services-row-number">{String(index+1).padStart(2,'0')} / {String(serviceOverview.length).padStart(2,'0')}</p><Link href={`/services/${slugify(item.title)}`} className="services-row-title"><h3>{item.title}</h3><span aria-hidden="true">↗</span></Link><p>{item.summary}</p><ul>{item.items.map(detail=><li key={detail}>{detail}</li>)}</ul><Link className="services-row-link" href={`/services/${slugify(item.title)}`}>Explore {item.title} <span aria-hidden="true">↗</span></Link></article>)}</div></div></section><section className="services-end"><p className="services-eyebrow">LET’S BUILD WHAT’S NEXT</p><h2>Ready to connect<br/><span>the dots?</span></h2><p>Tell us what you’re building. Together, we’ll shape the right approach for your next stage of growth.</p><Button/></section></main><Footer/></>;
+  return <><Header dark glassAlways showContact/><main className="services-page"><section className="services-intro"><div className="services-intro-content"><nav className="services-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><span>Services</span></nav><p className="services-eyebrow">QUANTUMX / SERVICES</p><h1>Connected thinking.<br/><span>Built for growth.</span></h1><p className="services-lede">Strategy, creativity and technology work better together. We connect the capabilities your business needs to move forward.</p><div className="services-intro-bottom"><ServiceCounters/><Button/></div></div><div className="services-globe" aria-hidden="true"><img src="/assets/services-globe.webp" alt=""/><svg viewBox="0 0 1000 562" preserveAspectRatio="none"><g className="globe-routes-base"><path d="M486 442 Q365 260 185 366"/><path d="M486 442 Q440 255 338 335"/><path d="M486 442 Q590 255 720 350"/><path d="M486 442 Q670 295 875 390"/><path d="M486 442 Q565 330 624 445"/></g><g className="globe-routes"><path d="M486 442 Q365 260 185 366"/><path d="M486 442 Q440 255 338 335"/><path d="M486 442 Q590 255 720 350"/><path d="M486 442 Q670 295 875 390"/><path d="M486 442 Q565 330 624 445"/></g><g className="globe-nodes"><circle cx="486" cy="442" r="5"/><circle cx="185" cy="366" r="3"/><circle cx="338" cy="335" r="3"/><circle cx="720" cy="350" r="3"/><circle cx="875" cy="390" r="3"/><circle cx="624" cy="445" r="3"/></g></svg></div></section><section className="services-catalog"><div className="services-catalog-heading"><p className="services-eyebrow">OUR CAPABILITIES</p><h2>One connected<br/><span>system.</span></h2><p>From first idea to ongoing growth, explore the services that bring your business ambitions together.</p></div><div className="services-catalog-layout"><nav className="services-index" aria-label="Jump to a service">{serviceOverview.map((item,index)=><a href={`#service-${index+1}`} key={item.title} className={active===index?'active':''} aria-current={active===index?'true':undefined}><span>{String(index+1).padStart(2,'0')}</span><span className="services-index-name">{item.title}</span></a>)}</nav><div className="services-rows">{serviceOverview.map((item,index)=><article className="services-row" id={`service-${index+1}`} data-service-section={index} key={item.title}><p className="services-row-number">{String(index+1).padStart(2,'0')} / {String(serviceOverview.length).padStart(2,'0')}</p><Link href={`/services/${slugify(item.title)}`} className="services-row-title"><h3>{item.title}</h3><span aria-hidden="true">↗</span></Link><p>{item.summary}</p><ul>{item.items.map(detail=><li key={detail}>{detail}</li>)}</ul><Link className="services-row-link" href={`/services/${slugify(item.title)}`}>Explore {item.title} <span aria-hidden="true">↗</span></Link></article>)}</div></div></section><section className="services-end"><p className="services-eyebrow">LET’S BUILD WHAT’S NEXT</p><h2>Ready to connect<br/><span>the dots?</span></h2><p>Tell us what you’re building. Together, we’ll shape the right approach for your next stage of growth.</p><Button/></section></main><Footer/></>;
 }
 function IndustryOverviewStats() {
   const ref=useRef(null);
