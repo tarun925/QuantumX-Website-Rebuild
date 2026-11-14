@@ -169,10 +169,10 @@ function projectThumbnail(project) {
 function ProjectVisual({project,eager=false}) {
   return project.image?<img className="project-image" src={project.image} alt={`${project.name} portfolio visual`} loading={eager?'eager':'lazy'} decoding="async"/>:<div className={`project-typographic project-${project.slug}`}><span>{project.sector}</span><strong>{project.name}</strong><small>{project.impact||project.category}</small></div>;
 }
-function ProjectCard({project,compact=false}) {
+function ProjectCard({project,compact=false,homepage=false}) {
   return <Link href={`/projects/${project.slug}`} className={`project-card ${compact?'compact':''} project-card-${project.slug}`}>
     <div className="project-meta"><h3>{project.name}</h3><p>{project.description}</p><span className="project-link">View Project ↗</span></div>
-    <ProjectVisual project={{...project, image:projectThumbnail(project)}}/>
+    <ProjectVisual project={{...project, image:homepage ? `/assets/home-mockups/${project.slug}.webp` : projectThumbnail(project)}}/>
     <div className="compact-caption"><h3>{project.name}</h3><p>{project.category} ↗</p></div>
   </Link>;
 }
@@ -291,7 +291,7 @@ function Home() {
   return <><Header workDark={workDark} newsLight={newsLight}/><main>
     <section className="hero"><div className="hero-copy"><p className="muted">Strategy · Creative · Performance · Technology · Data · AI</p><h1>Growth, managed as<br/><strong>one connected system<span>.</span></strong></h1><p className="hero-description">QuantumX connects brand building, demand generation, digital experience and measurable performance to help businesses grow.</p><div className="hero-actions"><Button/><Link className="text-link" href="/projects">See our Work</Link></div></div><HeroQuantumNode/></section>
     <ClientLogos/>
-    <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project}/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
+    <section className={`work-section ${workDark ? 'work-dark' : ''}`}><div className="section-intro"><h2><span>Selected work</span><br/>built for growth</h2><p>From identity and campaigns to websites, funnels and connected digital experiences.</p></div><div className="featured-projects">{projects.filter(project=>project.featured).map(project=><ProjectCard key={project.slug} project={project} homepage/>)}</div><div className="work-end"><h3>Explore more of the brands and experiences we have worked on.</h3><Button href="/projects">View all Projects</Button></div></section>
     <Testimonials/>
     <Capabilities/>
     <section className="quantum-news" data-theme={newsLight ? 'light' : 'dark'} aria-labelledby="quantum-news-title"><h2 id="quantum-news-title">Latest at <span>QuantumX</span></h2><div className="quantum-news-columns"><div className="quantum-news-list">

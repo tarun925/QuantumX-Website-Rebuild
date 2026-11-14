@@ -95,7 +95,7 @@ main{animation:page-in .5s ease both}@keyframes page-in{from{opacity:0;transform
 /* Each featured project stays in place until the next card covers it. */
 .featured-projects{display:block}
 .featured-projects .project-card{position:sticky;top:clamp(20px,8vh,72px);margin-bottom:clamp(28px,4vw,56px);box-shadow:0 -12px 35px rgba(0,0,0,.16)}
-.featured-projects .project-image{max-height:calc(100vh - 200px)}
+.featured-projects .project-image{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain}
 @media(max-width:767px){.featured-projects .project-card{top:20px;margin-bottom:32px}.featured-projects .project-image{max-height:none}}
 @media(prefers-reduced-motion:reduce){.hero .donut{animation:none;transform:none}.featured-projects .project-card{position:relative;top:auto;box-shadow:none}}
 .featured-projects .compact-caption{display:none}
@@ -509,3 +509,5 @@ body:has(.leaders-section) footer{padding-bottom:120px}
 .contact-page-new .contact-call-panel p:not(.eyebrow){margin:12px 8px 0;max-width:none;font-size:13px}
 .contact-call-panel a{color:#b94725;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:767px){.contact-page-new{padding-top:125px;padding-bottom:70px}.contact-page-new .contact-intro{margin-bottom:44px}.contact-page-new .contact-intro h1{font-size:clamp(52px,12vw,78px)}.contact-switch{display:flex;width:100%}.contact-switch button{flex:1;padding:14px 8px;font-size:13px}.contact-fields{grid-template-columns:1fr;gap:22px}.contact-fields .contact-message{grid-column:auto}.contact-page-new .contact-enquiry-form,.contact-call-panel{padding:25px 20px}.contact-actions{align-items:stretch;flex-direction:column}.contact-actions .contact-submit{width:100%}.contact-intro-details{flex-direction:column;align-items:flex-start}}
+
+.featured-projects .project-card > .project-image{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;flex:none}
